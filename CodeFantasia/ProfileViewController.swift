@@ -128,4 +128,124 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
     }
 }
+extension ProfileViewController {
+    private func setupLayout() {
+        
+        view.addSubview(titleLabel)
+        view.addSubview(produceView)
+        view.addSubview(profileImage)
+        view.addSubview(nicknameLabel)
+        view.addSubview(produceLabel)
+        view.addSubview(produceContent)
+        view.addSubview(techTitleLabel)
+        view.addSubview(techView)
+        view.addSubview(techLabel)
+        view.addSubview(urlTitleLabel)
+        view.addSubview(urlView)
+        view.addSubview(urlLabel)
+        view.addSubview(interestTitleLabel)
+        view.addSubview(interestView)
+        view.addSubview(interestLabel)
+        view.addSubview(editButton)
+        view.addSubview(logoutButton)
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        produceView.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(250)
+        }
+        profileImage.snp.makeConstraints {
+            $0.top.equalTo(produceView.snp.top).inset(16)
+            $0.leading.equalTo(produceView.snp.leading).inset(16)
+            $0.width.height.equalTo(100)
+        }
+        nicknameLabel.snp.makeConstraints {
+            $0.top.equalTo(profileImage)
+            $0.leading.equalTo(profileImage.snp.trailing).offset(16)
+        }
+        produceLabel.snp.makeConstraints {
+            $0.top.equalTo(profileImage.snp.bottom).offset(16)
+            $0.leading.equalTo(profileImage)
+        }
+        produceContent.snp.makeConstraints {
+            $0.top.equalTo(produceLabel.snp.bottom).offset(16)
+            $0.leading.equalTo(produceLabel)
+        }
+        techTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(produceView.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        techView.snp.makeConstraints {
+            $0.top.equalTo(techTitleLabel.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
+        }
+        techLabel.snp.makeConstraints {
+            $0.leading.equalTo(techView.snp.leading).inset(16)
+            $0.top.equalTo(techView.snp.top).inset(16)
+        }
+        urlTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(techView.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        urlView.snp.makeConstraints {
+            $0.top.equalTo(urlTitleLabel.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
+        }
+        urlLabel.snp.makeConstraints {
+            $0.leading.equalTo(urlView.snp.leading).inset(16)
+            $0.top.equalTo(urlView.snp.top).inset(16)
+        }
+        interestTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(urlView.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        interestView.snp.makeConstraints {
+            $0.top.equalTo(interestTitleLabel.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
+        }
+        interestLabel.snp.makeConstraints {
+            $0.leading.equalTo(interestView.snp.leading).inset(16)
+            $0.top.equalTo(interestView.snp.top).inset(16)
+        }
+        editButton.snp.makeConstraints {
+            $0.top.equalTo(interestView.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
+        }
+        logoutButton.snp.makeConstraints {
+            $0.top.equalTo(editButton.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
+        }
+    }
+}
+
+
+//화면별 Title 폰트 크기 -> Bold, 30
+//소제목 폰트 크기 -> semi bold, 20
+//디테일 폰트 크기 -> regular, 16
+//
+//뷰들 전부 ->  SafeLayoutArea
+//왼쪽에서 20 오른쪽에서 20
+//
+//Title -> 위에서부터 10
+//뷰들 간 간격 16
+//
+//extension 으로 빼놔서 통일감 줍시다
+//뷰 네모네모 radius -> 10
+//뷰 네모네모 그림자 주기
+//
+//얘도 extension으로 custom 버튼 만듭시다
+//버튼들 높이 50, 가로는 Width 꽉 채워서 왼오 여백 20
+//버튼 안 글씨 크기 20, regular  프로필 아이콘: 50*50
+//기술 및 언어 아이콘 25*25  버튼 아이콘 20*20
+//
 
