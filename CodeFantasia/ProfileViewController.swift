@@ -74,7 +74,7 @@ class ProfileViewController: UIViewController {
     
     private let urlTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "주요 사용 언어 및 기술 스택"
+        label.text = "내 포트폴리오"
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
@@ -94,7 +94,7 @@ class ProfileViewController: UIViewController {
     
     private let interestTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "주요 사용 언어 및 기술 스택"
+        label.text = "나의 관심분야"
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
@@ -150,7 +150,7 @@ extension ProfileViewController {
         view.addSubview(logoutButton)
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(10)
+            $0.top.equalToSuperview().inset(46)
             $0.leading.equalToSuperview().inset(20)
         }
         
@@ -181,9 +181,9 @@ extension ProfileViewController {
             $0.leading.equalToSuperview().inset(20)
         }
         techView.snp.makeConstraints {
-            $0.top.equalTo(techTitleLabel.snp.bottom).offset(16)
+            $0.top.equalTo(techTitleLabel.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(50)
+            $0.height.equalTo(32)
         }
         techLabel.snp.makeConstraints {
             $0.leading.equalTo(techView.snp.leading).inset(16)
@@ -194,9 +194,9 @@ extension ProfileViewController {
             $0.leading.equalToSuperview().inset(20)
         }
         urlView.snp.makeConstraints {
-            $0.top.equalTo(urlTitleLabel.snp.bottom).offset(16)
+            $0.top.equalTo(urlTitleLabel.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(50)
+            $0.height.equalTo(32)
         }
         urlLabel.snp.makeConstraints {
             $0.leading.equalTo(urlView.snp.leading).inset(16)
@@ -207,9 +207,9 @@ extension ProfileViewController {
             $0.leading.equalToSuperview().inset(20)
         }
         interestView.snp.makeConstraints {
-            $0.top.equalTo(interestTitleLabel.snp.bottom).offset(16)
+            $0.top.equalTo(interestTitleLabel.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(50)
+            $0.height.equalTo(32)
         }
         interestLabel.snp.makeConstraints {
             $0.leading.equalTo(interestView.snp.leading).inset(16)
@@ -227,7 +227,6 @@ extension ProfileViewController {
         }
     }
 }
-
 
 //화면별 Title 폰트 크기 -> Bold, 30
 //소제목 폰트 크기 -> semi bold, 20
