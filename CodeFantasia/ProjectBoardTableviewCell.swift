@@ -19,15 +19,15 @@ class ProjectBoardTableviewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
-        imageView.layer.borderColor = UIColor.black.cgColor
-        imageView.layer.borderWidth = 1.0
+//        imageView.layer.borderColor = UIColor.black.cgColor
+//        imageView.layer.borderWidth = 1.0
         return imageView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = UIColor(red: 125/255.0, green: 215/255.0, blue: 184/255.0, alpha: 1.0)
         return label
     }()
     
@@ -73,7 +73,7 @@ class ProjectBoardTableviewCell: UITableViewCell {
         self.icons = icons
         statusLabel.text = status
         if status == "모집 중" {
-            statusLabel.backgroundColor = .black
+            statusLabel.backgroundColor = UIColor(red: 240/255.0, green: 196/255.0, blue: 55/255.0, alpha: 1.0)
         } else {
             statusLabel.backgroundColor = .lightGray
         }

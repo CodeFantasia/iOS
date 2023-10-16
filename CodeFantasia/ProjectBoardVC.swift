@@ -29,15 +29,16 @@ class ProjectBoardVC: UIViewController, UITableViewDataSource, UITableViewDelega
         setupNavigationBar()
         setupTableView()
         
-        view.backgroundColor = .white
-        navigationController?.navigationBar.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
+        navigationController?.navigationBar.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         navigationController?.navigationBar.tintColor = .black
     }
     
     func setupNavigationBar() {
         let customTitleLabel = UILabel()
         customTitleLabel.text = "프로젝트 게시판"
-        customTitleLabel.font = UIFont.boldSystemFont(ofSize: 21)
+        customTitleLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        customTitleLabel.textColor = .black
 
         let customTitleBarItem = UIBarButtonItem(customView: customTitleLabel)
         navigationItem.leftBarButtonItem = customTitleBarItem
