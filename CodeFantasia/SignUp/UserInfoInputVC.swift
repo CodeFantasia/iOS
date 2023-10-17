@@ -8,7 +8,7 @@ class UserInfoInputVC: UIViewController {
     private let titleLabel = {
         let label = UILabel()
         label.text = "회원 정보 등록"
-        label.font = UIFont.systemFont(ofSize: 32.0, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: CGFloat.title, weight: .bold)
         
         return label
     }()

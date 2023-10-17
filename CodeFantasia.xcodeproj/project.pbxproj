@@ -24,7 +24,6 @@
 		ABC3DF442AD46097008CEF1A /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = ABC3DF432AD46097008CEF1A /* CombineMoya */; };
 		ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF452AD4617C008CEF1A /* MainVC.swift */; };
 		ABFD4B0B2ADE81DC0055EF35 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD4B0A2ADE81DC0055EF35 /* LoginVC.swift */; };
-		ABFD4B0E2ADE82160055EF35 /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD4B0D2ADE82160055EF35 /* SignupVC.swift */; };
 		ABFD4B122ADE82460055EF35 /* TermsOfConditionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD4B112ADE82460055EF35 /* TermsOfConditionsVC.swift */; };
 		ABFD4B142ADE827A0055EF35 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD4B132ADE827A0055EF35 /* Button.swift */; };
 		ABFD4B162ADE97910055EF35 /* UserInfoInputVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD4B152ADE97910055EF35 /* UserInfoInputVC.swift */; };
@@ -56,7 +55,6 @@
 		ABC3DF322AD45E8C008CEF1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABC3DF452AD4617C008CEF1A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		ABFD4B0A2ADE81DC0055EF35 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
-		ABFD4B0D2ADE82160055EF35 /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		ABFD4B112ADE82460055EF35 /* TermsOfConditionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfConditionsVC.swift; sourceTree = "<group>"; };
 		ABFD4B132ADE827A0055EF35 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		ABFD4B152ADE97910055EF35 /* UserInfoInputVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoInputVC.swift; sourceTree = "<group>"; };
@@ -139,7 +137,6 @@
 		ABFD4B0F2ADE821A0055EF35 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				ABFD4B0D2ADE82160055EF35 /* SignupVC.swift */,
 				ABFD4B112ADE82460055EF35 /* TermsOfConditionsVC.swift */,
 				ABFD4B152ADE97910055EF35 /* UserInfoInputVC.swift */,
 			);
@@ -273,7 +270,6 @@
 				ABFD4B162ADE97910055EF35 /* UserInfoInputVC.swift in Sources */,
 				F1E653E82AD8E73F00274A34 /* PaddingLabel.swift in Sources */,
 				F1E653EA2AD8F63D00274A34 /* Images.swift in Sources */,
-				ABFD4B0E2ADE82160055EF35 /* SignupVC.swift in Sources */,
 				F1E653DE2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift in Sources */,
 				ABC3DF2C2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld in Sources */,
 				3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */,
