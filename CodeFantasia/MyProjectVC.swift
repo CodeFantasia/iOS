@@ -14,3 +14,12 @@ class MyProjectVC: UITableViewController {
     }
 }
 
+extension MyProjectVC {
+    override func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+}
+

@@ -23,6 +23,8 @@
 		ABC3DF412AD46069008CEF1A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = ABC3DF402AD46069008CEF1A /* Alamofire */; };
 		ABC3DF442AD46097008CEF1A /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = ABC3DF432AD46097008CEF1A /* CombineMoya */; };
 		ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF452AD4617C008CEF1A /* MainVC.swift */; };
+		F013B52C2AD8290F00CB777A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013B52B2AD8290F00CB777A /* ProfileViewController.swift */; };
+		F076F6FA2ADE80F000AD7435 /* MyProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */; };
 		F1E653DE2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */; };
 		F1E653E12AD8CE2200274A34 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = F1E653E02AD8CE2200274A34 /* Then */; };
 		F1E653E42AD8E0F200274A34 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E32AD8E0F200274A34 /* Fonts.swift */; };
@@ -30,7 +32,6 @@
 		F1E653E82AD8E73F00274A34 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E72AD8E73F00274A34 /* PaddingLabel.swift */; };
 		F1E653EA2AD8F63D00274A34 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E92AD8F63D00274A34 /* Images.swift */; };
 		F1E653EC2ADD539D00274A34 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653EB2ADD539D00274A34 /* Metrics.swift */; };
-		F013B52C2AD8290F00CB777A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013B52B2AD8290F00CB777A /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,13 +49,14 @@
 		ABC3DF302AD45E8C008CEF1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABC3DF322AD45E8C008CEF1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABC3DF452AD4617C008CEF1A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		F013B52B2AD8290F00CB777A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectTableViewCell.swift; sourceTree = "<group>"; };
 		F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailNoticeBoardViewController.swift; sourceTree = "<group>"; };
 		F1E653E32AD8E0F200274A34 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		F1E653E52AD8E3A900274A34 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		F1E653E72AD8E73F00274A34 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		F1E653E92AD8F63D00274A34 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		F1E653EB2ADD539D00274A34 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
-		F013B52B2AD8290F00CB777A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				ABC3DF322AD45E8C008CEF1A /* Info.plist */,
 				ABC3DF2A2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld */,
 				F013B52B2AD8290F00CB777A /* ProfileViewController.swift */,
+				F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */,
 			);
 			path = CodeFantasia;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */,
 				F1E653E62AD8E3A900274A34 /* Palette.swift in Sources */,
 				F1E653E82AD8E73F00274A34 /* PaddingLabel.swift in Sources */,
+				F076F6FA2ADE80F000AD7435 /* MyProjectTableViewCell.swift in Sources */,
 				F1E653EA2AD8F63D00274A34 /* Images.swift in Sources */,
 				F1E653DE2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift in Sources */,
 				ABC3DF2C2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld in Sources */,
