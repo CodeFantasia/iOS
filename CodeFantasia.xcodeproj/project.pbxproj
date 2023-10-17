@@ -18,6 +18,13 @@
 		ABC3DF412AD46069008CEF1A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = ABC3DF402AD46069008CEF1A /* Alamofire */; };
 		ABC3DF442AD46097008CEF1A /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = ABC3DF432AD46097008CEF1A /* CombineMoya */; };
 		ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF452AD4617C008CEF1A /* MainVC.swift */; };
+		F1E653DE2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */; };
+		F1E653E12AD8CE2200274A34 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = F1E653E02AD8CE2200274A34 /* Then */; };
+		F1E653E42AD8E0F200274A34 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E32AD8E0F200274A34 /* Fonts.swift */; };
+		F1E653E62AD8E3A900274A34 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E52AD8E3A900274A34 /* Palette.swift */; };
+		F1E653E82AD8E73F00274A34 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E72AD8E73F00274A34 /* PaddingLabel.swift */; };
+		F1E653EA2AD8F63D00274A34 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E92AD8F63D00274A34 /* Images.swift */; };
+		F1E653EC2ADD539D00274A34 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653EB2ADD539D00274A34 /* Metrics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +37,12 @@
 		ABC3DF302AD45E8C008CEF1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABC3DF322AD45E8C008CEF1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABC3DF452AD4617C008CEF1A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailNoticeBoardViewController.swift; sourceTree = "<group>"; };
+		F1E653E32AD8E0F200274A34 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		F1E653E52AD8E3A900274A34 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		F1E653E72AD8E73F00274A34 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		F1E653E92AD8F63D00274A34 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		F1E653EB2ADD539D00274A34 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1E653E12AD8CE2200274A34 /* Then in Frameworks */,
 				ABC3DF412AD46069008CEF1A /* Alamofire in Frameworks */,
 				ABC3DF3D2AD45F4A008CEF1A /* Kingfisher in Frameworks */,
 				ABC3DF442AD46097008CEF1A /* CombineMoya in Frameworks */,
@@ -66,6 +80,8 @@
 		ABC3DF202AD45E8B008CEF1A /* CodeFantasia */ = {
 			isa = PBXGroup;
 			children = (
+				F1E653E22AD8E0D700274A34 /* Resource */,
+				F1E653DC2AD8CD8F00274A34 /* ProjectDetailNoticeBoard */,
 				ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */,
 				ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */,
 				ABC3DF252AD45E8B008CEF1A /* ViewController.swift */,
@@ -76,6 +92,26 @@
 				ABC3DF2A2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld */,
 			);
 			path = CodeFantasia;
+			sourceTree = "<group>";
+		};
+		F1E653DC2AD8CD8F00274A34 /* ProjectDetailNoticeBoard */ = {
+			isa = PBXGroup;
+			children = (
+				F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */,
+				F1E653E72AD8E73F00274A34 /* PaddingLabel.swift */,
+			);
+			path = ProjectDetailNoticeBoard;
+			sourceTree = "<group>";
+		};
+		F1E653E22AD8E0D700274A34 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				F1E653E32AD8E0F200274A34 /* Fonts.swift */,
+				F1E653E52AD8E3A900274A34 /* Palette.swift */,
+				F1E653E92AD8F63D00274A34 /* Images.swift */,
+				F1E653EB2ADD539D00274A34 /* Metrics.swift */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -99,6 +135,7 @@
 				ABC3DF3C2AD45F4A008CEF1A /* Kingfisher */,
 				ABC3DF402AD46069008CEF1A /* Alamofire */,
 				ABC3DF432AD46097008CEF1A /* CombineMoya */,
+				F1E653E02AD8CE2200274A34 /* Then */,
 			);
 			productName = CodeFantasia;
 			productReference = ABC3DF1E2AD45E8B008CEF1A /* CodeFantasia.app */;
@@ -134,6 +171,7 @@
 				ABC3DF3E2AD46025008CEF1A /* XCRemoteSwiftPackageReference "SwiftLintPlugin" */,
 				ABC3DF3F2AD46068008CEF1A /* XCRemoteSwiftPackageReference "Alamofire" */,
 				ABC3DF422AD46097008CEF1A /* XCRemoteSwiftPackageReference "Moya" */,
+				F1E653DF2AD8CE2200274A34 /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = ABC3DF1F2AD45E8B008CEF1A /* Products */;
 			projectDirPath = "";
@@ -161,10 +199,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1E653E42AD8E0F200274A34 /* Fonts.swift in Sources */,
 				ABC3DF262AD45E8B008CEF1A /* ViewController.swift in Sources */,
+				F1E653EC2ADD539D00274A34 /* Metrics.swift in Sources */,
 				ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */,
 				ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */,
 				ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */,
+				F1E653E62AD8E3A900274A34 /* Palette.swift in Sources */,
+				F1E653E82AD8E73F00274A34 /* PaddingLabel.swift in Sources */,
+				F1E653EA2AD8F63D00274A34 /* Images.swift in Sources */,
+				F1E653DE2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift in Sources */,
 				ABC3DF2C2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +467,14 @@
 				minimumVersion = 15.0.0;
 			};
 		};
+		F1E653DF2AD8CE2200274A34 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -445,6 +497,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ABC3DF422AD46097008CEF1A /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = CombineMoya;
+		};
+		F1E653E02AD8CE2200274A34 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F1E653DF2AD8CE2200274A34 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
 		};
 /* End XCSwiftPackageProductDependency section */
 
