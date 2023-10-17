@@ -221,7 +221,7 @@ class UserInfoInputVC: UIViewController {
         return textfield
     }()
     
-    // MARK: Log in Button 
+    // MARK: Log in Button
     private let loginButton = {
         let button = UIButton()
         button.customConfigure(title: " Apple로 로그인")

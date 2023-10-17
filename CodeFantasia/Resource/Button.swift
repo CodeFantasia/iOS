@@ -13,7 +13,7 @@ extension UIButton {
         
         self.layer.masksToBounds = false
         self.layer.cornerRadius = 16.0
-        self.backgroundColor = UIColor(hexCode: "FFE45E")
+        self.backgroundColor = UIColor.buttonPrimaryColor
         
         self.layer.shadowColor = UIColor.black.cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 4)
