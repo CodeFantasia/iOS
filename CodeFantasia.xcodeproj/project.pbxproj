@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3191DEDE2AD8F9B30059AACB /* TabbarM.swift */; };
+		3191DEE12AD8F9DF0059AACB /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3191DEE02AD8F9DF0059AACB /* ProfileVC.swift */; };
+		3191DEE32AD8FA060059AACB /* MyProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3191DEE22AD8FA060059AACB /* MyProjectVC.swift */; };
+		31C0371E2AD900A800142EC5 /* ProjectBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C0371D2AD900A800142EC5 /* ProjectBoardVC.swift */; };
+		31C037202AD900E300142EC5 /* ProjectBoardTableviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C0371F2AD900E300142EC5 /* ProjectBoardTableviewCell.swift */; };
 		ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */; };
 		ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */; };
 		ABC3DF262AD45E8B008CEF1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF252AD45E8B008CEF1A /* ViewController.swift */; };
@@ -21,6 +26,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3191DEDE2AD8F9B30059AACB /* TabbarM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarM.swift; sourceTree = "<group>"; };
+		3191DEE02AD8F9DF0059AACB /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		3191DEE22AD8FA060059AACB /* MyProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectVC.swift; sourceTree = "<group>"; };
+		31C0371D2AD900A800142EC5 /* ProjectBoardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectBoardVC.swift; sourceTree = "<group>"; };
+		31C0371F2AD900E300142EC5 /* ProjectBoardTableviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectBoardTableviewCell.swift; sourceTree = "<group>"; };
 		ABC3DF1E2AD45E8B008CEF1A /* CodeFantasia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeFantasia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +80,11 @@
 				ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */,
 				ABC3DF252AD45E8B008CEF1A /* ViewController.swift */,
 				ABC3DF452AD4617C008CEF1A /* MainVC.swift */,
+				31C0371D2AD900A800142EC5 /* ProjectBoardVC.swift */,
+				31C0371F2AD900E300142EC5 /* ProjectBoardTableviewCell.swift */,
+				3191DEE02AD8F9DF0059AACB /* ProfileVC.swift */,
+				3191DEE22AD8FA060059AACB /* MyProjectVC.swift */,
+				3191DEDE2AD8F9B30059AACB /* TabbarM.swift */,
 				ABC3DF2D2AD45E8C008CEF1A /* Assets.xcassets */,
 				ABC3DF2F2AD45E8C008CEF1A /* LaunchScreen.storyboard */,
 				ABC3DF322AD45E8C008CEF1A /* Info.plist */,
@@ -163,9 +178,14 @@
 			files = (
 				ABC3DF262AD45E8B008CEF1A /* ViewController.swift in Sources */,
 				ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */,
+				31C0371E2AD900A800142EC5 /* ProjectBoardVC.swift in Sources */,
+				3191DEE32AD8FA060059AACB /* MyProjectVC.swift in Sources */,
+				31C037202AD900E300142EC5 /* ProjectBoardTableviewCell.swift in Sources */,
+				3191DEE12AD8F9DF0059AACB /* ProfileVC.swift in Sources */,
 				ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */,
 				ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */,
 				ABC3DF2C2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld in Sources */,
+				3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
