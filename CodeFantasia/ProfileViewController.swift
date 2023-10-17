@@ -18,8 +18,8 @@ class ProfileViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "내 프로필"
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
         return label
     }()
 
@@ -158,7 +158,7 @@ class ProfileViewController: UIViewController {
 
     private let editButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .blue
+        button.backgroundColor = .black
         button.setTitle("프로필 수정", for: .normal)
         button.layer.cornerRadius = 8
         return button
@@ -255,24 +255,4 @@ extension ProfileViewController {
         }
     }
 }
-
-//화면별 Title 폰트 크기 -> Bold, 30
-//소제목 폰트 크기 -> semi bold, 20
-//디테일 폰트 크기 -> regular, 16
-//
-//뷰들 전부 ->  SafeLayoutArea
-//왼쪽에서 20 오른쪽에서 20
-//
-//Title -> 위에서부터 10
-//뷰들 간 간격 16
-//
-//extension 으로 빼놔서 통일감 줍시다
-//뷰 네모네모 radius -> 10
-//뷰 네모네모 그림자 주기
-//
-//얘도 extension으로 custom 버튼 만듭시다
-//버튼들 높이 50, 가로는 Width 꽉 채워서 왼오 여백 20
-//버튼 안 글씨 크기 20, regular  프로필 아이콘: 50*50
-//기술 및 언어 아이콘 25*25  버튼 아이콘 20*20
-//
 
