@@ -5,43 +5,34 @@
 //  Created by Hyunwoo Lee on 2023/10/17.
 import UIKit
 import SnapKit
+import Then
 
 class MyProjectTableViewCell: UITableViewCell {
     
     static let identifier = "CustomCell"
     
-    let projectImage: UIImageView = {
-        let image = UIImageView()
-        image.layer.cornerRadius = 10
-        return image
-    }()
+    let projectImage = UIImageView().then {
+        $0.layer.cornerRadius = 10
+    }
     
-    let projectTitle: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        return label
-    }()
+    let projectTitle = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+    }
     
-    let projectSubtitle: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 2
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        return label
-    }()
+    let projectSubtitle = UILabel().then {
+        $0.numberOfLines = 2
+        $0.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+    }
     
-    let dateView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 10
-        return view
-    }()
+    let dateView = UIView().then {
+        $0.layer.cornerRadius = 10
+    }
     
-    let dateLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .white
-        return label
-    }()
+    let dateLabel = UILabel().then {
+        $0.textAlignment = .center
+        $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        $0.textColor = .white
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

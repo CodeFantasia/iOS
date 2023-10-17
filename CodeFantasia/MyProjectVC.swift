@@ -6,47 +6,38 @@
 
 import UIKit
 import SnapKit
+import Then
 
 class MyProjectVC: UITableViewController {
+    
+    let barTitle = UILabel().then {
+        $0.text = "내 프로젝트"
+        $0.font = UIFont.boldSystemFont(ofSize: 30)
+        $0.textColor = .black
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationbarTitle()
         
         tableView.register(MyProjectTableViewCell.self, forCellReuseIdentifier: MyProjectTableViewCell.identifier)
-        
         tableView.delegate = self
         tableView.dataSource = self
     }
 }
 
 extension MyProjectVC {
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 270
     }
     
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let header = view as? UITableViewHeaderFooterView else { return }
-               header.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 30)
-               header.textLabel?.font = UIFont.boldSystemFont(ofSize: 30)
-               header.textLabel?.textColor = UIColor.black
-               header.textLabel?.sizeToFit()
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "내 프로젝트"
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MyProjectTableViewCell.identifier, for: indexPath) as! MyProjectTableViewCell
-        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProjectTableViewCell.identifier, for: indexPath) as? MyProjectTableViewCell else { return UITableViewCell() }
         cell.projectTitle.text = "즐코팟 모집중"
         cell.projectSubtitle.text = """
                                     나의 첫 사이드 프로젝트 여기서 시작해보
@@ -58,5 +49,11 @@ extension MyProjectVC {
    
         return cell
     }
+    
+    func navigationbarTitle() {
+        let barTitleItem = UIBarButtonItem(customView: barTitle)
+        navigationItem.leftBarButtonItem = barTitleItem
+    }
 }
+
 

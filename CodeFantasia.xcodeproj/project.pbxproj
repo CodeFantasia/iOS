@@ -103,13 +103,13 @@
 				31C0371D2AD900A800142EC5 /* ProjectBoardVC.swift */,
 				31C0371F2AD900E300142EC5 /* ProjectBoardTableviewCell.swift */,
 				3191DEE02AD8F9DF0059AACB /* ProfileVC.swift */,
-				3191DEE22AD8FA060059AACB /* MyProjectVC.swift */,
 				3191DEDE2AD8F9B30059AACB /* TabbarM.swift */,
 				ABC3DF2D2AD45E8C008CEF1A /* Assets.xcassets */,
 				ABC3DF2F2AD45E8C008CEF1A /* LaunchScreen.storyboard */,
 				ABC3DF322AD45E8C008CEF1A /* Info.plist */,
 				ABC3DF2A2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld */,
 				F013B52B2AD8290F00CB777A /* ProfileViewController.swift */,
+				3191DEE22AD8FA060059AACB /* MyProjectVC.swift */,
 				F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */,
 			);
 			path = CodeFantasia;
