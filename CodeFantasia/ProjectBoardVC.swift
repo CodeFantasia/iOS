@@ -17,8 +17,8 @@ class ProjectBoardVC: UIViewController, UITableViewDataSource, UITableViewDelega
     }()
     
     let mockData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String)] = [
-        (UIImage(named: "digimon"), "Project A", "This is the detail for Project A,This is the detail for Project A, This is the detail for Project A,This is the detail for Project A, This is the detail for Project A,This is the detail for Project A", [IconModel(image: UIImage(named: "swift") ?? UIImage()), IconModel(image: UIImage(named: "javascript") ?? UIImage())], "모집 중"),
-        (UIImage(named: "pokemon"), "Project B", "This is the detail for Project B", [IconModel(image: UIImage(named: "python") ?? UIImage())], "모집 완료"),
+        (UIImage(named: "digimon"), "즐코팟 모집중!", "나의 첫 사이드 프로젝트 여기서 시작해보자!", [IconModel(image: UIImage(named: "swift") ?? UIImage()), IconModel(image: UIImage(named: "javascript") ?? UIImage())], "모집 중"),
+        (UIImage(named: "pokemon"), "포켓몬 마스터 모집중!", "피카츄 라이츄 파이리 꼬북이 버터풀 야도란 피존투 또가스", [IconModel(image: UIImage(named: "python") ?? UIImage())], "모집 완료"),
     ]
 
 

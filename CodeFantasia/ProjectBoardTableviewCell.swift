@@ -27,7 +27,7 @@ class ProjectBoardTableviewCell: UITableViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = UIColor(red: 125/255.0, green: 215/255.0, blue: 184/255.0, alpha: 1.0)
+        label.textColor = .black
         return label
     }()
     
@@ -73,7 +73,7 @@ class ProjectBoardTableviewCell: UITableViewCell {
         self.icons = icons
         statusLabel.text = status
         if status == "모집 중" {
-            statusLabel.backgroundColor = UIColor(red: 240/255.0, green: 196/255.0, blue: 55/255.0, alpha: 1.0)
+            statusLabel.backgroundColor = .black
         } else {
             statusLabel.backgroundColor = .lightGray
         }
@@ -149,7 +149,10 @@ class ProjectBoardTableviewCell: UITableViewCell {
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         contentView.layer.shadowOpacity = 0.5
         contentView.layer.shadowRadius = 4
+        
     }
+    
+
     
     private func updateIconLayout() {
         for subview in contentView.subviews {
