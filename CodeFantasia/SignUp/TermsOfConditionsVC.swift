@@ -4,7 +4,6 @@ import Foundation
 
 class TermsOfConditionsVC: UIViewController {
     
-    
     private let termsOfConditionsString = """
 Yeah, I'm out that Brooklyn, now I'm down in Tribeca
 Right next to De Niro, but I'll be hood forever
