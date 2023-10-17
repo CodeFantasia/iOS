@@ -25,11 +25,11 @@ extension MyProjectVC {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 2
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 270
     }
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -54,7 +54,7 @@ extension MyProjectVC {
                                     """
         cell.dateLabel.text = "D-17"
         cell.projectImage.backgroundColor = .gray
-        cell.dateView.backgroundColor = .blue
+        cell.dateView.backgroundColor = .black
    
         return cell
     }
