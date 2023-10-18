@@ -166,19 +166,19 @@ extension ProjectDetailNoticeBoardViewController {
         }
 
         techStackContextView.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(32)
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
         }
         recruitmentStatusContextLabel.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(32)
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
         }
         projectIntroduceContextLabel.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(32)
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
         }
         projectPeriodContextLabel.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(32)
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
         }
         projectMeetingTypeContextLabel.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(32)
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
         }
         
         scrollView.snp.makeConstraints { make in

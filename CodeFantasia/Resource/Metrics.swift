@@ -10,4 +10,5 @@ import Foundation
 extension CGFloat {
     static let cornerRadius: CGFloat = 8
     static let spacing: CGFloat = 10
+    static let minimumFormHeight: CGFloat = 32
 }
