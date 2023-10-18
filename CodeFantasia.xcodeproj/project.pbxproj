@@ -98,23 +98,39 @@
 			children = (
 				F1E653E22AD8E0D700274A34 /* Resource */,
 				F1E653DC2AD8CD8F00274A34 /* ProjectDetailNoticeBoard */,
-				ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */,
-				ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */,
-				ABC3DF252AD45E8B008CEF1A /* ViewController.swift */,
-				ABC3DF452AD4617C008CEF1A /* MainVC.swift */,
+				F070B73A2ADFA2A500B13419 /* MyProject */,
+				F070B73B2ADFA2C900B13419 /* Profile */,
 				31C0371D2AD900A800142EC5 /* ProjectBoardVC.swift */,
 				31C0371F2AD900E300142EC5 /* ProjectBoardTableviewCell.swift */,
 				3191DEE02AD8F9DF0059AACB /* ProfileVC.swift */,
 				3191DEDE2AD8F9B30059AACB /* TabbarM.swift */,
+				ABC3DF452AD4617C008CEF1A /* MainVC.swift */,
+				ABC3DF252AD45E8B008CEF1A /* ViewController.swift */,
 				ABC3DF2D2AD45E8C008CEF1A /* Assets.xcassets */,
 				ABC3DF2F2AD45E8C008CEF1A /* LaunchScreen.storyboard */,
 				ABC3DF322AD45E8C008CEF1A /* Info.plist */,
 				ABC3DF2A2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld */,
-				F013B52B2AD8290F00CB777A /* ProfileViewController.swift */,
-				3191DEE22AD8FA060059AACB /* MyProjectVC.swift */,
-				F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */,
+				ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */,
+				ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */,
 			);
 			path = CodeFantasia;
+			sourceTree = "<group>";
+		};
+		F070B73A2ADFA2A500B13419 /* MyProject */ = {
+			isa = PBXGroup;
+			children = (
+				F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */,
+				3191DEE22AD8FA060059AACB /* MyProjectVC.swift */,
+			);
+			path = MyProject;
+			sourceTree = "<group>";
+		};
+		F070B73B2ADFA2C900B13419 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F013B52B2AD8290F00CB777A /* ProfileViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		F1E653DC2AD8CD8F00274A34 /* ProjectDetailNoticeBoard */ = {
