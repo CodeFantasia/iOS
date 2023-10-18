@@ -6,65 +6,144 @@
 //
 import UIKit
 import SnapKit
+import Then
 
 class ProfileViewController: UIViewController {
 
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.alwaysBounceVertical = false
-        return scrollView
-    }()
+    private lazy var scrollView = UIScrollView()
+    
+    private lazy var barTitle = UILabel().then {
+        $0.text = "내 프로필"
+        $0.font = UIFont.title
+        $0.textColor = .black
+    }
 
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "내 프로필"
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
-        return label
-    }()
+    private lazy var produceView = UIView().then {
+        $0.layer.cornerRadius = .cornerRadius
+        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
+        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowRadius = 4 / UIScreen.main.scale
+        $0.layer.masksToBounds = false
+        $0.backgroundColor = .white
+    }
 
-    private let produceView: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 8
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowRadius = 8
-        view.layer.shadowOffset = CGSize(width: 0.5, height: 0.5)
-        view.layer.shadowColor = UIColor.black.cgColor
-        view.backgroundColor = .white
-        return view
-    }()
+    private lazy var profileImage = UIImageView().then {
+        $0.layer.cornerRadius = 50
+        $0.backgroundColor = .gray
+    }
 
-    private let profileImage: UIImageView = {
-        let image = UIImageView()
-        image.layer.cornerRadius = 50
-        image.backgroundColor = .gray
-        return image
-    }()
+    private lazy var nicknameLabel = UILabel().then {
+        $0.text = "닉네임"
+        $0.font = UIFont.subTitle
+    }
 
-    private let nicknameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "닉네임"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        return label
-    }()
+    private lazy var produceLabel = UILabel().then {
+        $0.text = "내 소개"
+        $0.font = UIFont.subTitle
+    }
 
-    private let produceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "내 소개"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        return label
-    }()
+    private lazy var produceContent = UILabel().then {
+        $0.numberOfLines = 3
+        $0.font = UIFont.body
+    }
+    
+    private lazy var infoLabel = UILabel().then {
+        $0.text = "나의 스펙 정보"
+        $0.font = UIFont.subTitle
+    }
 
-    private let produceContent: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 3
-        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        return label
-    }()
+    private lazy var separatorView1 = UIView().then {
+        $0.backgroundColor = UIColor.black
+    }
+    private lazy var separatorView2 = UIView().then {
+        $0.backgroundColor = UIColor.systemGray
+    }
+    private lazy var separatorView3 = UIView().then {
+        $0.backgroundColor = UIColor.systemGray
+    }
+    private lazy var separatorView4 = UIView().then {
+        $0.backgroundColor = UIColor.black
+    }
+    
+    private lazy var techTitleLabel = UILabel().then {
+        $0.text = "주요 사용 언어 및 기술 스택"
+        $0.font = UIFont.body
+    }
 
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [
-            titleLabel,
+    private lazy var techLabel = UILabel().then {
+        $0.text = "Swift"
+        $0.font = UIFont.systemFont(ofSize: .content)
+    }
+
+    private lazy var urlTitleLabel = UILabel().then {
+        $0.text = "나의 포트폴리오"
+        $0.font = UIFont.body
+    }
+
+    private lazy var urlLabel = UILabel().then {
+        $0.text = "www.github.com"
+        $0.font = UIFont.systemFont(ofSize: .content)
+    }
+
+    private lazy var interestTitleLabel = UILabel().then {
+        $0.text = "나의 관심 분야"
+        $0.font = UIFont.body
+    }
+
+    private lazy var interestLabel = UILabel().then {
+        $0.text = "앱개발"
+        $0.font = UIFont.systemFont(ofSize: .content)
+    }
+
+    private lazy var editButton = UIHoverButton().then {
+        $0.backgroundColor = UIColor.buttonPrimaryColor
+        $0.setTitle("프로필 수정", for: .normal)
+        $0.titleLabel?.font = UIFont.buttonTitle
+        $0.layer.cornerRadius = .cornerRadius
+        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
+        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowRadius = 4 / UIScreen.main.scale
+        $0.layer.masksToBounds = false
+    }
+
+    private lazy var logoutButton =  UIHoverButton().then {
+        $0.backgroundColor = UIColor.buttonSecondaryColor
+        $0.setTitle("로그아웃", for: .normal)
+        $0.titleLabel?.font = UIFont.buttonTitle
+        $0.layer.cornerRadius = .cornerRadius
+        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
+        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowRadius = 4 / UIScreen.main.scale
+        $0.layer.masksToBounds = false
+    }
+    
+    private lazy var stackView: UIStackView = UIStackView().then {
+        $0.addArrangedSubviews(addArrangedSubviews())
+        $0.layoutMargins = UIEdgeInsets(top: .spacing, left: 20, bottom: 20, right: 20)
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.axis = .vertical
+        $0.spacing = .spacing
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor.backgroundColor
+        navigationbarTitle()
+        setupLayout()
+    }
+}
+extension ProfileViewController {
+
+    private func navigationbarTitle() {
+        let barTitleItem = UIBarButtonItem(customView: barTitle)
+        navigationItem.leftBarButtonItem = barTitleItem
+    }
+    
+    private func addArrangedSubviews() -> [UIView] {
+        let components: [UIView] = [
             produceView,
             infoLabel,
             separatorView1,
@@ -79,106 +158,10 @@ class ProfileViewController: UIViewController {
             separatorView4,
             editButton,
             logoutButton
-        ])
-        stackView.alignment = .leading
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        return stackView
-    }()
-
-    private let infoLabel: UILabel = {
-        let label = UILabel()
-        label.text = "나의 스펙 정보"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
-        return label
-    }()
-
-    private let separatorView1: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.black
-        return view
-    }()
-    private let separatorView2: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.systemGray
-        return view
-    }()
-    private let separatorView3: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.systemGray
-        return view
-    }()
-    private let separatorView4: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor.black
-        return view
-    }()
-    
-    private let techTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "주요 사용 언어 및 기술 스택"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        return label
-    }()
-
-    private let techLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Swift"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        return label
-    }()
-
-    private let urlTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "나의 포트폴리오"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        return label
-    }()
-
-    private let urlLabel: UILabel = {
-        let label = UILabel()
-        label.text = "www.github.com"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        return label
-    }()
-
-    private let interestTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "나의 관심 분야"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        return label
-    }()
-
-    private let interestLabel: UILabel = {
-        let label = UILabel()
-        label.text = "앱개발"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        return label
-    }()
-
-    private let editButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .black
-        button.setTitle("프로필 수정", for: .normal)
-        button.layer.cornerRadius = 8
-        return button
-    }()
-
-    private let logoutButton:  UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .gray
-        button.setTitle("로그아웃", for: .normal)
-        button.layer.cornerRadius = 8
-        return button
-    }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setupLayout()
+        ]
+        return components
     }
-}
-extension ProfileViewController {
+    
     private func setupLayout() {
 
         view.addSubview(scrollView)
@@ -188,25 +171,12 @@ extension ProfileViewController {
         produceView.addSubview(produceLabel)
         produceView.addSubview(produceContent)
 
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        ])
-
-        stackView.snp.makeConstraints {
-            $0.leading.equalTo(scrollView.snp.leading)
-            $0.trailing.equalTo(scrollView.snp.trailing)
-            $0.top.equalTo(scrollView)
-            $0.width.equalTo(view)
-            $0.bottom.equalTo(scrollView.snp.bottom)
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
-
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(stackView.snp.top).offset(10)
-            $0.leading.equalTo(stackView.snp.leading).offset(20)
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalToSuperview()
         }
         produceView.snp.makeConstraints {
             $0.leading.equalTo(stackView.snp.leading).inset(20)
@@ -252,8 +222,12 @@ extension ProfileViewController {
         }
         logoutButton.snp.makeConstraints {
             $0.leading.trailing.equalTo(separatorView1)
-            $0.bottom.equalTo(scrollView.snp.bottom).inset(20)
         }
+    }
+}
+extension UIStackView {
+    func addArrangedSubviews(_ views: [UIView]) {
+        views.forEach { addArrangedSubview($0) }
     }
 }
 

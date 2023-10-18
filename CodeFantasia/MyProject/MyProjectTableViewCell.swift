@@ -12,25 +12,30 @@ class MyProjectTableViewCell: UITableViewCell {
     static let identifier = "CustomCell"
     
     let projectImage = UIImageView().then {
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = .cornerRadius
     }
     
     let projectTitle = UILabel().then {
-        $0.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        $0.font = UIFont.subTitle
     }
     
     let projectSubtitle = UILabel().then {
         $0.numberOfLines = 2
-        $0.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        $0.font = UIFont.body
     }
     
     let dateView = UIView().then {
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = .cornerRadius
+        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
+        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowRadius = 4 / UIScreen.main.scale
+        $0.layer.masksToBounds = false
     }
     
     let dateLabel = UILabel().then {
         $0.textAlignment = .center
-        $0.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        $0.font = UIFont.systemFont(ofSize: .content, weight: .regular)
         $0.textColor = .white
     }
     
@@ -42,21 +47,23 @@ class MyProjectTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+ 
+        contentView.layer.cornerRadius = .cornerRadius
+        contentView.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
+        contentView.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+        contentView.layer.shadowOpacity = 0.25
+        contentView.layer.shadowRadius = 4 / UIScreen.main.scale
+        contentView.layer.masksToBounds = false
         contentView.backgroundColor = .white
-        contentView.layer.cornerRadius = 8
-        contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        contentView.layer.shadowOpacity = 0.5
-        contentView.layer.shadowRadius = 4
-        let inset: CGFloat = 10
-        contentView.frame = CGRect(x: inset, y: inset, width: bounds.width - (2 * inset), height: bounds.height - (2 * inset))
+        contentView.frame = CGRect(x: .spacing, y: .spacing, width: bounds.width - (2 * .spacing), height: bounds.height - (2 * .spacing))
     }
 }
 
 extension MyProjectTableViewCell {
+
     func setupCellLayout() {
         
         contentView.addSubview(projectImage)
@@ -66,17 +73,18 @@ extension MyProjectTableViewCell {
         dateView.addSubview(dateLabel)
         
         projectImage.snp.makeConstraints {
-            $0.leading.top.equalTo(contentView).inset(16)
+            $0.leading.top.equalTo(contentView).offset(16)
             $0.width.height.equalTo(150)
         }
         projectTitle.snp.makeConstraints {
             $0.leading.equalTo(projectImage)
+            $0.height.equalTo(20)
             $0.top.equalTo(projectImage.snp.bottom).offset(16)
         }
         projectSubtitle.snp.makeConstraints {
             $0.leading.equalTo(projectImage)
-            $0.top.equalTo(projectTitle.snp.bottom).offset(8)
-            $0.bottom.equalTo(contentView).inset(20)
+            $0.top.equalTo(projectTitle.snp.bottom).offset(16)
+            $0.bottom.equalTo(contentView.snp.bottom).inset(16)
         }
         dateView.snp.makeConstraints {
             $0.top.trailing.equalTo(contentView).inset(16)
