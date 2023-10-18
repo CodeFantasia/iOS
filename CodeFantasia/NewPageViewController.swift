@@ -208,10 +208,8 @@ class NewPageViewController: UIViewController {
         view.addSubview(thumbnailTextView)
         view.addSubview(platformLabel)
         view.addSubview(platformTextField)
-        // ... 다른 요소들 추가
         view.addSubview(completeButton)
 
-        // 나머지 코드는 동일...
     }
 }
 
