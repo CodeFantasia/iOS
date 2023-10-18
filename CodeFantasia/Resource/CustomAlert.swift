@@ -7,7 +7,7 @@
 import UIKit
 import SnapKit
 
-class CustomAlert: UIView {
+class CustomAlertView: UIView {
     
     private let titleLabel = UILabel()
     private let messageLabel = UILabel()
@@ -32,7 +32,7 @@ class CustomAlert: UIView {
     }
 }
 
-extension CustomAlert {
+extension CustomAlertView {
     func totalSetup(title: String, message: String, buttonTitle: String) {
         setupCustomAlertView()
         setupTitleLabel(title: title)
@@ -75,10 +75,6 @@ extension CustomAlert {
         addSubview(titleLabel)
         addSubview(messageLabel)
         addSubview(actionButton)
-        self.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
         
         self.snp.makeConstraints {
             $0.width.equalTo(320)
