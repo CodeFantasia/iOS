@@ -90,7 +90,7 @@ New York (yeah), New York (uh)
     
     private let profileRegisterButton = {
         let button = UIButton()
-        button.customConfigure(title: "동의하고 프로필 등록하러가기")
+        button.primaryColorConfigure(title: "동의하고 프로필 등록하러가기")
         
         return button
     }()
@@ -101,7 +101,7 @@ New York (yeah), New York (uh)
         let label = UILabel()
         label.text = "약관에 동의합니다."
         label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: CGFloat.subtitle, weight: .light)
+        label.font = UIFont.systemFont(ofSize: CGFloat.subTitle, weight: .light)
         
         let button = UIButton()
         button.setImage(UIImage(systemName: "circle"), for: .normal)

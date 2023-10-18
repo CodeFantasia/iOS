@@ -19,7 +19,7 @@ class LoginVC: UIViewController {
         let label = UILabel()
         label.text = "애플 계정으로 가입하고 이용하세요."
         label.textColor = .darkGray
-        label.font = UIFont.systemFont(ofSize: CGFloat.subtitle)
+        label.font = UIFont.systemFont(ofSize: CGFloat.subTitle)
         
         let button = UIButton()
         button.setTitle("회원가입", for: .normal)

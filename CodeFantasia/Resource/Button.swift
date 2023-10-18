@@ -4,7 +4,7 @@ import Foundation
 
 extension UIButton {
 
-    func customConfigure(title: String) {
+    func primaryColorConfigure(title: String) {
         self.setTitle(title, for: .normal)
         self.configuration?.titleAlignment = .center
         

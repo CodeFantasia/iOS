@@ -224,7 +224,7 @@ class UserInfoInputVC: UIViewController {
     // MARK: Log in Button
     private let loginButton = {
         let button = UIButton()
-        button.customConfigure(title: " Apple로 로그인")
+        button.primaryColorConfigure(title: " Apple로 로그인")
         
         return button
     }()
