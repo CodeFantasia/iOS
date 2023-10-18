@@ -20,6 +20,7 @@ class MyProjectVC: UITableViewController {
         super.viewDidLoad()
         navigationbarTitle()
         
+        tableView.separatorStyle = .none
         tableView.register(MyProjectTableViewCell.self, forCellReuseIdentifier: MyProjectTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
