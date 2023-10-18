@@ -11,7 +11,6 @@
 		6BBF70772ADFB72100F58080 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70762ADFB72100F58080 /* ProfileViewController.swift */; };
 		6BBF707A2ADFB73700F58080 /* ProjectBoardTableviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */; };
 		6BBF707B2ADFB73700F58080 /* ProjectBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70792ADFB73700F58080 /* ProjectBoardVC.swift */; };
-		6BBF707E2ADFB76000F58080 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF707C2ADFB76000F58080 /* ProfileVC.swift */; };
 		6BBF707F2ADFB76000F58080 /* MyProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF707D2ADFB76000F58080 /* MyProjectVC.swift */; };
 		6BC007BE2ADD0BA5005E544F /* NewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC007BD2ADD0BA5005E544F /* NewPageViewController.swift */; };
 		ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */; };
@@ -41,8 +40,7 @@
 		6BBF70762ADFB72100F58080 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectBoardTableviewCell.swift; sourceTree = "<group>"; };
 		6BBF70792ADFB73700F58080 /* ProjectBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectBoardVC.swift; sourceTree = "<group>"; };
-		6BBF707C2ADFB76000F58080 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
-		6BBF707D2ADFB76000F58080 /* MyProjectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyProjectVC.swift; sourceTree = "<group>"; };
+		6BBF707D2ADFB76000F58080 /* MyProjectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyProjectVC.swift; path = "../To be deleted/MyProjectVC.swift"; sourceTree = "<group>"; };
 		6BC007BD2ADD0BA5005E544F /* NewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageViewController.swift; sourceTree = "<group>"; };
 		ABC3DF1E2AD45E8B008CEF1A /* CodeFantasia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeFantasia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,15 +86,6 @@
 			path = ProjectBoard;
 			sourceTree = "<group>";
 		};
-		31E640422ADE6FD5009647DA /* To be deleted */ = {
-			isa = PBXGroup;
-			children = (
-				6BBF707D2ADFB76000F58080 /* MyProjectVC.swift */,
-				6BBF707C2ADFB76000F58080 /* ProfileVC.swift */,
-			);
-			path = "To be deleted";
-			sourceTree = "<group>";
-		};
 		ABC3DF152AD45E8B008CEF1A = {
 			isa = PBXGroup;
 			children = (
@@ -116,7 +105,6 @@
 		ABC3DF202AD45E8B008CEF1A /* CodeFantasia */ = {
 			isa = PBXGroup;
 			children = (
-				31E640422ADE6FD5009647DA /* To be deleted */,
 				31E640412ADE6F88009647DA /* ProjectBoard */,
 				F1E653E22AD8E0D700274A34 /* Resource */,
 				F1E653DC2AD8CD8F00274A34 /* ProjectDetailNoticeBoard */,
@@ -139,6 +127,7 @@
 		F070B73A2ADFA2A500B13419 /* MyProject */ = {
 			isa = PBXGroup;
 			children = (
+				6BBF707D2ADFB76000F58080 /* MyProjectVC.swift */,
 				F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */,
 			);
 			path = MyProject;
@@ -266,7 +255,6 @@
 				ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */,
 				6BC007BE2ADD0BA5005E544F /* NewPageViewController.swift in Sources */,
 				F01AD1BC2ADF8A1800F0E0B1 /* CustomAlert.swift in Sources */,
-				6BBF707E2ADFB76000F58080 /* ProfileVC.swift in Sources */,
 				ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */,
 				ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */,
 				F1E653E62AD8E3A900274A34 /* Palette.swift in Sources */,
