@@ -121,7 +121,6 @@ class ProfileViewController: UIViewController {
     }
     
     private lazy var stackView: UIStackView = UIStackView().then {
-        $0.addArrangedSubviews(addArrangedSubviews())
         $0.layoutMargins = UIEdgeInsets(top: .spacing, left: 20, bottom: 20, right: 20)
         $0.isLayoutMarginsRelativeArrangement = true
         $0.axis = .vertical
@@ -142,26 +141,6 @@ extension ProfileViewController {
         navigationItem.leftBarButtonItem = barTitleItem
     }
     
-    private func addArrangedSubviews() -> [UIView] {
-        let components: [UIView] = [
-            produceView,
-            infoLabel,
-            separatorView1,
-            techTitleLabel,
-            techLabel,
-            separatorView2,
-            urlTitleLabel,
-            urlLabel,
-            separatorView3,
-            interestTitleLabel,
-            interestLabel,
-            separatorView4,
-            editButton,
-            logoutButton
-        ]
-        return components
-    }
-    
     private func setupLayout() {
 
         view.addSubview(scrollView)
@@ -170,6 +149,23 @@ extension ProfileViewController {
         produceView.addSubview(nicknameLabel)
         produceView.addSubview(produceLabel)
         produceView.addSubview(produceContent)
+        
+        [ produceView,
+          infoLabel,
+          separatorView1,
+          techTitleLabel,
+          techLabel,
+          separatorView2,
+          urlTitleLabel,
+          urlLabel,
+          separatorView3,
+          interestTitleLabel,
+          interestLabel,
+          separatorView4,
+          editButton,
+          logoutButton].forEach {
+            stackView.addArrangedSubview($0)
+        }
 
         scrollView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
@@ -225,9 +221,3 @@ extension ProfileViewController {
         }
     }
 }
-extension UIStackView {
-    func addArrangedSubviews(_ views: [UIView]) {
-        views.forEach { addArrangedSubview($0) }
-    }
-}
-
