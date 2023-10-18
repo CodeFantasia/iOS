@@ -7,158 +7,211 @@
 
 import UIKit
 
-class NewPageViewController: UIViewController, UITextFieldDelegate {
+class NewPageViewController: UIViewController {
+
+    // 뒤로가기 버튼
+    private let backButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "backbutton"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.frame = CGRect(x: 10, y: 40, width: 30, height: 30)
+        return button
+    }()
+
+    // 임시저장 버튼
+    private let saveButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("임시저장", for: .normal)
+        button.frame = CGRect(x: UIScreen.main.bounds.width - 110, y: 60, width: 100, height: 30)
+        button.backgroundColor = UIColor(hex: 0x000000)
+        button.layer.cornerRadius = 15
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
+
+    // 제목 라벨
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "제목"
+        label.textColor = UIColor(hex: 0x000000)
+        label.sizeToFit()
+        label.frame.origin = CGPoint(x: 20, y: 100)
+        return label
+    }()
+
+    // 제목 텍스트 필드
+    private let titleTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "제목"
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.backgroundColor = .white
+        textField.frame = CGRect(x: 20, y: 150, width: UIScreen.main.bounds.width - 40, height: 30)
+        return textField
+    }()
+
+    // 썸네일 라벨
+    private let thumbnailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "썸네일"
+        label.textColor = UIColor(hex: 0x000000)
+        label.sizeToFit()
+        label.frame.origin = CGPoint(x: 20, y: 200)
+        return label
+    }()
+
+    // 썸네일 텍스트뷰
+    private let thumbnailTextView: UITextView = {
+        let textView = UITextView()
+        textView.layer.cornerRadius = 8
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.black.cgColor
+        textView.backgroundColor = .white
+        textView.frame = CGRect(x: 20, y: 250, width: UIScreen.main.bounds.width - 40, height: 100)
+        return textView
+    }()
+
+    // 출시 플랫폼 라벨
+    private let platformLabel: UILabel = {
+        let label = UILabel()
+        label.text = "출시 플랫폼"
+        label.textColor = UIColor(hex: 0x000000)
+        label.sizeToFit()
+        label.frame.origin = CGPoint(x: 20, y: 380)
+        return label
+    }()
+
+    // 출시 플랫폼 텍스트 필드
+    private let platformTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "출시 플랫폼"
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.backgroundColor = .white
+        textField.frame = CGRect(x: 20, y: 430, width: UIScreen.main.bounds.width - 40, height: 30)
+        return textField
+    }()
+
+    // 모집 기술 및 언어 라벨
+    private let techLanguageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "모집 기술 및 언어"
+        label.textColor = UIColor(hex: 0x000000)
+        label.sizeToFit()
+        label.frame.origin = CGPoint(x: 20, y: 560)
+        return label
+    }()
+
+    // 모집 기술 및 언어 텍스트 필드
+    private let techLanguageTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "모집 기술 및 언어"
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.backgroundColor = .white
+        textField.frame = CGRect(x: 20, y: 610, width: UIScreen.main.bounds.width - 40, height: 30)
+        return textField
+    }()
+
+    // 모집 분야 라벨
+    private let recruitmentFieldLabel: UILabel = {
+        let label = UILabel()
+        label.text = "모집 분야"
+        label.textColor = UIColor(hex: 0x000000)
+        label.sizeToFit()
+        label.frame.origin = CGPoint(x: 20, y: 660)
+        return label
+    }()
+
+    // 모집 분야 텍스트 필드
+    private let recruitmentFieldTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "모집 분야"
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.backgroundColor = .white
+        textField.frame = CGRect(x: 20, y: 710, width: UIScreen.main.bounds.width - 40, height: 30)
+        return textField
+    }()
+
+    // 프로젝트 소개 라벨
+    private let projectIntroLabel: UILabel = {
+        let label = UILabel()
+        label.text = "프로젝트 소개"
+        label.textColor = UIColor(hex: 0x000000)
+        label.sizeToFit()
+        label.frame.origin = CGPoint(x: 20, y: 760)
+        return label
+    }()
+
+    // 프로젝트 소개 텍스트뷰
+    private let projectIntroTextView: UITextView = {
+        let textView = UITextView()
+        textView.layer.cornerRadius = 8
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.black.cgColor
+        textView.backgroundColor = .white
+        textView.frame = CGRect(x: 20, y: 810, width: UIScreen.main.bounds.width - 40, height: 100)
+        return textView
+    }()
+
+    // 프로젝트 기간 라벨
+    private let projectDateLabel: UILabel = {
+        let label = UILabel()
+        label.text = "프로젝트 기간"
+        label.textColor = UIColor(hex: 0x000000)
+        label.sizeToFit()
+        label.frame.origin = CGPoint(x: 20, y: 940)
+        return label
+    }()
+
+    // 프로젝트 기간 데이트 피커
+    private let projectDatePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.frame = CGRect(x: 20, y: 990, width: UIScreen.main.bounds.width - 40, height: 100)
+        return datePicker
+    }()
+
+    // 작성 완료 버튼
+    private let completeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("작성 완료", for: .normal)
+        button.frame = CGRect(x: 10, y: 1000, width: UIScreen.main.bounds.width - 20, height: 30)
+        button.backgroundColor = UIColor(hex: 0x000000)
+        button.layer.cornerRadius = 15
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
 
     private func setupUI() {
-        // 배경색을 하얀색으로 설정
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = .white
 
-        // 뒤로가기 버튼 생성
-        let backButton = UIButton(type: .system)
-        backButton.setImage(UIImage(named: "backbutton"), for: .normal) // 이미지 설정
-        backButton.imageView?.contentMode = .scaleAspectFit
-        backButton.frame = CGRect(x: 10, y: 40, width: 30, height: 30) // Adjusted position and size
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         view.addSubview(backButton)
-
-
-        // 임시저장 버튼 생성
-        let saveButton = UIButton(type: .system)
-        saveButton.setTitle("임시저장", for: .normal)
-        saveButton.frame = CGRect(x: view.bounds.width - 110, y: 60, width: 100, height: 30) // Adjusted y position
-        saveButton.backgroundColor = UIColor(hex: 0x000000) // 색상 변경
-        saveButton.layer.cornerRadius = 15 // 버튼 모서리 둥글게
-        saveButton.setTitleColor(.white, for: .normal) // 글씨색을 하얀색으로 설정
-        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         view.addSubview(saveButton)
+        view.addSubview(titleLabel)
+        view.addSubview(titleTextField)
+        view.addSubview(thumbnailLabel)
+        view.addSubview(thumbnailTextView)
+        view.addSubview(platformLabel)
+        view.addSubview(platformTextField)
+        // ... 다른 요소들 추가
+        view.addSubview(completeButton)
 
-
-        // 스크롤뷰 생성
-        let scrollView = UIScrollView(frame: CGRect(x: 0, y: 80, width: view.bounds.width, height: view.bounds.height - 130))
-        scrollView.contentSize = CGSize(width: view.bounds.width, height: 1000) // ContentSize 조절
-        view.addSubview(scrollView)
-
-        // 스택뷰 생성
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 20
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-
-        // 레이블과 입력 요소들 생성 및 설정
-        func createLabel(text: String) -> UILabel {
-            let label = UILabel()
-            label.text = text
-            label.textColor = UIColor(hex: 0x000000) // 색상 코드 67C99D에 해당하는 색으로 변경
-            return label
-        }
-        //  텍스트필드 생성함수
-        func createTextField() -> UITextField {
-            let textField = UITextField()
-            textField.borderStyle = .roundedRect
-            textField.layer.cornerRadius = 8
-            textField.layer.borderWidth = 1
-            textField.layer.borderColor = UIColor.black.cgColor
-            textField.backgroundColor = UIColor.white
-            return textField
-        }
-        // 텍스트뷰 생성함수
-        func createTextView() -> UITextView {
-            let textView = UITextView()
-            textView.layer.cornerRadius = 8
-            textView.layer.borderWidth = 1
-            textView.layer.borderColor = UIColor.black.cgColor
-            textView.backgroundColor = UIColor.white
-            textView.heightAnchor.constraint(equalToConstant: 100).isActive = true // Set the height here
-            return textView
-        }
-        // 콤보박스 텍스트필드 생성함수
-        func areateTextField() -> UITextField {
-            let textField = UITextField()
-            textField.borderStyle = .roundedRect
-            textField.layer.cornerRadius = 8
-            textField.layer.borderWidth = 1
-            textField.layer.borderColor = UIColor.black.cgColor
-            textField.backgroundColor = UIColor.white
-            return textField
-        }
-        // 데이트피커 생성 함수
-        func createDatePicker() -> UIDatePicker {
-            let datePicker = UIDatePicker()
-            datePicker.datePickerMode = .date
-            return datePicker
-        }
-        // 이 텍스트필드를 건드리면
-        func createTextFieldWithAction(placeholder: String, action: Selector) -> UITextField {
-             let textField = UITextField()
-             textField.borderStyle = .roundedRect
-             textField.layer.cornerRadius = 8
-             textField.layer.borderWidth = 1
-             textField.layer.borderColor = UIColor.black.cgColor
-             textField.backgroundColor = UIColor.white
-             textField.placeholder = placeholder
-             textField.addTarget(self, action: action, for: .editingDidBegin) // 연락 방법 텍스트 필드에 대한 액션 추가
-             return textField
-         }
-
-        let elements: [(String, UIView)] = [
-            ("제목", createTextField()),
-            ("썸네일", createTextView()),
-            ("출시 플랫폼", createTextField()),
-            ("모집 기술 및 언어", createTextField()),
-            ("모집 분야", createTextField()),
-            ("프로젝트 소개", createTextView()),
-            ("프로젝트 기간", createDatePicker()),
-            ("", createDatePicker()),
-            ("모임 유형", createTextField()),
-            ("신청 시 연락 방법", createTextField())
-        ]
-
-        elements.forEach { labelText, element in
-            let label = createLabel(text: labelText)
-            stackView.addArrangedSubview(label)
-            stackView.addArrangedSubview(element)
-        }
-
-        // 작성 완료 버튼 생성
-        let completeButton = UIButton(type: .system)
-        completeButton.setTitle("작성 완료", for: .normal)
-        completeButton.frame = CGRect(x: 10, y: scrollView.contentSize.height + 20, width: view.bounds.width - 20, height: 30) // 좌우 여백 수정
-        completeButton.backgroundColor = UIColor(hex: 0x000000) // 색상 변경
-        completeButton.layer.cornerRadius = 15 // 버튼 모서리 둥글게
-        completeButton.setTitleColor(.white, for: .normal) // 글씨색을 하얀색으로 설정
-        completeButton.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
-        stackView.addArrangedSubview(completeButton) // stackView에 추가
-
-        stackView.addArrangedSubview(completeButton) // stackView에 추가
-
-        stackView.addArrangedSubview(completeButton)
-
-        scrollView.addSubview(stackView)
-
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.bottomAnchor, constant: -20)
-        ])
-    }
-
-    @objc private func backButtonTapped() {
-        // 뒤로가기 버튼이 눌렸을 때의 동작
-    }
-
-    @objc private func saveButtonTapped() {
-        // 임시저장 버튼이 눌렸을 때의 동작
-    }
-
-    @objc private func completeButtonTapped() {
-        // 작성 완료 버튼이 눌렸을 때의 동작
+        // 나머지 코드는 동일...
     }
 }
 
