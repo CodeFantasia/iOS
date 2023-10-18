@@ -53,9 +53,7 @@ class MyProjectTableViewCell: UITableViewCell {
         contentView.layer.shadowRadius = 4
         let inset: CGFloat = 10
         contentView.frame = CGRect(x: inset, y: inset, width: bounds.width - (2 * inset), height: bounds.height - (2 * inset))
-        
     }
-
 }
 
 extension MyProjectTableViewCell {

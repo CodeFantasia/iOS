@@ -24,6 +24,7 @@
 		ABC3DF442AD46097008CEF1A /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = ABC3DF432AD46097008CEF1A /* CombineMoya */; };
 		ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF452AD4617C008CEF1A /* MainVC.swift */; };
 		F013B52C2AD8290F00CB777A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013B52B2AD8290F00CB777A /* ProfileViewController.swift */; };
+		F01AD1BC2ADF8A1800F0E0B1 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */; };
 		F076F6FA2ADE80F000AD7435 /* MyProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */; };
 		F1E653DE2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */; };
 		F1E653E12AD8CE2200274A34 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = F1E653E02AD8CE2200274A34 /* Then */; };
@@ -50,6 +51,7 @@
 		ABC3DF322AD45E8C008CEF1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABC3DF452AD4617C008CEF1A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		F013B52B2AD8290F00CB777A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectTableViewCell.swift; sourceTree = "<group>"; };
 		F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailNoticeBoardViewController.swift; sourceTree = "<group>"; };
 		F1E653E32AD8E0F200274A34 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				F1E653E52AD8E3A900274A34 /* Palette.swift */,
 				F1E653E92AD8F63D00274A34 /* Images.swift */,
 				F1E653EB2ADD539D00274A34 /* Metrics.swift */,
+				F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				F1E653EC2ADD539D00274A34 /* Metrics.swift in Sources */,
 				ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */,
 				31C0371E2AD900A800142EC5 /* ProjectBoardVC.swift in Sources */,
+				F01AD1BC2ADF8A1800F0E0B1 /* CustomAlert.swift in Sources */,
 				3191DEE32AD8FA060059AACB /* MyProjectVC.swift in Sources */,
 				31C037202AD900E300142EC5 /* ProjectBoardTableviewCell.swift in Sources */,
 				3191DEE12AD8F9DF0059AACB /* ProfileVC.swift in Sources */,
