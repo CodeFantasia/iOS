@@ -84,7 +84,6 @@ extension CustomAlertView {
             $0.top.equalTo(self).offset(20)
             $0.leading.trailing.equalTo(self).inset(20)
         }
-        
         messageLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(30)
             $0.leading.trailing.equalTo(self).inset(20)
