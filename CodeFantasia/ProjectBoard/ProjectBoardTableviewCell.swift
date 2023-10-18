@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Then
 
 struct IconModel {
     let image: UIImage
@@ -14,51 +15,39 @@ struct IconModel {
 
 class ProjectBoardTableviewCell: UITableViewCell {
     
-    let customImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 10
-//        imageView.layer.borderColor = UIColor.black.cgColor
-//        imageView.layer.borderWidth = 1.0
-        return imageView
-    }()
-    
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = .black
-        return label
-    }()
-    
-    let detailLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .gray
-        label.numberOfLines = 2
-        label.lineBreakMode = .byTruncatingTail
-        label.textAlignment = .left
-        return label
-    }()
-    
-    let statusLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textAlignment = .center
-        label.layer.masksToBounds = true
-        label.textColor = .white
-        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        return label
-    }()
-    
-    let recruitmentLabel: UILabel = {
-        let label = UILabel()
-        label.text = "모집분야"
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .black
-        return label
-    }()
+    let titleImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 10
+    }
+
+    let titleLabel = UILabel().then {
+        $0.font = UIFont.boldSystemFont(ofSize: 20)
+        $0.textColor = .black
+    }
+
+    let subheadingLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.textColor = .gray
+        $0.numberOfLines = 2
+        $0.lineBreakMode = .byTruncatingTail
+        $0.textAlignment = .left
+    }
+
+    let recruitStatusLabel = UILabel().then {
+        $0.font = UIFont.systemFont(ofSize: 14)
+        $0.textAlignment = .center
+        $0.layer.masksToBounds = true
+        $0.textColor = .white
+        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+    }
+
+    let recruitmentLabel = UILabel().then {
+        $0.text = "모집분야"
+        $0.font = UIFont.systemFont(ofSize: 12)
+        $0.textColor = .black
+    }
     
     var icons: [IconModel] = [] {
         didSet {
@@ -66,64 +55,12 @@ class ProjectBoardTableviewCell: UITableViewCell {
         }
     }
     
-    func bindData(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String) {
-        customImageView.image = image
-        titleLabel.text = title
-        detailLabel.text = detail
-        self.icons = icons
-        statusLabel.text = status
-        if status == "모집 중" {
-            statusLabel.backgroundColor = .black
-        } else {
-            statusLabel.backgroundColor = .lightGray
-        }
-    }
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.addSubview(customImageView)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(detailLabel)
-        contentView.addSubview(statusLabel)
-        contentView.addSubview(recruitmentLabel)
-        
-        customImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            customImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
-            customImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            customImageView.widthAnchor.constraint(equalToConstant: 100),
-            customImageView.heightAnchor.constraint(equalToConstant: 60)
-        ])
-        
-        titleLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(customImageView.snp.left).offset(-10)
-            make.top.equalTo(customImageView)
-            make.left.equalToSuperview().offset(10)
-        }
-        
-        detailLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp.bottom).offset(5)
-            make.width.equalTo(230)
-            make.height.equalTo(30)
-        }
-    
-        recruitmentLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(titleLabel)
-            make.top.equalTo(detailLabel.snp.bottom).offset(25)
-            make.width.equalTo(50)
-            make.height.equalTo(20)
-        }
-        
-        statusLabel.snp.makeConstraints { (make) in
-            make.right.equalTo(contentView).offset(0)
-            make.bottom.equalTo(contentView).offset(-10)
-            make.height.equalTo(30)
-            make.width.equalTo(60)
-        }
-        
-        setView()
+        setupViews()
+        setLayoutConstraints()
+        setViewProperties()
     }
 
     required init?(coder: NSCoder) {
@@ -132,66 +69,120 @@ class ProjectBoardTableviewCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        print("recruitmentLabel isHidden: \(recruitmentLabel.isHidden)")
-        print("recruitmentLabel alpha: \(recruitmentLabel.alpha)")
-        print("recruitmentLabel frame: \(recruitmentLabel.frame)")
-        print("recruitmentLabel bounds: \(recruitmentLabel.bounds)")
-        print("recruitmentLabel's superview clipsToBounds: \(recruitmentLabel.superview?.clipsToBounds ?? false)")
-        
         let inset: CGFloat = 6
         contentView.frame = CGRect(x: inset, y: inset, width: bounds.width - (2 * inset), height: bounds.height - (2 * inset))
     }
+}
+
+// MARK: - Setup Views
+private extension ProjectBoardTableviewCell {
+    func setupViews() {
+        contentView.addSubview(titleImageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(subheadingLabel)
+        contentView.addSubview(recruitStatusLabel)
+        contentView.addSubview(recruitmentLabel)
+    }
+
+    func setLayoutConstraints() {
+        titleImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            titleImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
+            titleImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleImageView.widthAnchor.constraint(equalToConstant: 100),
+            titleImageView.heightAnchor.constraint(equalToConstant: 60)
+        ])
+        
+        titleLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(titleImageView.snp.left).offset(-10)
+            make.top.equalTo(titleImageView)
+            make.left.equalToSuperview().offset(10)
+        }
+        
+        subheadingLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(titleLabel)
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.width.equalTo(230)
+            make.height.equalTo(30)
+        }
     
-    func setView() {
+        recruitmentLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(titleLabel)
+            make.top.equalTo(subheadingLabel.snp.bottom).offset(25)
+            make.width.equalTo(50)
+            make.height.equalTo(20)
+        }
+        
+        recruitStatusLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(contentView).offset(0)
+            make.bottom.equalTo(contentView).offset(-10)
+            make.height.equalTo(30)
+            make.width.equalTo(60)
+        }
+    }
+
+    func setViewProperties() {
         contentView.layer.cornerRadius = 8
         contentView.layer.shadowColor = UIColor.black.cgColor
         contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
         contentView.layer.shadowOpacity = 0.5
         contentView.layer.shadowRadius = 4
-        
     }
-    
+}
 
-    
-    private func updateIconLayout() {
-        for subview in contentView.subviews {
-            if subview !== customImageView && subview !== titleLabel && subview !== detailLabel && subview !== statusLabel && subview !== recruitmentLabel && (subview is UIImageView || subview is UILabel) {
-                subview.removeFromSuperview()
+// MARK: - Icon Layout
+private extension ProjectBoardTableviewCell {
+    func updateIconLayout() {
+        contentView.subviews.forEach { view in
+            guard view == titleImageView || view == titleLabel || view == subheadingLabel || view == recruitStatusLabel || view == recruitmentLabel || !(view is UIStackView) else {
+                view.removeFromSuperview()
+                return
             }
         }
-        
-        var lastIconView: UIView? = nil
+
         let iconSize: CGFloat = 30
-        for icon in icons {
-            let iconView = UIImageView(image: icon.image)
-            iconView.layer.cornerRadius = iconSize / 2
-            iconView.clipsToBounds = true
-            let label = UILabel()
-            
-            contentView.addSubview(iconView)
-            contentView.addSubview(label)
-            
-            if let last = lastIconView as? UILabel {
-                iconView.snp.makeConstraints { make in
-                    make.left.equalTo(last.snp.right).offset(10)
-                    make.bottom.equalTo(contentView).offset(-10)
-                    make.width.height.equalTo(iconSize)
-                }
-            } else {
-                iconView.snp.makeConstraints { make in
-                    make.left.equalToSuperview().offset(10)
-                    make.bottom.equalTo(contentView).offset(-10)
-                    make.width.height.equalTo(iconSize)
-                }
+        var iconViews: [UIImageView] = []
+
+        let displayIcons = icons.prefix(5)
+        
+        for icon in displayIcons {
+            let iconView = UIImageView(image: icon.image).then {
+                $0.layer.cornerRadius = iconSize / 2
+                $0.clipsToBounds = true
             }
-            
-            label.snp.makeConstraints { make in
-                make.left.equalTo(iconView.snp.right).offset(5)
-                make.centerY.equalTo(iconView)
+            iconView.snp.makeConstraints { make in
+                make.width.height.equalTo(iconSize)
             }
-            
-            lastIconView = label
+
+            iconViews.append(iconView)
+        }
+
+        let stackView = UIStackView(arrangedSubviews: iconViews).then {
+            $0.axis = .horizontal
+            $0.spacing = 10
+            $0.alignment = .center
+        }
+
+        contentView.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(10)
+            make.bottom.equalTo(contentView).offset(-10)
+        }
+    }
+}
+
+// MARK: - Public Methods
+extension ProjectBoardTableviewCell {
+    func recruitmentLabelCheck(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String) {
+        titleImageView.image = image
+        titleLabel.text = title
+        subheadingLabel.text = detail
+        self.icons = icons
+        recruitStatusLabel.text = status
+        if status == "모집 중" {
+            recruitStatusLabel.backgroundColor = .black
+        } else {
+            recruitStatusLabel.backgroundColor = .lightGray
         }
     }
 }

@@ -23,6 +23,7 @@
 		ABC3DF412AD46069008CEF1A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = ABC3DF402AD46069008CEF1A /* Alamofire */; };
 		ABC3DF442AD46097008CEF1A /* CombineMoya in Frameworks */ = {isa = PBXBuildFile; productRef = ABC3DF432AD46097008CEF1A /* CombineMoya */; };
 		ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF452AD4617C008CEF1A /* MainVC.swift */; };
+		F013B52C2AD8290F00CB777A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013B52B2AD8290F00CB777A /* ProfileViewController.swift */; };
 		F1E653DE2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */; };
 		F1E653E12AD8CE2200274A34 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = F1E653E02AD8CE2200274A34 /* Then */; };
 		F1E653E42AD8E0F200274A34 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E32AD8E0F200274A34 /* Fonts.swift */; };
@@ -30,7 +31,6 @@
 		F1E653E82AD8E73F00274A34 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E72AD8E73F00274A34 /* PaddingLabel.swift */; };
 		F1E653EA2AD8F63D00274A34 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653E92AD8F63D00274A34 /* Images.swift */; };
 		F1E653EC2ADD539D00274A34 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653EB2ADD539D00274A34 /* Metrics.swift */; };
-		F013B52C2AD8290F00CB777A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013B52B2AD8290F00CB777A /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,13 +48,13 @@
 		ABC3DF302AD45E8C008CEF1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABC3DF322AD45E8C008CEF1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABC3DF452AD4617C008CEF1A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		F013B52B2AD8290F00CB777A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailNoticeBoardViewController.swift; sourceTree = "<group>"; };
 		F1E653E32AD8E0F200274A34 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		F1E653E52AD8E3A900274A34 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		F1E653E72AD8E73F00274A34 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		F1E653E92AD8F63D00274A34 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		F1E653EB2ADD539D00274A34 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
-		F013B52B2AD8290F00CB777A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +73,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		31E640412ADE6F88009647DA /* ProjectBoard */ = {
+			isa = PBXGroup;
+			children = (
+				31C0371D2AD900A800142EC5 /* ProjectBoardVC.swift */,
+				31C0371F2AD900E300142EC5 /* ProjectBoardTableviewCell.swift */,
+			);
+			path = ProjectBoard;
+			sourceTree = "<group>";
+		};
+		31E640422ADE6FD5009647DA /* To be deleted */ = {
+			isa = PBXGroup;
+			children = (
+				3191DEE02AD8F9DF0059AACB /* ProfileVC.swift */,
+				3191DEE22AD8FA060059AACB /* MyProjectVC.swift */,
+			);
+			path = "To be deleted";
+			sourceTree = "<group>";
+		};
 		ABC3DF152AD45E8B008CEF1A = {
 			isa = PBXGroup;
 			children = (
@@ -92,22 +110,20 @@
 		ABC3DF202AD45E8B008CEF1A /* CodeFantasia */ = {
 			isa = PBXGroup;
 			children = (
+				31E640422ADE6FD5009647DA /* To be deleted */,
+				31E640412ADE6F88009647DA /* ProjectBoard */,
 				F1E653E22AD8E0D700274A34 /* Resource */,
 				F1E653DC2AD8CD8F00274A34 /* ProjectDetailNoticeBoard */,
 				ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */,
 				ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */,
 				ABC3DF252AD45E8B008CEF1A /* ViewController.swift */,
 				ABC3DF452AD4617C008CEF1A /* MainVC.swift */,
-				31C0371D2AD900A800142EC5 /* ProjectBoardVC.swift */,
-				31C0371F2AD900E300142EC5 /* ProjectBoardTableviewCell.swift */,
-				3191DEE02AD8F9DF0059AACB /* ProfileVC.swift */,
-				3191DEE22AD8FA060059AACB /* MyProjectVC.swift */,
+				F013B52B2AD8290F00CB777A /* ProfileViewController.swift */,
 				3191DEDE2AD8F9B30059AACB /* TabbarM.swift */,
 				ABC3DF2D2AD45E8C008CEF1A /* Assets.xcassets */,
 				ABC3DF2F2AD45E8C008CEF1A /* LaunchScreen.storyboard */,
 				ABC3DF322AD45E8C008CEF1A /* Info.plist */,
 				ABC3DF2A2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld */,
-				F013B52B2AD8290F00CB777A /* ProfileViewController.swift */,
 			);
 			path = CodeFantasia;
 			sourceTree = "<group>";
