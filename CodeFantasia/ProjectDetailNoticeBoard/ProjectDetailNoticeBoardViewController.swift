@@ -24,21 +24,21 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.axis = .horizontal
     }
     private lazy var projectTitleLabel = UILabel().then {
-        $0.text = "즐코팟 모집중"
+        $0.text = "프로젝트"
         $0.font = .title
     }
     private lazy var projectsubTitleLabel = UILabel().then {
-        $0.text = "나의 첫 사이드 프로젝트 여기서 시작해보세요"
+        $0.text = ""
         $0.font = .body
     }
     private lazy var projectTeamLeaderProfileImageButton = UIButton().then {
         $0.layer.cornerRadius = .cornerRadius
         $0.clipsToBounds = true
-        $0.setImage(UIImage(systemName: "person.crop.circle.fill"), for: .normal)
+        $0.setImage(.defaultProfileImage, for: .normal)
     }
     private lazy var projectImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
-        $0.image = UIImage(systemName: "person.crop.circle.fill")
+        $0.image = .defaultProfileImage
     }
     private lazy var techStackStackView = UIStackView().then {
         $0.axis = .vertical
@@ -48,8 +48,9 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.text = "기술 및 언어"
         $0.font = .subTitle
     }
-    private lazy var techStackImagesView = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
-        $0.text = "기술스택 기술스택"
+    private lazy var techStackContextView = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+        $0.text = """
+        """
         $0.font = .body
         $0.numberOfLines = 0
     }
@@ -64,9 +65,6 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     }
     private lazy var recruitmentStatusContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
         $0.text = """
-        UI/UX 0/1
-        iOS 1/2
-        Backend 2/2
         """
         $0.numberOfLines = 0
     }
@@ -80,12 +78,6 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     }
     private lazy var projectIntroduceContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
         $0.text = """
-        우리는 모든 사용자에게 유용한 솔루션을 제공하기 위해 노력하고 있습니다. 이 앱은 사용자의 다양한 BedZERG를 해결하고, 새로운 경험을 제공하며, 다른 사용자와의 연결을 촉진합니다.
-        
-        원해요!
-
-        모든 시간을 투자할 수 있는 분
-        모르더라도 끝까지 방법을 찾아내시는 분
         """
         $0.numberOfLines = 0
     }
@@ -98,7 +90,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.font = .subTitle
     }
     private lazy var projectPeriodContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
-        $0.text = "2023.10.10 ~ 2023.10.25"
+        $0.text = "\(Date().yearMonthDate) ~ \(Date().yearMonthDate)"
         $0.numberOfLines = 0
     }
     private lazy var projectMeetingTypeStackView = UIStackView().then {
@@ -111,10 +103,10 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     }
 
     private lazy var projectMeetingTypeContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
-        $0.text = "온라인 (Zoom) 미팅"
+        $0.text = ""
         $0.numberOfLines = 0
     }
-    private lazy var projectApplyButton = UIButton().then {
+    private lazy var projectApplyButton = UIHoverButton().then {
         $0.setTitle("신청하기", for: .normal)
         $0.titleLabel?.font = .buttonTitle
         $0.setTitleColor(.black, for: .normal)
@@ -157,7 +149,7 @@ extension ProjectDetailNoticeBoardViewController {
         [projectTitleLabel, projectTeamLeaderProfileImageButton].forEach {
             projectTitleAndTeamLeaderProfileImageStackView.addArrangedSubview($0)
         }
-        [techStackStackViewTitleLabel, techStackImagesView].forEach {
+        [techStackStackViewTitleLabel, techStackContextView].forEach {
             techStackStackView.addArrangedSubview($0)
         }
         [recruitmentStatusTitleLabel, recruitmentStatusContextLabel].forEach {
@@ -166,10 +158,28 @@ extension ProjectDetailNoticeBoardViewController {
         [projectIntroduceTitleLabel, projectIntroduceContextLabel].forEach {
             projectIntroduceStackView.addArrangedSubview($0)
         }
+        [projectPeriodTitleLabel, projectPeriodContextLabel].forEach {
+            projectPeriodStackView.addArrangedSubview($0)
+        }
         [projectMeetingTypeTitleLabel, projectMeetingTypeContextLabel].forEach {
             projectMeetingTypeStackView.addArrangedSubview($0)
         }
 
+        techStackContextView.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
+        }
+        recruitmentStatusContextLabel.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
+        }
+        projectIntroduceContextLabel.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
+        }
+        projectPeriodContextLabel.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
+        }
+        projectMeetingTypeContextLabel.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(CGFloat.minimumFormHeight)
+        }
         
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
