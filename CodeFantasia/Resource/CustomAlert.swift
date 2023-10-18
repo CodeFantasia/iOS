@@ -7,7 +7,7 @@
 import UIKit
 import SnapKit
 
-class CustomAlertView: UIView {
+class CustomAlert: UIView {
     
     private let titleLabel = UILabel()
     private let messageLabel = UILabel()
@@ -32,7 +32,7 @@ class CustomAlertView: UIView {
     }
 }
 
-extension CustomAlertView {
+extension CustomAlert {
     func totalSetup(title: String, message: String, buttonTitle: String) {
         setupCustomAlertView()
         setupTitleLabel(title: title)
