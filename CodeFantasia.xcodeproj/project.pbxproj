@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		313064E42ADFFA9C00D1CC6C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313064E32ADFFA9C00D1CC6C /* DataModel.swift */; };
 		3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3191DEDE2AD8F9B30059AACB /* TabbarM.swift */; };
 		6BBF70772ADFB72100F58080 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70762ADFB72100F58080 /* ProfileViewController.swift */; };
 		6BBF707A2ADFB73700F58080 /* ProjectBoardTableviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */; };
@@ -26,7 +27,6 @@
 		ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF452AD4617C008CEF1A /* MainVC.swift */; };
 		F01AD1BC2ADF8A1800F0E0B1 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */; };
 		F076F6FA2ADE80F000AD7435 /* MyProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */; };
-		F013B52C2AD8290F00CB777A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F013B52B2AD8290F00CB777A /* ProfileViewController.swift */; };
 		F187DF232ADEA249001B097D /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = F187DF222ADEA249001B097D /* Date+Format.swift */; };
 		F187DF252ADEA911001B097D /* UIHoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F187DF242ADEA911001B097D /* UIHoverButton.swift */; };
 		F187DF282ADEAA2A001B097D /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = F187DF272ADEAA2A001B097D /* RxCocoa */; };
@@ -42,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		313064E32ADFFA9C00D1CC6C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		3191DEDE2AD8F9B30059AACB /* TabbarM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarM.swift; sourceTree = "<group>"; };
 		6BBF70762ADFB72100F58080 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectBoardTableviewCell.swift; sourceTree = "<group>"; };
@@ -59,7 +60,6 @@
 		ABC3DF452AD4617C008CEF1A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectTableViewCell.swift; sourceTree = "<group>"; };
-		F013B52B2AD8290F00CB777A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F187DF222ADEA249001B097D /* Date+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Format.swift"; sourceTree = "<group>"; };
 		F187DF242ADEA911001B097D /* UIHoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHoverButton.swift; sourceTree = "<group>"; };
 		F1E653DD2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailNoticeBoardViewController.swift; sourceTree = "<group>"; };
@@ -127,12 +127,13 @@
 				3191DEDE2AD8F9B30059AACB /* TabbarM.swift */,
 				ABC3DF452AD4617C008CEF1A /* MainVC.swift */,
 				ABC3DF252AD45E8B008CEF1A /* ViewController.swift */,
+				ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */,
+				ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */,
+				313064E32ADFFA9C00D1CC6C /* DataModel.swift */,
 				ABC3DF2D2AD45E8C008CEF1A /* Assets.xcassets */,
 				ABC3DF2F2AD45E8C008CEF1A /* LaunchScreen.storyboard */,
 				ABC3DF322AD45E8C008CEF1A /* Info.plist */,
 				ABC3DF2A2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld */,
-				ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */,
-				ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */,
 			);
 			path = CodeFantasia;
 			sourceTree = "<group>";
@@ -286,7 +287,7 @@
 				ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */,
 				ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */,
 				F1E653E62AD8E3A900274A34 /* Palette.swift in Sources */,
-				ABFD4B162ADE97910055EF35 /* UserInfoInputVC.swift in Sources */,
+				313064E42ADFFA9C00D1CC6C /* DataModel.swift in Sources */,
 				F1E653E82AD8E73F00274A34 /* PaddingLabel.swift in Sources */,
 				F076F6FA2ADE80F000AD7435 /* MyProjectTableViewCell.swift in Sources */,
 				F1E653EA2AD8F63D00274A34 /* Images.swift in Sources */,
@@ -295,7 +296,6 @@
 				6BBF70772ADFB72100F58080 /* ProfileViewController.swift in Sources */,
 				ABC3DF2C2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld in Sources */,
 				3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */,
-				ABFD4B122ADE82460055EF35 /* TermsOfConditionsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
