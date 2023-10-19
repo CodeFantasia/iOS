@@ -9,17 +9,17 @@ import SnapKit
 import Then
 
 class MyProjectVC: UITableViewController {
-
+    
     let barTitle = UILabel().then {
         $0.text = "내 프로젝트"
-        $0.font = UIFont.boldSystemFont(ofSize: 30)
+        $0.font = UIFont.title
         $0.textColor = .black
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationbarTitle()
-
+        tableView.backgroundColor = UIColor.backgroundColor
         tableView.separatorStyle = .none
         tableView.register(MyProjectTableViewCell.self, forCellReuseIdentifier: MyProjectTableViewCell.identifier)
         tableView.delegate = self
@@ -34,11 +34,13 @@ extension MyProjectVC {
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 270
+        return UITableView.automaticDimension
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProjectTableViewCell.identifier, for: indexPath) as? MyProjectTableViewCell else { return UITableViewCell() }
+
+        cell.backgroundColor = UIColor.backgroundColor
         cell.projectTitle.text = "즐코팟 모집중"
         cell.projectSubtitle.text = """
                                     나의 첫 사이드 프로젝트 여기서 시작해보
@@ -46,7 +48,7 @@ extension MyProjectVC {
                                     """
         cell.dateLabel.text = "D-17"
         cell.projectImage.backgroundColor = .gray
-        cell.dateView.backgroundColor = .black
+        cell.dateView.backgroundColor = UIColor.buttonPrimaryColor
 
         return cell
     }
