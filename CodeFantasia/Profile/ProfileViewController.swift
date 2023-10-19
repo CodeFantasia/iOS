@@ -53,16 +53,16 @@ class ProfileViewController: UIViewController {
         $0.font = UIFont.subTitle
     }
 
-    private lazy var separatorView1 = UIView().then {
+    private lazy var infoUnderline = UIView().then {
         $0.backgroundColor = UIColor.black
     }
-    private lazy var separatorView2 = UIView().then {
+    private lazy var techUnderline = UIView().then {
         $0.backgroundColor = UIColor.systemGray
     }
-    private lazy var separatorView3 = UIView().then {
+    private lazy var urlUnderline = UIView().then {
         $0.backgroundColor = UIColor.systemGray
     }
-    private lazy var separatorView4 = UIView().then {
+    private lazy var interestUnderline = UIView().then {
         $0.backgroundColor = UIColor.black
     }
     
@@ -152,16 +152,16 @@ extension ProfileViewController {
         
         [ produceView,
           infoLabel,
-          separatorView1,
+          infoUnderline,
           techTitleLabel,
           techLabel,
-          separatorView2,
+          techUnderline,
           urlTitleLabel,
           urlLabel,
-          separatorView3,
+          urlUnderline,
           interestTitleLabel,
           interestLabel,
-          separatorView4,
+          interestUnderline,
           editButton,
           logoutButton].forEach {
             stackView.addArrangedSubview($0)
@@ -196,28 +196,28 @@ extension ProfileViewController {
             $0.top.equalTo(produceLabel.snp.bottom).offset(16)
             $0.leading.equalTo(produceLabel)
         }
-        separatorView1.snp.makeConstraints {
+        infoUnderline.snp.makeConstraints {
             $0.height.equalTo(1)
             $0.leading.equalTo(stackView.snp.leading).inset(20)
             $0.trailing.equalTo(stackView.snp.trailing).inset(20)
         }
-        separatorView2 .snp.makeConstraints {
+        techUnderline .snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.leading.trailing.equalTo(separatorView1)
+            $0.leading.trailing.equalTo(infoUnderline)
         }
-        separatorView3.snp.makeConstraints {
+        urlUnderline.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.leading.trailing.equalTo(separatorView1)
+            $0.leading.trailing.equalTo(infoUnderline)
         }
-        separatorView4.snp.makeConstraints {
+        interestUnderline.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.leading.trailing.equalTo(separatorView1)
+            $0.leading.trailing.equalTo(infoUnderline)
         }
         editButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(separatorView1)
+            $0.leading.trailing.equalTo(infoUnderline)
         }
         logoutButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(separatorView1)
+            $0.leading.trailing.equalTo(infoUnderline)
         }
     }
 }
