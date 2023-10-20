@@ -22,7 +22,7 @@ struct UserProfile: Codable {
     let userID: UUID
 }
 
-struct Project {
+struct Project: Codable {
     var techStack: [TechStack]
     var recruitmentCount: Int
     var projectDescription: String?
