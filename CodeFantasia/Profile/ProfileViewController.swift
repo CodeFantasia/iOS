@@ -142,7 +142,6 @@ extension ProfileViewController {
     }
     
     private func setupLayout() {
-
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
         produceView.addSubview(profileImage)
@@ -175,8 +174,6 @@ extension ProfileViewController {
             $0.width.equalToSuperview()
         }
         produceView.snp.makeConstraints {
-            $0.leading.equalTo(stackView.snp.leading).inset(20)
-            $0.trailing.equalTo(stackView.snp.trailing).inset(20)
             $0.height.equalTo(250)
         }
         profileImage.snp.makeConstraints {
@@ -198,26 +195,15 @@ extension ProfileViewController {
         }
         infoUnderline.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.leading.equalTo(stackView.snp.leading).inset(20)
-            $0.trailing.equalTo(stackView.snp.trailing).inset(20)
         }
         techUnderline .snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.leading.trailing.equalTo(infoUnderline)
+            $0.height.equalTo(infoUnderline)
         }
         urlUnderline.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.leading.trailing.equalTo(infoUnderline)
+            $0.height.equalTo(infoUnderline)
         }
         interestUnderline.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.leading.trailing.equalTo(infoUnderline)
-        }
-        editButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(infoUnderline)
-        }
-        logoutButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(infoUnderline)
+            $0.height.equalTo(infoUnderline)
         }
     }
 }
