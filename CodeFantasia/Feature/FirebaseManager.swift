@@ -125,6 +125,7 @@ struct FireBaseManager: FireBaseManagerProtocol {
     ) -> Single<[Data]> {
         return Single<[Data]>.create { single in
             collectionReference(collectionId).getDocuments { snapshot, error in
+                print("📡📡📡📡📡📡📡📡📡\n--- FetchedData ---\nPath: \(collectionId)")
                 if let error {
                     print(error)
                     single(.failure(error))
