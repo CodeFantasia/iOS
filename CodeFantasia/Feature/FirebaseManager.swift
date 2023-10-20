@@ -15,6 +15,7 @@ protocol FireBaseManagerProtocol {
     func delete(_ collectionId: String, _ documentId: String)
     func update<T: Encodable>(_ collectionId: String, _ documentId: String, _ data: T)
     func read(_ collectionId: String, _ documentId: String) -> Single<Data>
+    func `read`(_ collectionId: String) -> Single<[Data]>
 }
 
 struct FireBaseManager: FireBaseManagerProtocol {
@@ -113,6 +114,32 @@ struct FireBaseManager: FireBaseManagerProtocol {
                     }
                     dump(dataTypeData)
                     single(.success(dataTypeData))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+    
+    func `read`(
+        _ collectionId: String
+    ) -> Single<[Data]> {
+        return Single<[Data]>.create { single in
+            collectionReference(collectionId).getDocuments { snapshot, error in
+                print("📡📡📡📡📡📡📡📡📡\n--- FetchedData ---\nPath: \(collectionId)")
+                if let error {
+                    print(error)
+                    single(.failure(error))
+                } else {
+                    guard let responseData = snapshot?.documents else {
+                        single(.failure(FireBaseManagerError.dataDoesntExist))
+                        return
+                    }
+                    let dataTypeDatas = responseData.compactMap({ element in
+                        let dataTypeData = dictionaryToData(element.data())
+                        return dataTypeData
+                    })
+                    dump(dataTypeDatas)
+                    single(.success(dataTypeDatas))
                 }
             }
             return Disposables.create()
