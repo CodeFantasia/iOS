@@ -32,11 +32,11 @@ final class ProjectDetailNoticeBoardViewModel {
     let projectApplyComplete = PublishSubject<Void>()
     let projectReportComplete = PublishSubject<Void>()
     private let disposeBag = DisposeBag()
-    private let projectRepository: ProjectRepository
+    private let projectRepository: ProjectRepositoryProtocol
     private let projectId: String
     
     init(
-        projectRepository: ProjectRepository,
+        projectRepository: ProjectRepositoryProtocol,
         projectId: String
     ) {
         self.projectRepository = projectRepository
