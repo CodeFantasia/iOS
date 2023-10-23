@@ -8,6 +8,9 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 final class ProjectDetailNoticeBoardViewController: UIViewController {
 
@@ -39,6 +42,8 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     private lazy var projectImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = .defaultProfileImage
+        $0.layer.cornerRadius = .cornerRadius
+        $0.clipsToBounds = true
     }
     private lazy var techStackStackView = UIStackView().then {
         $0.axis = .vertical
@@ -61,7 +66,6 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     private lazy var recruitmentStatusTitleLabel = UILabel().then {
         $0.text = "모집 현황"
         $0.font = .subTitle
-//        $0.backgroundColor = .clear
     }
     private lazy var recruitmentStatusContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
         $0.text = """
@@ -123,8 +127,18 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.layer.masksToBounds = false
 
     }
-    private lazy var rightButton = UIBarButtonItem(image: .projectEditImage, style: .plain, target: self, action: #selector(editImageTapped))
-
+    private lazy var editButton = UIBarButtonItem(image: .projectEditImage, style: .plain, target: self, action: nil)
+    private lazy var reportButton = UIBarButtonItem(image: .reportImage, style: .plain, target: self, action: nil)
+    private let viewModel: ProjectDetailNoticeBoardViewModel
+    private let disposeBag = DisposeBag()
+    init(viewModel: ProjectDetailNoticeBoardViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 //MARK: - View Life Cycle
@@ -133,7 +147,9 @@ extension ProjectDetailNoticeBoardViewController {
         super.viewDidLoad()
         configure()
         // 파티장이라면
-        navigationItem.rightBarButtonItem = rightButton
+        navigationItem.rightBarButtonItems = [reportButton, editButton]
+        // 아니면
+//        navigationItem.rightBarButtonItems = [reportButton]
     }
 }
 
@@ -201,5 +217,73 @@ extension ProjectDetailNoticeBoardViewController {
 
 //MARK: - binding
 extension ProjectDetailNoticeBoardViewController {
-    @objc private func editImageTapped() {}
+    private func bind() {
+        let inputs = ProjectDetailNoticeBoardViewModel.Input(
+            viewDidLoad: rx.viewDidLoad.asObservable(),
+            editImageTapped: editButton.rx.tap.asObservable(),
+            profileImageTapped: projectTeamLeaderProfileImageButton.rx.tap.asObservable(),
+            projectApplyButtonTapped: projectApplyButton.rx.tap.asObservable(),
+            projectReportButtonTapped: reportButton.rx.tap.asObservable()
+        )
+        let outputs = viewModel.transform(input: inputs)
+        
+        outputs.projectDataFetched
+            .subscribe(onNext: { [weak self] project in
+                guard let self else {return}
+                DispatchQueue.main.async {
+                    //TODO: project 모델 타이틀, 부 타이틀 없음
+                    self.techStackContextView.text = project.platform.reduce("", {$0 + $1.rawValue + "\n"})
+                    self.projectImageView.kf.setImage(with: URL(string: project.imageUrl ?? ""))
+                    self.recruitmentStatusContextLabel.text = project.recruitmentField ?? ""
+                    self.projectIntroduceContextLabel.text = project.projectDescription ?? ""
+                    self.projectMeetingTypeContextLabel.text = project.meetingType ?? ""
+                    self.projectPeriodContextLabel.text = project.projectDuration ?? ""
+                }
+                
+            }, onError: { error in
+                self.alertViewActionSheet(
+                    title: "오류 발생",
+                    message: error.localizedDescription,
+                    acceptText: "확인",
+                    cancelText: nil
+                )
+            })
+            .disposed(by: disposeBag)
+        
+        outputs.projectApplyButtonDidTap
+            .withUnretained(self)
+            .subscribe { _ in
+                DispatchQueue.main.async {
+                    self.alertViewAlert(title: "신청", message: "프로젝트에 신청하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
+                        self.viewModel.projectApplyComplete.on(.next(()))
+                    })
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        outputs.projectLeaderProfileDidTap
+            .withUnretained(self)
+            .subscribe { _ in
+                // 프로필 뷰로
+            }
+            .disposed(by: disposeBag)
+        
+        outputs.projectReportButtonDidTap
+            .withUnretained(self)
+            .subscribe { _ in
+                DispatchQueue.main.async {
+                    self.alertViewAlert(title: "신고", message: "프로젝트를 신고하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
+                        self.viewModel.projectReportComplete.on(.next(()))
+                    })
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        outputs.projectEditButtonDidTap
+            .withUnretained(self)
+            .subscribe { _ in
+                // 글 변경 뷰로
+            }
+            .disposed(by: disposeBag)
+    }
 }
