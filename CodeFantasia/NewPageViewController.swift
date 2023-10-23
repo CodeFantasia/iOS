@@ -8,6 +8,7 @@
 import SnapKit
 import Then
 import UIKit
+
 class NewPageViewController: UIViewController {
     // 뒤로가기 버튼
     private let backButton = UIButton().then {
@@ -81,6 +82,7 @@ class NewPageViewController: UIViewController {
         textField.layer.borderColor = UIColor.black.cgColor
         textField.backgroundColor = .white
         textField.frame = CGRect(x: 20, y: 430, width: UIScreen.main.bounds.width - 40, height: 30)
+        textField.addTarget(self, action: #selector(showPlatformSelection), for: .touchDown) //
         return textField
     }()
 
@@ -302,6 +304,20 @@ class NewPageViewController: UIViewController {
             $0.width.equalTo(UIScreen.main.bounds.width - 20)
             $0.height.equalTo(30)
         }
+    }
+
+    @objc func showPlatformSelection() {
+        let showPlatformSelectionVC = PlatformSelectionViewController() // 모달 뷰 컨트롤러 인스턴스 생성
+        // 모달 페이지 표시 스타일 설정 (예: .popover)
+        showPlatformSelectionVC.modalPresentationStyle = .popover
+        // 모달 페이지 크기 및 위치 설정
+        showPlatformSelectionVC.preferredContentSize = CGSize(width: 300, height: 400)
+        if let popoverPresentationController = showPlatformSelectionVC.popoverPresentationController {
+            popoverPresentationController.sourceView = techLanguageTextField
+            popoverPresentationController.sourceRect = techLanguageTextField.bounds
+            popoverPresentationController.permittedArrowDirections = .up
+        }
+        present(showPlatformSelectionVC, animated: true, completion: nil)
     }
 }
 
