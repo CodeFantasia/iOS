@@ -42,6 +42,13 @@ class PaddingLabel: UILabel {
     override func layoutSubviews() {
         super.layoutSubviews()
         
+        if let textLayer {
+            textLayer.removeFromSuperlayer()
+        }
+        if let shadowLayer {
+            shadowLayer.removeFromSuperlayer()
+        }
+          
         textLayer = CATextLayer()
         textLayer.frame = CGRect(x: Int(bounds.origin.x+10.0), y: Int(bounds.origin.y+10.0), width: Int(bounds.width-20.0), height: Int(bounds.height-20))
         textLayer.isWrapped = true
