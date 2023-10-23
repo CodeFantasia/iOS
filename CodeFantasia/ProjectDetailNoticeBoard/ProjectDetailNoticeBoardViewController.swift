@@ -42,8 +42,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     private lazy var projectImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = .defaultProfileImage
-        $0.layer.cornerRadius = .cornerRadius
-        $0.clipsToBounds = true
+        $0.roundCornersForAspectFit(radius: .cornerRadius)
     }
     private lazy var techStackStackView = UIStackView().then {
         $0.axis = .vertical
@@ -233,7 +232,14 @@ extension ProjectDetailNoticeBoardViewController {
                 DispatchQueue.main.async {
                     //TODO: project 모델 타이틀, 부 타이틀 없음
                     self.techStackContextView.text = project.platform.reduce("", {$0 + $1.rawValue + "\n"})
-                    self.projectImageView.kf.setImage(with: URL(string: project.imageUrl ?? ""))
+                    self.projectImageView.kf.setImage(with: URL(string: project.imageUrl ?? "")) { result in
+                        switch result {
+                        case .success(_):
+                            self.projectImageView.roundCornersForAspectFit(radius: .cornerRadius)
+                        case .failure(_):
+                            self.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
+                        }
+                    }
                     self.recruitmentStatusContextLabel.text = project.recruitmentField ?? ""
                     self.projectIntroduceContextLabel.text = project.projectDescription ?? ""
                     self.projectMeetingTypeContextLabel.text = project.meetingType ?? ""
