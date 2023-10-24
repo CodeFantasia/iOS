@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		313064E42ADFFA9C00D1CC6C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313064E32ADFFA9C00D1CC6C /* DataModel.swift */; };
 		3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3191DEDE2AD8F9B30059AACB /* TabbarM.swift */; };
+		31C6317A2AE6930700D741AF /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C631792AE6930700D741AF /* UIImageView+.swift */; };
+		31C6317C2AE6931A00D741AF /* ProjectSearchViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6317B2AE6931A00D741AF /* ProjectSearchViewVC.swift */; };
 		6BBF70772ADFB72100F58080 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70762ADFB72100F58080 /* ProfileViewController.swift */; };
 		6BBF707A2ADFB73700F58080 /* ProjectBoardTableviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */; };
 		6BBF707B2ADFB73700F58080 /* ProjectBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70792ADFB73700F58080 /* ProjectBoardVC.swift */; };
@@ -112,6 +114,8 @@
 /* Begin PBXFileReference section */
 		313064E32ADFFA9C00D1CC6C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		3191DEDE2AD8F9B30059AACB /* TabbarM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarM.swift; sourceTree = "<group>"; };
+		31C631792AE6930700D741AF /* UIImageView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		31C6317B2AE6931A00D741AF /* ProjectSearchViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSearchViewVC.swift; sourceTree = "<group>"; };
 		6BBF70762ADFB72100F58080 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectBoardTableviewCell.swift; sourceTree = "<group>"; };
 		6BBF70792ADFB73700F58080 /* ProjectBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectBoardVC.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */,
+				31C6317B2AE6931A00D741AF /* ProjectSearchViewVC.swift */,
 				6BBF70792ADFB73700F58080 /* ProjectBoardVC.swift */,
 			);
 			path = ProjectBoard;
@@ -315,6 +320,7 @@
 				F13AED022AE611F00098C654 /* Rx+UIViewController.swift */,
 				6BBF70842AE692E100F58080 /* UIImageView+.swift */,
 				F13AED052AE63D320098C654 /* UIViewController+.swift */,
+				31C631792AE6930700D741AF /* UIImageView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -547,6 +553,8 @@
 				ABC3DF262AD45E8B008CEF1A /* ViewController.swift in Sources */,
 				6BBF707A2ADFB73700F58080 /* ProjectBoardTableviewCell.swift in Sources */,
 				F1E653EC2ADD539D00274A34 /* Metrics.swift in Sources */,
+				31C6317C2AE6931A00D741AF /* ProjectSearchViewVC.swift in Sources */,
+				31C6317A2AE6930700D741AF /* UIImageView+.swift in Sources */,
 				F187DF252ADEA911001B097D /* UIHoverButton.swift in Sources */,
 				ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */,
 				6BC007BE2ADD0BA5005E544F /* NewPageViewController.swift in Sources */,
