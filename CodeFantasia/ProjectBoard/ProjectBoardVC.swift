@@ -20,6 +20,7 @@ class ProjectBoardVC: UIViewController {
     let mockData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String)] = [
         (UIImage(named: "digimon"), "즐코팟 모집중!", "나의 첫 사이드 프로젝트 여기서 시작해보자!", [IconModel(image: UIImage(named: "swift") ?? UIImage()), IconModel(image: UIImage(named: "javascript") ?? UIImage())], "모집 중"),
         (UIImage(named: "pokemon"), "포켓몬 마스터 모집중!", "피카츄 라이츄 파이리 꼬북이 버터풀 야도란 피존투 또가스", [IconModel(image: UIImage(named: "python") ?? UIImage())], "모집 완료"),
+        (UIImage(named: "pokemon"), "Pokemon Master Here!", "피카츄 라이츄 파이리 꼬북이 버터풀 야도란 피존투 또가스", [IconModel(image: UIImage(named: "python") ?? UIImage())], "모집 완료")
     ]
 
     override func viewDidLoad() {
@@ -65,7 +66,8 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
 // MARK: - Actions & Event Handlers (추후에 분리)
 extension ProjectBoardVC {
     @objc func searchButtonTapped() {
-        // TODO: Implement search action
+        let searchVC = ProjectSearchViewVC(mockData: mockData)
+        navigationController?.pushViewController(searchVC, animated: true)
     }
     
     @objc func bellButtonTapped() {
@@ -73,7 +75,9 @@ extension ProjectBoardVC {
     }
     
     @objc func pencilButtonTapped() {
-        // TODO: Implement pencil action
+        let newPageViewController = NewPageViewController()
+        navigationController?.pushViewController(newPageViewController, animated: true)
+    
     }
 }
 
