@@ -120,3 +120,4 @@ class PlatformSelectionViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 }
+
