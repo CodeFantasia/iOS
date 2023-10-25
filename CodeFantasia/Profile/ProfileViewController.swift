@@ -5,8 +5,10 @@
 //  Created by Hyunwoo Lee on 2023/10/12.
 //
 import UIKit
-import SnapKit
 import Then
+import SnapKit
+import RxSwift
+import RxCocoa
 
 class ProfileViewController: UIViewController {
 
@@ -126,6 +128,16 @@ class ProfileViewController: UIViewController {
         $0.axis = .vertical
         $0.spacing = .spacing
     }
+    let viewModel: ProfileViewModel
+    private let disposeBag = DisposeBag()
+    init(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,5 +217,58 @@ extension ProfileViewController {
         interestUnderline.snp.makeConstraints {
             $0.height.equalTo(infoUnderline)
         }
+    }
+}
+
+//MARK: - binding
+extension ProfileViewController {
+    private func bind() {
+        let inputs = ProfileViewModel.Input(
+            viewDidLoad: rx.viewDidLoad.asObservable(),
+            profileEditTapped: editButton.rx.tap.asObservable(),
+            logoutTapped: logoutButton.rx.tap.asObservable()
+        )
+        let outputs = viewModel.transform(input: inputs)
+        
+        outputs.userDataFetched
+            .subscribe(onNext: { [weak self] user in
+                guard let self else {return}
+                DispatchQueue.main.async {
+                    self.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
+                        switch result {
+                        case .success(_):
+                            self.profileImage.roundCornersForAspectFit(radius: .cornerRadius)
+                        case .failure(_):
+                            self.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
+                        }
+                    }
+                   
+                    self.nicknameLabel.text = user.nickname
+                    self.produceContent.text = user.selfIntroduction ?? ""
+                    self.urlLabel.text = user.portfolioURL ?? ""
+                }
+            }, onError: { error in
+                self.alertViewActionSheet(
+                    title: "오류 발생",
+                    message: error.localizedDescription,
+                    acceptText: "확인",
+                    cancelText: nil
+                )
+            })
+            .disposed(by: disposeBag)
+        
+        outputs.profileEditDidTap
+            .withUnretained(self)
+            .subscribe { _ in
+                //프로필 수정
+            }
+            .disposed(by: disposeBag)
+        
+        outputs.logoutDidTap
+            .withUnretained(self)
+            .subscribe { _ in
+                //로그아웃
+            }
+            .disposed(by: disposeBag)
     }
 }

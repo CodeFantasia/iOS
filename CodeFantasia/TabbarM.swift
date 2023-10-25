@@ -33,8 +33,7 @@ class TabBarController: UITabBarController {
         let tabbarMainVC = UINavigationController(rootViewController: ProjectBoardVC())
         let secondTabIcon = UIImage(named: "TabbarHome")?.withRenderingMode(.alwaysOriginal).resize(to: iconSize)
         tabbarMainVC.tabBarItem = UITabBarItem(title: "홈", image: secondTabIcon, tag: 1)
-        
-        let tabbarProfileVC = UINavigationController(rootViewController: ProfileViewController())
+        let tabbarProfileVC = UINavigationController(rootViewController: ProfileViewController(viewModel: ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: String())))
         let thirdTabIcon = UIImage(named: "TabbarProfile")?.withRenderingMode(.alwaysOriginal).resize(to: iconSize)
         tabbarProfileVC.tabBarItem = UITabBarItem(title: "프로필", image: thirdTabIcon, tag: 2)
         
