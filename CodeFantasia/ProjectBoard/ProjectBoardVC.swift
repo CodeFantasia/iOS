@@ -49,28 +49,7 @@ class ProjectBoardVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        // 모의 프로젝트 데이터
-//        let mockProject = Project(
-//            projectTitle: "프로젝트 1",
-//            projecSubtitle: "프로젝트 1의 설명",
-//            techStack: [],
-//            recruitmentCount: 2,
-//            projectDescription: "모의 프로젝트 설명",
-//            projectDuration: "3개월",
-//            meetingType: "온라인",
-//            imageUrl: "sampleImage1",
-//            projectID: UUID(),
-//            platform: [.WebApplication],
-//            recruitmentField: "백엔드 개발",
-//            recruitingStatus: true,
-//            teamMember: []
-//        )
-//        
-//        // Firebase에 모의 프로젝트 데이터 저장
-//        projectRepository.create(project: mockProject)
-////
-//        // 바로 Firebase에서 데이터 가져와서 테이블 뷰에 표시
+
         self.fetchDataFromFirebase()
 
         setupNavigationBar()
