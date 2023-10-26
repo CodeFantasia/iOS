@@ -13,17 +13,17 @@ final class ProjectDetailNoticeBoardViewModel {
     
     struct Input {
         var viewDidLoad: Observable<Void>
-        var editImageTapped: Observable<Void>
-        var profileImageTapped: Observable<Void>
-        var projectApplyButtonTapped: Observable<Void>
-        var projectReportButtonTapped: Observable<Void>
+        var editImageTapped: Driver<Void>
+        var profileImageTapped: Driver<Void>
+        var projectApplyButtonTapped: Driver<Void>
+        var projectReportButtonTapped: Driver<Void>
     }
     struct Output {
         var projectDataFetched: Observable<Project>
-        var projectApplyButtonDidTap: Observable<Void>
-        var projectLeaderProfileDidTap: Observable<Void>
-        var projectEditButtonDidTap: Observable<Void>
-        var projectReportButtonDidTap: Observable<Void>
+        var projectApplyButtonDidTap: Driver<Void>
+        var projectLeaderProfileDidTap: Driver<Void>
+        var projectEditButtonDidTap: Driver<Void>
+        var projectReportButtonDidTap: Driver<Void>
 //        var projectApplySuccess: Observable<Void>
 //        var projectApplyFail: Observable<Void>
 //        var projectReportSuccess: Observable<Void>
@@ -45,19 +45,19 @@ final class ProjectDetailNoticeBoardViewModel {
     
     func transform(input: Input) -> Output {
         
-        let projectData = Observable<Project>.create { observer in
+        let projectData = Observable<Project>.create { [weak self] observer in
+            guard let self else { return Disposables.create() }
             input.viewDidLoad
-                .withUnretained(self)
                 .subscribe { projectId in
-                self.projectRepository.read(projectId: self.projectId)
-                    .subscribe(onSuccess: { project in
-                        observer.onNext(project)
-                    }, onFailure: { error in
-                        observer.onError(error)
-                    })
-                    .disposed(by: self.disposeBag)
-            }
-            .disposed(by: self.disposeBag)
+                    self.projectRepository.read(projectId: self.projectId)
+                        .subscribe(onSuccess: { project in
+                            observer.onNext(project)
+                        }, onFailure: { error in
+                            observer.onError(error)
+                        })
+                        .disposed(by: self.disposeBag)
+                }
+                .disposed(by: self.disposeBag)
             return Disposables.create()
         }
         
