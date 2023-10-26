@@ -130,6 +130,8 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     private lazy var reportButton = UIBarButtonItem(image: .reportImage, style: .plain, target: self, action: nil)
     private let viewModel: ProjectDetailNoticeBoardViewModel
     private let disposeBag = DisposeBag()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
     init(viewModel: ProjectDetailNoticeBoardViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -145,6 +147,7 @@ extension ProjectDetailNoticeBoardViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        activityIndicator.startAnimating()
         // 파티장이라면
         navigationItem.rightBarButtonItems = [reportButton, editButton]
         // 아니면
@@ -158,6 +161,8 @@ extension ProjectDetailNoticeBoardViewController {
         view.backgroundColor = .backgroundColor
         view.addSubview(scrollView)
         scrollView.addSubview(contentStackView)
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
         [projectTitleAndTeamLeaderProfileImageStackView, projectsubTitleLabel, projectImageView, techStackStackView, recruitmentStatusStackView, projectIntroduceStackView, projectPeriodStackView, projectMeetingTypeStackView, projectApplyButton].forEach {
             contentStackView.addArrangedSubview($0)
         }
@@ -219,77 +224,72 @@ extension ProjectDetailNoticeBoardViewController {
     private func bind() {
         let inputs = ProjectDetailNoticeBoardViewModel.Input(
             viewDidLoad: rx.viewDidLoad.asObservable(),
-            editImageTapped: editButton.rx.tap.asObservable(),
-            profileImageTapped: projectTeamLeaderProfileImageButton.rx.tap.asObservable(),
-            projectApplyButtonTapped: projectApplyButton.rx.tap.asObservable(),
-            projectReportButtonTapped: reportButton.rx.tap.asObservable()
+            editImageTapped: editButton.rx.tap.asDriver(),
+            profileImageTapped: projectTeamLeaderProfileImageButton.rx.tap.asDriver(),
+            projectApplyButtonTapped: projectApplyButton.rx.tap.asDriver(),
+            projectReportButtonTapped: reportButton.rx.tap.asDriver()
         )
         let outputs = viewModel.transform(input: inputs)
         
         outputs.projectDataFetched
-            .subscribe(onNext: { [weak self] project in
-                guard let self else {return}
+            .withUnretained(self)
+            .subscribe(onNext: { owner, project in
                 DispatchQueue.main.async {
+                    owner.activityIndicator.stopAnimating()
                     //TODO: project 모델 타이틀, 부 타이틀 없음
-                    self.techStackContextView.text = project.platform.reduce("", {$0 + $1.rawValue + "\n"})
-                    self.projectImageView.kf.setImage(with: URL(string: project.imageUrl ?? "")) { result in
+                    owner.techStackContextView.text = project.platform.reduce("", {$0 + $1.rawValue + "\n"})
+                    owner.projectImageView.kf.setImage(with: URL(string: project.imageUrl ?? "")) { result in
                         switch result {
                         case .success(_):
-                            self.projectImageView.roundCornersForAspectFit(radius: .cornerRadius)
+                            owner.projectImageView.roundCornersForAspectFit(radius: .cornerRadius)
                         case .failure(_):
-                            self.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
+                            owner.alertViewAlert(title: "오류 발생", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
                         }
                     }
-                    self.recruitmentStatusContextLabel.text = project.recruitmentField ?? ""
-                    self.projectIntroduceContextLabel.text = project.projectDescription ?? ""
-                    self.projectMeetingTypeContextLabel.text = project.meetingType ?? ""
-                    self.projectPeriodContextLabel.text = project.projectDuration ?? ""
+                    owner.recruitmentStatusContextLabel.text = project.recruitmentField ?? ""
+                    owner.projectIntroduceContextLabel.text = project.projectDescription ?? ""
+                    owner.projectMeetingTypeContextLabel.text = project.meetingType ?? ""
+                    owner.projectPeriodContextLabel.text = project.projectDuration ?? ""
                 }
-                
-            }, onError: { error in
-                self.alertViewActionSheet(
-                    title: "오류 발생",
-                    message: error.localizedDescription,
-                    acceptText: "확인",
-                    cancelText: nil
-                )
+            }, onError: { [weak self] error in
+                DispatchQueue.main.async {
+                    self?.activityIndicator.stopAnimating()
+                    self?.alertViewActionSheet(
+                        title: "오류 발생",
+                        message: error.localizedDescription,
+                        acceptText: "확인",
+                        cancelText: nil
+                    )
+                }
             })
             .disposed(by: disposeBag)
         
         outputs.projectApplyButtonDidTap
-            .withUnretained(self)
-            .subscribe { _ in
-                DispatchQueue.main.async {
-                    self.alertViewAlert(title: "신청", message: "프로젝트에 신청하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
-                        self.viewModel.projectApplyComplete.on(.next(()))
-                    })
-                }
-            }
+            .drive(with: self, onNext: { owner, _ in
+                owner.alertViewAlert(title: "신청", message: "프로젝트에 신청하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
+                    owner.viewModel.projectApplyComplete.on(.next(()))
+                })
+            })
             .disposed(by: disposeBag)
         
         outputs.projectLeaderProfileDidTap
-            .withUnretained(self)
-            .subscribe { _ in
+            .drive(with: self, onNext: { owner, _ in
                 // 프로필 뷰로
-            }
+            })
             .disposed(by: disposeBag)
         
         outputs.projectReportButtonDidTap
-            .withUnretained(self)
-            .subscribe { _ in
-                DispatchQueue.main.async {
-                    self.alertViewAlert(title: "신고", message: "프로젝트를 신고하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
-                        self.viewModel.projectReportComplete.on(.next(()))
-                    })
-                }
-            }
+            .drive(with: self, onNext: { owner, _ in
+                owner.alertViewAlert(title: "신고", message: "프로젝트를 신고하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
+                    owner.viewModel.projectReportComplete.on(.next(()))
+                })
+            })
             .disposed(by: disposeBag)
         
         outputs.projectEditButtonDidTap
-            .withUnretained(self)
-            .subscribe { _ in
-                // 글 변경 뷰로
-            }
+            .drive(with: self, onNext: { owner, _ in
+                // 편집 뷰로
+            })
             .disposed(by: disposeBag)
     }
 }
