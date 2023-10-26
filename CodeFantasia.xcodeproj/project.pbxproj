@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		311FF5202AE90BC4008AB16E /* ProjectSearchViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6317B2AE6931A00D741AF /* ProjectSearchViewVC.swift */; };
+		311FF5212AE90BD1008AB16E /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C631792AE6930700D741AF /* UIImageView+.swift */; };
+		311FF5222AE90BDA008AB16E /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB42AE2503B00ACE79F /* Button.swift */; };
+		311FF5232AE90BDD008AB16E /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB82AE2504700ACE79F /* TextField.swift */; };
+		311FF5242AE90BE0008AB16E /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB62AE2503F00ACE79F /* Label.swift */; };
 		313064E42ADFFA9C00D1CC6C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313064E32ADFFA9C00D1CC6C /* DataModel.swift */; };
 		3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3191DEDE2AD8F9B30059AACB /* TabbarM.swift */; };
 		31C6317A2AE6930700D741AF /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C631792AE6930700D741AF /* UIImageView+.swift */; };
@@ -597,6 +602,7 @@
 				F1E18BD02AE105B50041638B /* Fonts.swift in Sources */,
 				F13AED072AE63D320098C654 /* UIViewController+.swift in Sources */,
 				F1E18BD12AE105B50041638B /* ViewController.swift in Sources */,
+				311FF5222AE90BDA008AB16E /* Button.swift in Sources */,
 				F1E18BD22AE105B50041638B /* ProjectBoardTableviewCell.swift in Sources */,
 				F1E18BD32AE105B50041638B /* Metrics.swift in Sources */,
 				F1E18BD42AE105B50041638B /* UIHoverButton.swift in Sources */,
@@ -610,11 +616,15 @@
 				F1E18BDA2AE105B50041638B /* Palette.swift in Sources */,
 				F1E18BDB2AE105B50041638B /* DataModel.swift in Sources */,
 				F1E18BDC2AE105B50041638B /* PaddingLabel.swift in Sources */,
+				311FF5232AE90BDD008AB16E /* TextField.swift in Sources */,
 				F1E18BDD2AE105B50041638B /* MyProjectTableViewCell.swift in Sources */,
 				F17108A52AE21AED0076C575 /* Data+.swift in Sources */,
 				F13AED042AE611F00098C654 /* Rx+UIViewController.swift in Sources */,
 				F1E18BDE2AE105B50041638B /* Images.swift in Sources */,
+				311FF5202AE90BC4008AB16E /* ProjectSearchViewVC.swift in Sources */,
 				F1E18BDF2AE105B50041638B /* ProjectBoardVC.swift in Sources */,
+				311FF5242AE90BE0008AB16E /* Label.swift in Sources */,
+				311FF5212AE90BD1008AB16E /* UIImageView+.swift in Sources */,
 				F1E18BE02AE105B50041638B /* ProjectDetailNoticeBoardViewController.swift in Sources */,
 				F1E18BE12AE105B50041638B /* ProfileViewController.swift in Sources */,
 				F1E18BE22AE105B50041638B /* FirebaseManager.swift in Sources */,
