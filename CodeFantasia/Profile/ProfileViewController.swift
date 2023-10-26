@@ -4,11 +4,13 @@
 //
 //  Created by Hyunwoo Lee on 2023/10/12.
 //
+
 import UIKit
 import Then
 import SnapKit
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class ProfileViewController: UIViewController {
 
@@ -49,7 +51,7 @@ class ProfileViewController: UIViewController {
         $0.numberOfLines = 3
         $0.font = UIFont.body
     }
-    
+
     private lazy var infoLabel = UILabel().then {
         $0.text = "나의 스펙 정보"
         $0.font = UIFont.subTitle
@@ -58,12 +60,15 @@ class ProfileViewController: UIViewController {
     private lazy var infoUnderline = UIView().then {
         $0.backgroundColor = UIColor.black
     }
+    
     private lazy var techUnderline = UIView().then {
         $0.backgroundColor = UIColor.systemGray
     }
+    
     private lazy var urlUnderline = UIView().then {
         $0.backgroundColor = UIColor.systemGray
     }
+    
     private lazy var interestUnderline = UIView().then {
         $0.backgroundColor = UIColor.black
     }
@@ -128,7 +133,7 @@ class ProfileViewController: UIViewController {
         $0.axis = .vertical
         $0.spacing = .spacing
     }
-    let viewModel: ProfileViewModel
+    private let viewModel: ProfileViewModel
     private let disposeBag = DisposeBag()
     init(viewModel: ProfileViewModel) {
         self.viewModel = viewModel
@@ -138,14 +143,22 @@ class ProfileViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+}
+extension ProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+//
+//        let mockProfile = UserProfile(
+//        nickname: "이현우", primaryLanguage: [], techStack: [], areasOfInterest: [], portfolioURL: "https://www.navercorp.com/img/ko/og/logo.png", selfIntroduction: "안녕하세요", githubURL: "https://www.navercorp.com/img/ko/og/logo.png", blogURL: "https://www.navercorp.com/img/ko/og/logo.png", profileImageURL: "https://www.navercorp.com/img/ko/og/logo.png", userProjects: [], userID: UUID()
+//        )
+//        viewModel.userRepository.create(user: mockProfile)
+//
         view.backgroundColor = UIColor.backgroundColor
         navigationbarTitle()
         setupLayout()
     }
 }
+
 extension ProfileViewController {
 
     private func navigationbarTitle() {
@@ -229,7 +242,7 @@ extension ProfileViewController {
             logoutTapped: logoutButton.rx.tap.asObservable()
         )
         let outputs = viewModel.transform(input: inputs)
-        
+
         outputs.userDataFetched
             .subscribe(onNext: { [weak self] user in
                 guard let self else {return}
@@ -242,7 +255,7 @@ extension ProfileViewController {
                             self.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
                         }
                     }
-                   
+
                     self.nicknameLabel.text = user.nickname
                     self.produceContent.text = user.selfIntroduction ?? ""
                     self.urlLabel.text = user.portfolioURL ?? ""
@@ -256,14 +269,14 @@ extension ProfileViewController {
                 )
             })
             .disposed(by: disposeBag)
-        
+
         outputs.profileEditDidTap
             .withUnretained(self)
             .subscribe { _ in
                 //프로필 수정
             }
             .disposed(by: disposeBag)
-        
+
         outputs.logoutDidTap
             .withUnretained(self)
             .subscribe { _ in

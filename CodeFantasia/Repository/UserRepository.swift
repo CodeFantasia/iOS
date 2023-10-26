@@ -27,7 +27,7 @@ struct UserRepository: UserRepositoryProtocol {
     private let collectionId: String
     
     init(
-        collectionId: String = "UserProfile",
+        collectionId: String = "User",
         firebaseBaseManager: FireBaseManagerProtocol
     ) {
         self.collectionId = collectionId
