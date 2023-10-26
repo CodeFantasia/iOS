@@ -24,26 +24,22 @@ class ProjectBoardVC: UIViewController {
 
     private func fetchDataFromFirebase() {
         projectRepository.readAll()
-            .subscribe(onSuccess: { [weak self] projects in
-                self?.projectsData = projects.map { project in
-
-                    let image = UIImage(named: project.imageUrl ?? "")
-                    let statusString = project.recruitingStatus ?? false ? "모집 중" : "모집 완료"
-                    
-
-                    let icons: [IconModel] = project.techStack.map { tech in
-
-                        return IconModel(image: UIImage(named: tech.techForCategory(.frontendDevelopment)?.first ?? "") ?? UIImage())
-                    }
-
-                    return (image, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString)
-                }
-                self?.tableView.reloadData()
-            }, onFailure: { error in
-                print("Error fetching data: \(error)")
-            })
-            .disposed(by: bag)
-    }
+          .observe(on: MainScheduler.instance)
+          .subscribe(onSuccess: { [weak self] projects in
+            self?.projectsData = projects.map { project in
+              let image = UIImage(named: project.imageUrl ?? "")
+              let statusString = project.recruitingStatus ?? false ? "모집 중" : "모집 완료"
+              let icons: [IconModel] = project.techStack.map { tech in
+                return IconModel(image: UIImage(named: tech.techForCategory(.frontendDevelopment)?.first ?? "") ?? UIImage())
+              }
+              return (image, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString)
+            }
+            self?.tableView.reloadData()
+          }, onFailure: { error in
+            print("Error fetching data: \(error)")
+          })
+          .disposed(by: bag)
+      }
 
 
 
