@@ -108,6 +108,8 @@
 		F1E653EC2ADD539D00274A34 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E653EB2ADD539D00274A34 /* Metrics.swift */; };
 		F1F51AC82AE9F523002E8507 /* ImageStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F51AC72AE9F522002E8507 /* ImageStorageManager.swift */; };
 		F1F51AC92AE9F525002E8507 /* ImageStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F51AC72AE9F522002E8507 /* ImageStorageManager.swift */; };
+		F1F51ACB2AEA0CF0002E8507 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F51ACA2AEA0CF0002E8507 /* NetworkManager.swift */; };
+		F1F51ACC2AEA0CF2002E8507 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F51ACA2AEA0CF0002E8507 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +157,7 @@
 		F1E653E92AD8F63D00274A34 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		F1E653EB2ADD539D00274A34 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		F1F51AC72AE9F522002E8507 /* ImageStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStorageManager.swift; sourceTree = "<group>"; };
+		F1F51ACA2AEA0CF0002E8507 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -322,6 +325,7 @@
 			children = (
 				F1E18B482AE0F9A40041638B /* FirebaseManager.swift */,
 				F1F51AC72AE9F522002E8507 /* ImageStorageManager.swift */,
+				F1F51ACA2AEA0CF0002E8507 /* NetworkManager.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -554,6 +558,7 @@
 				AB14BEB52AE2503B00ACE79F /* Button.swift in Sources */,
 				ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */,
 				ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */,
+				F1F51ACB2AEA0CF0002E8507 /* NetworkManager.swift in Sources */,
 				F1E653E62AD8E3A900274A34 /* Palette.swift in Sources */,
 				F13AED062AE63D320098C654 /* UIViewController+.swift in Sources */,
 				AB14BEBC2AE2505900ACE79F /* LoginVC.swift in Sources */,
@@ -596,6 +601,7 @@
 				F1E18BD92AE105B50041638B /* SceneDelegate.swift in Sources */,
 				F1E18BDA2AE105B50041638B /* Palette.swift in Sources */,
 				F1E18BDB2AE105B50041638B /* DataModel.swift in Sources */,
+				F1F51ACC2AEA0CF2002E8507 /* NetworkManager.swift in Sources */,
 				F1E18BDC2AE105B50041638B /* PaddingLabel.swift in Sources */,
 				F1E18BDD2AE105B50041638B /* MyProjectTableViewCell.swift in Sources */,
 				F17108A52AE21AED0076C575 /* Data+.swift in Sources */,
