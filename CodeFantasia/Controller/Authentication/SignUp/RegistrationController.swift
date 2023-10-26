@@ -72,7 +72,7 @@ class RegistrationController: UIViewController {
             make.height.equalTo(50)
         }
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont.buttonTitle
         button.addTarget(self, action: #selector(handleRegsiter), for: .touchUpInside)
         return button
     }()
@@ -128,7 +128,7 @@ class RegistrationController: UIViewController {
         
         view.addSubview(stack)
         stack.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(CGFloat.spacing)
             make.left.right.equalToSuperview().inset(8)
         }
     }

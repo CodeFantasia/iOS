@@ -42,7 +42,7 @@ class LoginController: UIViewController {
             make.height.equalTo(50)
         }
         button.layer.cornerRadius = 5
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        button.titleLabel?.font = UIFont.buttonTitle
         button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
         return button
     }()
@@ -83,7 +83,7 @@ class LoginController: UIViewController {
         view.addSubview(logoImageView)
         logoImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.height.width.equalTo(150)
         }
         
@@ -95,7 +95,7 @@ class LoginController: UIViewController {
         view.addSubview(stack)
         stack.snp.makeConstraints { make in
             make.top.equalTo(logoImageView.snp.bottom)
-            make.left.right.equalToSuperview().inset(8)
+            make.left.right.equalToSuperview().inset(CGFloat.spacing)
         }
         
         view.addSubview(dontHaveAccountButton)
