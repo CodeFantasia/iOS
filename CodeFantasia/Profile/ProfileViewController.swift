@@ -4,9 +4,13 @@
 //
 //  Created by Hyunwoo Lee on 2023/10/12.
 //
+
 import UIKit
-import SnapKit
 import Then
+import SnapKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 class ProfileViewController: UIViewController {
 
@@ -47,7 +51,7 @@ class ProfileViewController: UIViewController {
         $0.numberOfLines = 3
         $0.font = UIFont.body
     }
-    
+
     private lazy var infoLabel = UILabel().then {
         $0.text = "나의 스펙 정보"
         $0.font = UIFont.subTitle
@@ -56,12 +60,15 @@ class ProfileViewController: UIViewController {
     private lazy var infoUnderline = UIView().then {
         $0.backgroundColor = UIColor.black
     }
+    
     private lazy var techUnderline = UIView().then {
         $0.backgroundColor = UIColor.systemGray
     }
+    
     private lazy var urlUnderline = UIView().then {
         $0.backgroundColor = UIColor.systemGray
     }
+    
     private lazy var interestUnderline = UIView().then {
         $0.backgroundColor = UIColor.black
     }
@@ -126,14 +133,27 @@ class ProfileViewController: UIViewController {
         $0.axis = .vertical
         $0.spacing = .spacing
     }
-
+    private let viewModel: ProfileViewModel
+    private let disposeBag = DisposeBag()
+    init(viewModel: ProfileViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+extension ProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+
         view.backgroundColor = UIColor.backgroundColor
         navigationbarTitle()
         setupLayout()
     }
 }
+
 extension ProfileViewController {
 
     private func navigationbarTitle() {
@@ -142,7 +162,6 @@ extension ProfileViewController {
     }
     
     private func setupLayout() {
-
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
         produceView.addSubview(profileImage)
@@ -175,8 +194,6 @@ extension ProfileViewController {
             $0.width.equalToSuperview()
         }
         produceView.snp.makeConstraints {
-            $0.leading.equalTo(stackView.snp.leading).inset(20)
-            $0.trailing.equalTo(stackView.snp.trailing).inset(20)
             $0.height.equalTo(250)
         }
         profileImage.snp.makeConstraints {
@@ -198,26 +215,69 @@ extension ProfileViewController {
         }
         infoUnderline.snp.makeConstraints {
             $0.height.equalTo(1)
-            $0.leading.equalTo(stackView.snp.leading).inset(20)
-            $0.trailing.equalTo(stackView.snp.trailing).inset(20)
         }
         techUnderline .snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.leading.trailing.equalTo(infoUnderline)
+            $0.height.equalTo(infoUnderline)
         }
         urlUnderline.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.leading.trailing.equalTo(infoUnderline)
+            $0.height.equalTo(infoUnderline)
         }
         interestUnderline.snp.makeConstraints {
-            $0.height.equalTo(1)
-            $0.leading.trailing.equalTo(infoUnderline)
+            $0.height.equalTo(infoUnderline)
         }
-        editButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(infoUnderline)
-        }
-        logoutButton.snp.makeConstraints {
-            $0.leading.trailing.equalTo(infoUnderline)
-        }
+    }
+}
+
+//MARK: - binding
+extension ProfileViewController {
+    private func bind() {
+        let inputs = ProfileViewModel.Input(
+            viewDidLoad: rx.viewDidLoad.asObservable(),
+            profileEditTapped: editButton.rx.tap.asObservable(),
+            logoutTapped: logoutButton.rx.tap.asObservable()
+        )
+        let outputs = viewModel.transform(input: inputs)
+
+        outputs.userDataFetched
+            .subscribe(onNext: { [weak self] user in
+                guard let self else {return}
+                DispatchQueue.main.async {
+                    self.interestLabel.text = user.areasOfInterest.reduce("", {$0 + $1.rawValue + "\n"})
+                    self.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
+                        switch result {
+                        case .success(_):
+                            self.profileImage.roundCornersForAspectFit(radius: 50)
+                        case .failure(_):
+                            self.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
+                        }
+                    }
+
+                    self.nicknameLabel.text = user.nickname
+                    self.produceContent.text = user.selfIntroduction ?? ""
+                    self.urlLabel.text = user.portfolioURL ?? ""
+                }
+            }, onError: { error in
+                self.alertViewActionSheet(
+                    title: "오류 발생",
+                    message: error.localizedDescription,
+                    acceptText: "확인",
+                    cancelText: nil
+                )
+            })
+            .disposed(by: disposeBag)
+
+        outputs.profileEditDidTap
+            .withUnretained(self)
+            .subscribe { _ in
+                //프로필 수정
+            }
+            .disposed(by: disposeBag)
+
+        outputs.logoutDidTap
+            .withUnretained(self)
+            .subscribe { _ in
+                //로그아웃
+            }
+            .disposed(by: disposeBag)
     }
 }

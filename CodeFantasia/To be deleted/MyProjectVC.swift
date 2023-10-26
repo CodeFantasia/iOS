@@ -7,18 +7,37 @@
 import UIKit
 import SnapKit
 import Then
+import RxCocoa
+import RxSwift
+import Firebase
 
 class MyProjectVC: UITableViewController {
+    
+    private var projectDataArray: [Project] = []
     
     let barTitle = UILabel().then {
         $0.text = "내 프로젝트"
         $0.font = UIFont.title
         $0.textColor = .black
     }
+    
+    private let viewModel: MyProjectViewModel
+    private let disposeBag = DisposeBag()
+    
+    init(viewModel: MyProjectViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationbarTitle()
+
         tableView.backgroundColor = UIColor.backgroundColor
         tableView.separatorStyle = .none
         tableView.register(MyProjectTableViewCell.self, forCellReuseIdentifier: MyProjectTableViewCell.identifier)
@@ -30,26 +49,22 @@ class MyProjectVC: UITableViewController {
 extension MyProjectVC {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return projectDataArray.count
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        return 270
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MyProjectTableViewCell.identifier, for: indexPath) as? MyProjectTableViewCell else { return UITableViewCell() }
-
+        let project = projectDataArray[indexPath.row]
         cell.backgroundColor = UIColor.backgroundColor
-        cell.projectTitle.text = "즐코팟 모집중"
-        cell.projectSubtitle.text = """
-                                    나의 첫 사이드 프로젝트 여기서 시작해보
-                                    자!
-                                    """
+        cell.projectTitle.text = project.projectTitle
+        cell.projectSubtitle.text = project.projecSubtitle
         cell.dateLabel.text = "D-17"
-        cell.projectImage.backgroundColor = .gray
+        cell.projectImage.kf.setImage(with: URL(string: project.imageUrl ?? ""))
         cell.dateView.backgroundColor = UIColor.buttonPrimaryColor
-
         return cell
     }
 
@@ -57,4 +72,23 @@ extension MyProjectVC {
         let barTitleItem = UIBarButtonItem(customView: barTitle)
         navigationItem.leftBarButtonItem = barTitleItem
     }
+}
+extension MyProjectVC {
+private func bind() {
+      let inputs = MyProjectViewModel.Input(
+          viewDidLoad: rx.viewDidLoad.asObservable()
+      )
+      let outputs = viewModel.transform(input: inputs)
+
+      outputs.projectDataFetched
+        .withUnretained(self)
+        .subscribe(onNext: { owner, project in
+            DispatchQueue.main.async {
+                owner.projectDataArray.append(project)
+                self.tableView.reloadData()
+            }
+          })
+          .disposed(by: disposeBag)
+  }
+
 }
