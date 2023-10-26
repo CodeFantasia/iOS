@@ -84,7 +84,7 @@ class RegistrationController: UIViewController {
         super.viewDidLoad()
 
         configureUI()
-        setKeyboardObserver()
+        // setKeyboardObserver()
     }
     
     // MARK: - Selectors
