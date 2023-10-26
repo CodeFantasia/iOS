@@ -189,7 +189,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         button.backgroundColor = UIColor(hex: 0x000000)
         button.layer.cornerRadius = 15
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(NewPageViewController.self, action: #selector(completeButtonTapped), for: .touchUpInside)
+//        button.addTarget(NewPageViewController.self, action: #selector(completeButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -356,31 +356,31 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
 
     // MARK: - 데이터 이동 함수
 
-    @objc func completeButtonTapped() {
-        // 사용자가 입력한 정보 가져오기
-        let title = titleTextField.text ?? ""
-//        let thumbnail = thumbnailImageView.imageURL ?? ""
-        let platform = platformTextField.text ?? ""
-        let techAndLanguage = techLanguageTextField.text ?? ""
-        let recruitmentField = recruitmentFieldTextField.text ?? ""
-        let projectDescription = projectIntroTextView.text ?? ""
-        let projectStartDate = projectDatePicker1.date
-        let projectEndDate = projectDatePicker2.date
-
-        // Project 구조체 인스턴스 생성
-        let project = Project(
-            techStack: [], // 여기에 사용자가 선택한 기술 스택을 넣으세요.
-            recruitmentCount: 0, // 여기에 사용자가 입력한 모집 인원 수를 넣으세요.
-            projectDescription: projectDescription,
-            projectDuration: "\(projectStartDate) ~ \(projectEndDate)",
-            meetingType: nil, // 사용자가 선택한 회의 유형을 넣으세요.
-            imageUrl: nil, // 이미지 URL을 넣으세요.
-            projectID: UUID(),
-            platform: [], // 여기에 사용자가 선택한 플랫폼을 넣으세요.
-            recruitmentField: recruitmentField
-        )
-        print(project)
-    }
+//    @objc func completeButtonTapped() {
+//        // 사용자가 입력한 정보 가져오기
+//        let title = titleTextField.text ?? ""
+////        let thumbnail = thumbnailImageView.imageURL ?? ""
+//        let platform = platformTextField.text ?? ""
+//        let techAndLanguage = techLanguageTextField.text ?? ""
+//        let recruitmentField = recruitmentFieldTextField.text ?? ""
+//        let projectDescription = projectIntroTextView.text ?? ""
+//        let projectStartDate = projectDatePicker1.date
+//        let projectEndDate = projectDatePicker2.date
+//
+//        // Project 구조체 인스턴스 생성
+//        let project = Project(
+//            techStack: [], // 여기에 사용자가 선택한 기술 스택을 넣으세요.
+//            recruitmentCount: 0, // 여기에 사용자가 입력한 모집 인원 수를 넣으세요.
+//            projectDescription: projectDescription,
+//            projectDuration: "\(projectStartDate) ~ \(projectEndDate)",
+//            meetingType: nil, // 사용자가 선택한 회의 유형을 넣으세요.
+//            imageUrl: nil, // 이미지 URL을 넣으세요.
+//            projectID: UUID(),
+//            platform: [], // 여기에 사용자가 선택한 플랫폼을 넣으세요.
+//            recruitmentField: recruitmentField
+//        )
+//        print(project)
+//    }
 
     // MARK: - 모달페이지함수
 
