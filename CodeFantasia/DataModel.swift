@@ -23,6 +23,8 @@ struct UserProfile: Codable {
 }
 
 struct Project: Codable {
+    var projectTitle: String?  // 추가
+    var projecSubtitle: String?  // 추가
     var techStack: [TechStack]
     var recruitmentCount: Int
     var projectDescription: String?
@@ -32,6 +34,8 @@ struct Project: Codable {
     var projectID: UUID
     var platform: [Platform]
     var recruitmentField: String?
+    var recruitingStatus: Bool?  // 추가 현재 모집중 모집 완료인지
+    var teamMember: [TeamMember]   // 추가
 }
 
 // 기술 스택
@@ -108,3 +112,13 @@ enum Platform: String, Codable {
     case CarrierAppStore = "휴대폰 캐리어 앱 스토어 (특정 휴대폰 캐리어에 의한 앱 출시)"
 }
 
+struct Role: Codable {
+    var detailRole: String?
+}
+
+struct TeamMember: Codable {
+    let name: String
+    let employeeID: Int
+    // 다른 구성원 속성
+        var category: Role
+}
