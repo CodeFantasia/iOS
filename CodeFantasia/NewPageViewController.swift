@@ -10,9 +10,15 @@ import SnapKit
 // import SwiftUI
 import Then
 import UIKit
+import Firebase
+import FirebaseStorage
 
 class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: - 변수선언
+
+    //firebase 선언
+    private let projectRepository: ProjectRepositoryProtocol = ProjectRepository(firebaseBaseManager: FireBaseManager())
+
 
     // 스크롤 뷰
     private let scrollView: UIScrollView = {
@@ -189,7 +195,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         button.backgroundColor = UIColor(hex: 0x000000)
         button.layer.cornerRadius = 15
         button.setTitleColor(.white, for: .normal)
-//        button.addTarget(NewPageViewController.self, action: #selector(completeButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         return button
     }()
 
@@ -356,32 +362,45 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
 
     // MARK: - 데이터 이동 함수
 
-//    @objc func completeButtonTapped() {
-//        // 사용자가 입력한 정보 가져오기
-//        let title = titleTextField.text ?? ""
-////        let thumbnail = thumbnailImageView.imageURL ?? ""
-//        let platform = platformTextField.text ?? ""
-//        let techAndLanguage = techLanguageTextField.text ?? ""
-//        let recruitmentField = recruitmentFieldTextField.text ?? ""
-//        let projectDescription = projectIntroTextView.text ?? ""
-//        let projectStartDate = projectDatePicker1.date
-//        let projectEndDate = projectDatePicker2.date
-//
-//        // Project 구조체 인스턴스 생성
-//        let project = Project(
-//            techStack: [], // 여기에 사용자가 선택한 기술 스택을 넣으세요.
-//            recruitmentCount: 0, // 여기에 사용자가 입력한 모집 인원 수를 넣으세요.
-//            projectDescription: projectDescription,
-//            projectDuration: "\(projectStartDate) ~ \(projectEndDate)",
-//            meetingType: nil, // 사용자가 선택한 회의 유형을 넣으세요.
-//            imageUrl: nil, // 이미지 URL을 넣으세요.
-//            projectID: UUID(),
-//            platform: [], // 여기에 사용자가 선택한 플랫폼을 넣으세요.
-//            recruitmentField: recruitmentField
-//        )
-//        print(project)
-//    }
+    @objc func completeButtonTapped() {
+//        let projectInfo = Project(projectTitle: "", projecSubtitle: "",techStack: [], recruitmentCount: 1,projectDescription: "", projectID: UUID(), platform: [], teamMember: [])
+//        projectRepository.create(project: projectInfo)
+//        print("aaa")
+        let projectTitle = titleTextField.text
+            let platform = platformTextField.text
+            let techLanguage = techLanguageTextField.text
+            let recruitmentField = recruitmentFieldTextField.text
+            let projectDescription = projectIntroTextView.text
 
+            // 기간 데이터를 DateFormatter를 사용하여 문자열로 변환
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let projectStartDate = dateFormatter.string(from: projectDatePicker1.date)
+            let projectEndDate = dateFormatter.string(from: projectDatePicker2.date)
+
+            // 썸네일 이미지 URL (이미지를 Firebase Storage에 업로드한 후, 그 이미지의 URL을 사용)
+            let thumbnailImageURL: String = "이미지 URL을 여기에 넣어야 합니다"  // Firebase Storage에 업로드된 이미지의 URL로 설정
+
+            // Project 구조체에 데이터 할당
+            let projectInfo = Project(
+                projectTitle: projectTitle,
+                projecSubtitle: nil,  // 이 부분을 필요에 따라 채워넣으세요
+                techStack: [],  // 이 부분을 필요에 따라 채워넣으세요
+                recruitmentCount: 1,  // 이 부분을 필요에 따라 채워넣으세요
+                projectDescription: projectDescription,
+                projectDuration: "\(projectStartDate) - \(projectEndDate)",
+                meetingType: nil,  // 이 부분을 필요에 따라 채워넣으세요
+                imageUrl: thumbnailImageURL,
+                projectID: UUID(),
+                platform: [],  // 이 부분을 필요에 따라 채워넣으세요
+                recruitmentField: recruitmentField,
+                recruitingStatus: true,  // 모집 중이면 true, 모집 완료이면 false
+                teamMember: []  // 이 부분을 필요에 따라 채워넣으세요
+            )
+            // Firebase에 데이터 업로드
+            projectRepository.create(project: projectInfo)
+        print("aaaa")
+        }
     // MARK: - 모달페이지함수
 
     @objc func platformTextFieldTapped() {
