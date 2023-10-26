@@ -1,5 +1,7 @@
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class RegistrationController: UIViewController {
 
@@ -93,7 +95,15 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleRegsiter() {
-        print("Register!")
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let name = nameTextField.text else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) {
+            
+        }
+        
+        print("EMail: \(email), password: \(password), name: \(name)")
     }
     
     @objc func handleAddProfilePhoto() {
