@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		311FF5202AE90BC4008AB16E /* (null) in Sources */ = {isa = PBXBuildFile; };
+		311FF5212AE90BD1008AB16E /* (null) in Sources */ = {isa = PBXBuildFile; };
+		311FF5222AE90BDA008AB16E /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB42AE2503B00ACE79F /* Button.swift */; };
+		311FF5232AE90BDD008AB16E /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB82AE2504700ACE79F /* TextField.swift */; };
+		311FF5242AE90BE0008AB16E /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB62AE2503F00ACE79F /* Label.swift */; };
 		313064E42ADFFA9C00D1CC6C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313064E32ADFFA9C00D1CC6C /* DataModel.swift */; };
 		3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3191DEDE2AD8F9B30059AACB /* TabbarM.swift */; };
 		6BBF70772ADFB72100F58080 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70762ADFB72100F58080 /* ProfileViewController.swift */; };
@@ -110,6 +115,8 @@
 		F1F51AC92AE9F525002E8507 /* ImageStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F51AC72AE9F522002E8507 /* ImageStorageManager.swift */; };
 		F1F51ACB2AEA0CF0002E8507 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F51ACA2AEA0CF0002E8507 /* NetworkManager.swift */; };
 		F1F51ACC2AEA0CF2002E8507 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F51ACA2AEA0CF0002E8507 /* NetworkManager.swift */; };
+		F1F7CE392AEA3BBB00F28E95 /* ProjectSearchViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F7CE382AEA3BBA00F28E95 /* ProjectSearchViewVC.swift */; };
+		F1F7CE3B2AEA3D2800F28E95 /* ProjectSearchViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F7CE382AEA3BBA00F28E95 /* ProjectSearchViewVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +165,7 @@
 		F1E653EB2ADD539D00274A34 /* Metrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		F1F51AC72AE9F522002E8507 /* ImageStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStorageManager.swift; sourceTree = "<group>"; };
 		F1F51ACA2AEA0CF0002E8507 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		F1F7CE382AEA3BBA00F28E95 /* ProjectSearchViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProjectSearchViewVC.swift; path = CodeFantasia/ProjectBoard/ProjectSearchViewVC.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,6 +296,7 @@
 			children = (
 				6BBF707D2ADFB76000F58080 /* MyProjectVC.swift */,
 				F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */,
+				F1F7CE382AEA3BBA00F28E95 /* ProjectSearchViewVC.swift */,
 			);
 			path = MyProject;
 			sourceTree = "<group>";
@@ -546,6 +555,7 @@
 				AB14BEC12AE2506300ACE79F /* TermsOfConditionsVC.swift in Sources */,
 				AB14BEB92AE2504700ACE79F /* TextField.swift in Sources */,
 				ABC3DF262AD45E8B008CEF1A /* ViewController.swift in Sources */,
+				F1F7CE392AEA3BBB00F28E95 /* ProjectSearchViewVC.swift in Sources */,
 				6BBF707A2ADFB73700F58080 /* ProjectBoardTableviewCell.swift in Sources */,
 				F1E653EC2ADD539D00274A34 /* Metrics.swift in Sources */,
 				F13AED0C2AE693000098C654 /* UIImageView+.swift in Sources */,
@@ -589,6 +599,7 @@
 				F13AED072AE63D320098C654 /* UIViewController+.swift in Sources */,
 				F1E18BD12AE105B50041638B /* ViewController.swift in Sources */,
 				F1F51AC92AE9F525002E8507 /* ImageStorageManager.swift in Sources */,
+				311FF5222AE90BDA008AB16E /* Button.swift in Sources */,
 				F1E18BD22AE105B50041638B /* ProjectBoardTableviewCell.swift in Sources */,
 				F1E18BD32AE105B50041638B /* Metrics.swift in Sources */,
 				F1E18BD42AE105B50041638B /* UIHoverButton.swift in Sources */,
@@ -603,12 +614,17 @@
 				F1E18BDB2AE105B50041638B /* DataModel.swift in Sources */,
 				F1F51ACC2AEA0CF2002E8507 /* NetworkManager.swift in Sources */,
 				F1E18BDC2AE105B50041638B /* PaddingLabel.swift in Sources */,
+				311FF5232AE90BDD008AB16E /* TextField.swift in Sources */,
 				F1E18BDD2AE105B50041638B /* MyProjectTableViewCell.swift in Sources */,
 				F17108A52AE21AED0076C575 /* Data+.swift in Sources */,
+				F1F7CE3B2AEA3D2800F28E95 /* ProjectSearchViewVC.swift in Sources */,
 				F13AED0D2AE693000098C654 /* UIImageView+.swift in Sources */,
 				F13AED042AE611F00098C654 /* Rx+UIViewController.swift in Sources */,
 				F1E18BDE2AE105B50041638B /* Images.swift in Sources */,
+				311FF5202AE90BC4008AB16E /* (null) in Sources */,
 				F1E18BDF2AE105B50041638B /* ProjectBoardVC.swift in Sources */,
+				311FF5242AE90BE0008AB16E /* Label.swift in Sources */,
+				311FF5212AE90BD1008AB16E /* (null) in Sources */,
 				F1E18BE02AE105B50041638B /* ProjectDetailNoticeBoardViewController.swift in Sources */,
 				F1E18BE12AE105B50041638B /* ProfileViewController.swift in Sources */,
 				F1E18BE22AE105B50041638B /* FirebaseManager.swift in Sources */,

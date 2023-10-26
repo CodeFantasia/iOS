@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
 
 class ProjectBoardVC: UIViewController {
     
@@ -17,14 +18,36 @@ class ProjectBoardVC: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    let mockData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String)] = [
-        (UIImage(named: "digimon"), "즐코팟 모집중!", "나의 첫 사이드 프로젝트 여기서 시작해보자!", [IconModel(image: UIImage(named: "swift") ?? UIImage()), IconModel(image: UIImage(named: "javascript") ?? UIImage())], "모집 중"),
-        (UIImage(named: "pokemon"), "포켓몬 마스터 모집중!", "피카츄 라이츄 파이리 꼬북이 버터풀 야도란 피존투 또가스", [IconModel(image: UIImage(named: "python") ?? UIImage())], "모집 완료"),
-    ]
+    private let projectRepository: ProjectRepositoryProtocol = ProjectRepository(firebaseBaseManager: FireBaseManager())
+    private var projectsData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String)] = []
+    private var bag = DisposeBag()
+
+    private func fetchDataFromFirebase() {
+        projectRepository.readAll()
+          .observe(on: MainScheduler.instance)
+          .subscribe(onSuccess: { [weak self] projects in
+            self?.projectsData = projects.map { project in
+              let image = UIImage(named: project.imageUrl ?? "")
+              let statusString = project.recruitingStatus ?? false ? "모집 중" : "모집 완료"
+              let icons: [IconModel] = project.techStack.map { tech in
+                return IconModel(image: UIImage(named: tech.techForCategory(.frontendDevelopment)?.first ?? "") ?? UIImage())
+              }
+              return (image, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString)
+            }
+            self?.tableView.reloadData()
+          }, onFailure: { error in
+            print("Error fetching data: \(error)")
+          })
+          .disposed(by: bag)
+      }
+
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.fetchDataFromFirebase()
+
         setupNavigationBar()
         setupTableView()
         
@@ -32,17 +55,19 @@ class ProjectBoardVC: UIViewController {
         navigationController?.navigationBar.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         navigationController?.navigationBar.tintColor = .black
     }
+
+
 }
 
 // MARK: - TableView DataSource & Delegate
 extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mockData.count
+        return projectsData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectBoardCell", for: indexPath) as! ProjectBoardTableviewCell
-        let dataItem = mockData[indexPath.row]
+        let dataItem = projectsData[indexPath.row]
         cell.titleImageView.image = dataItem.image
         cell.titleLabel.text = dataItem.title
         cell.subheadingLabel.text = dataItem.detail
@@ -65,7 +90,8 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
 // MARK: - Actions & Event Handlers (추후에 분리)
 extension ProjectBoardVC {
     @objc func searchButtonTapped() {
-        // TODO: Implement search action
+        let searchVC = ProjectSearchViewVC(mockData: projectsData)
+        navigationController?.pushViewController(searchVC, animated: true)
     }
     
     @objc func bellButtonTapped() {
@@ -73,7 +99,8 @@ extension ProjectBoardVC {
     }
     
     @objc func pencilButtonTapped() {
-        // TODO: Implement pencil action
+        let newPageViewController = NewPageViewController()
+        navigationController?.pushViewController(newPageViewController, animated: true)
     }
 }
 
