@@ -134,11 +134,21 @@ class RegistrationController: UIViewController {
     }
 }
 
+// MARK: - UIImagePickerControllerDelegate
+
 extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let profileImage = info[.editedImage] as? UIImage else { return }
         
-        self.addPhotoButton.setImage(profileImage, for: .normal)
+        addPhotoButton.layer.cornerRadius = 130 / 2
+        addPhotoButton.layer.masksToBounds = true
+        addPhotoButton.imageView?.contentMode = .scaleToFill
+        addPhotoButton.imageView?.clipsToBounds = true
+        addPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        addPhotoButton.layer.borderColor = UIColor.white.cgColor
+        addPhotoButton.layer.borderWidth = 3
+        
+        dismiss(animated: true, completion: nil)
     }
 }
