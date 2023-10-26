@@ -359,7 +359,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     @objc func completeButtonTapped() {
         // 사용자가 입력한 정보 가져오기
         let title = titleTextField.text ?? ""
-//        let thumbnail = thumbnailImageView. ?? ""
+//        let thumbnail = thumbnailImageView.imageURL ?? ""
         let platform = platformTextField.text ?? ""
         let techAndLanguage = techLanguageTextField.text ?? ""
         let recruitmentField = recruitmentFieldTextField.text ?? ""
