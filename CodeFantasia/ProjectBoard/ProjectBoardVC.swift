@@ -19,7 +19,7 @@ class ProjectBoardVC: UIViewController {
     }
     
     private let projectRepository: ProjectRepositoryProtocol = ProjectRepository(firebaseBaseManager: FireBaseManager())
-    private var projectsData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String)] = []
+    private var projectsData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)] = []
     private var bag = DisposeBag()
 
     private func fetchDataFromFirebase() {
@@ -32,14 +32,16 @@ class ProjectBoardVC: UIViewController {
               let icons: [IconModel] = project.techStack.map { tech in
                 return IconModel(image: UIImage(named: tech.techForCategory(.frontendDevelopment)?.first ?? "") ?? UIImage())
               }
-              return (image, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString)
+              // projectID도 추가합니다.
+                return (image, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString, project.projectID)
             }
             self?.tableView.reloadData()
           }, onFailure: { error in
             print("Error fetching data: \(error)")
           })
           .disposed(by: bag)
-      }
+    }
+
 
 
 
@@ -68,11 +70,11 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectBoardCell", for: indexPath) as! ProjectBoardTableviewCell
         let dataItem = projectsData[indexPath.row]
-        cell.titleImageView.image = dataItem.image
-        cell.titleLabel.text = dataItem.title
-        cell.subheadingLabel.text = dataItem.detail
-        cell.icons = dataItem.icons
-        cell.recruitmentLabelCheck(image: dataItem.image, title: dataItem.title, detail: dataItem.detail, icons: dataItem.icons, status: dataItem.status)
+        cell.titleImageView.image = dataItem.0
+        cell.titleLabel.text = dataItem.1
+        cell.subheadingLabel.text = dataItem.2
+        cell.icons = dataItem.3
+        cell.recruitmentLabelCheck(image: dataItem.0, title: dataItem.1, detail: dataItem.2, icons: dataItem.3, status: dataItem.4)
         
         cell.backgroundColor = .clear
         cell.layer.borderColor = UIColor.black.cgColor
@@ -85,12 +87,29 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 170
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let selectedProject = projectsData[indexPath.row]
+
+        let projectId = selectedProject.5.uuidString
+
+        let viewModel = ProjectDetailNoticeBoardViewModel(projectRepository: projectRepository, projectId: projectId)
+        
+        let detailVC = ProjectDetailNoticeBoardViewController(viewModel: viewModel)
+        
+        // detailVC를 네비게이션 스택에 푸시하여 화면에 표시합니다.
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+
 }
 
 // MARK: - Actions & Event Handlers (추후에 분리)
 extension ProjectBoardVC {
     @objc func searchButtonTapped() {
-        let searchVC = ProjectSearchViewVC(mockData: projectsData)
+        let mockData = projectsData.map { (image: $0.0, title: $0.1, detail: $0.2, icons: $0.3, status: $0.4) }
+        let searchVC = ProjectSearchViewVC(mockData: mockData)
         navigationController?.pushViewController(searchVC, animated: true)
     }
     
