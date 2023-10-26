@@ -2,7 +2,7 @@
 import UIKit
 import Foundation
 
-class TermsOfConditionsVC: UIViewController {
+class TermsOfConditionsController: UIViewController {
     
     private let termsOfConditionsString = """
 Yeah, I'm out that Brooklyn, now I'm down in Tribeca
