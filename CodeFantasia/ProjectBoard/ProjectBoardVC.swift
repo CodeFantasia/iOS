@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 import Then
-import RxSwift
 
 class ProjectBoardVC: UIViewController {
     
@@ -17,7 +16,6 @@ class ProjectBoardVC: UIViewController {
         $0.separatorStyle = .none
         $0.backgroundColor = .clear
     }
-    private let disposeBag = DisposeBag()
     
     let mockData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String)] = [
         (UIImage(named: "digimon"), "즐코팟 모집중!", "나의 첫 사이드 프로젝트 여기서 시작해보자!", [IconModel(image: UIImage(named: "swift") ?? UIImage()), IconModel(image: UIImage(named: "javascript") ?? UIImage())], "모집 중"),
