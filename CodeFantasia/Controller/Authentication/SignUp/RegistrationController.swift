@@ -1,6 +1,5 @@
 
 import UIKit
-import Firebase
 import FirebaseAuth
 
 class RegistrationController: UIViewController {
