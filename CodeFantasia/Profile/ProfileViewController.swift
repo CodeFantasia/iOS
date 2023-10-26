@@ -147,12 +147,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-//
-//        let mockProfile = UserProfile(
-//        nickname: "이현우", primaryLanguage: [], techStack: [], areasOfInterest: [], portfolioURL: "https://www.navercorp.com/img/ko/og/logo.png", selfIntroduction: "안녕하세요", githubURL: "https://www.navercorp.com/img/ko/og/logo.png", blogURL: "https://www.navercorp.com/img/ko/og/logo.png", profileImageURL: "https://www.navercorp.com/img/ko/og/logo.png", userProjects: [], userID: UUID()
-//        )
-//        viewModel.userRepository.create(user: mockProfile)
-//
+
         view.backgroundColor = UIColor.backgroundColor
         navigationbarTitle()
         setupLayout()
@@ -247,10 +242,11 @@ extension ProfileViewController {
             .subscribe(onNext: { [weak self] user in
                 guard let self else {return}
                 DispatchQueue.main.async {
+                    self.interestLabel.text = user.areasOfInterest.reduce("", {$0 + $1.rawValue + "\n"})
                     self.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
                         switch result {
                         case .success(_):
-                            self.profileImage.roundCornersForAspectFit(radius: .cornerRadius)
+                            self.profileImage.roundCornersForAspectFit(radius: 50)
                         case .failure(_):
                             self.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
                         }

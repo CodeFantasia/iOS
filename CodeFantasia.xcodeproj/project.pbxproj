@@ -38,7 +38,7 @@
 		ABC3DF462AD4617C008CEF1A /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF452AD4617C008CEF1A /* MainVC.swift */; };
 		F01AD1BC2ADF8A1800F0E0B1 /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */; };
 		F03126642AE90B04000E337E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B39BC62AE76FF900CE4889 /* ProfileViewModel.swift */; };
-		F03126652AE90B0F000E337E /* ProjectSearchViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C6317B2AE6931A00D741AF /* ProjectSearchViewVC.swift */; };
+		F03126652AE90B0F000E337E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F03126662AE90B32000E337E /* ProjectRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17108A02AE219CC0076C575 /* ProjectRepository.swift */; };
 		F03126672AE90B34000E337E /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F053DFDD2AE7A99100BFFF6A /* UserRepository.swift */; };
 		F03126682AE90B41000E337E /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17108A32AE21AED0076C575 /* Data+.swift */; };
@@ -53,16 +53,15 @@
 		F053DFDE2AE7A99100BFFF6A /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F053DFDD2AE7A99100BFFF6A /* UserRepository.swift */; };
 		F076F6FA2ADE80F000AD7435 /* MyProjectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */; };
 		F0B39BC72AE76FF900CE4889 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B39BC62AE76FF900CE4889 /* ProfileViewModel.swift */; };
+		F0BFCB5E2AEA524B00D3BEC2 /* MyProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BFCB5D2AEA524B00D3BEC2 /* MyProjectViewModel.swift */; };
+		F0BFCB5F2AEA541400D3BEC2 /* MyProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BFCB5D2AEA524B00D3BEC2 /* MyProjectViewModel.swift */; };
 		F13AED002AE5F8CB0098C654 /* ProjectDetailNoticeBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AECFF2AE5F8CB0098C654 /* ProjectDetailNoticeBoardViewModel.swift */; };
-		F13AED012AE5F8CB0098C654 /* ProjectDetailNoticeBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AECFF2AE5F8CB0098C654 /* ProjectDetailNoticeBoardViewModel.swift */; };
 		F13AED032AE611F00098C654 /* Rx+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AED022AE611F00098C654 /* Rx+UIViewController.swift */; };
 		F13AED042AE611F00098C654 /* Rx+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AED022AE611F00098C654 /* Rx+UIViewController.swift */; };
 		F13AED062AE63D320098C654 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AED052AE63D320098C654 /* UIViewController+.swift */; };
-		F13AED072AE63D320098C654 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AED052AE63D320098C654 /* UIViewController+.swift */; };
 		F13AED0C2AE693000098C654 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AED0B2AE692FE0098C654 /* UIImageView+.swift */; };
 		F13AED0D2AE693000098C654 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13AED0B2AE692FE0098C654 /* UIImageView+.swift */; };
 		F17108A12AE219CC0076C575 /* ProjectRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17108A02AE219CC0076C575 /* ProjectRepository.swift */; };
-		F17108A22AE219CC0076C575 /* ProjectRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17108A02AE219CC0076C575 /* ProjectRepository.swift */; };
 		F17108A42AE21AED0076C575 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17108A32AE21AED0076C575 /* Data+.swift */; };
 		F17108A52AE21AED0076C575 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17108A32AE21AED0076C575 /* Data+.swift */; };
 		F187DF232ADEA249001B097D /* Date+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = F187DF222ADEA249001B097D /* Date+Format.swift */; };
@@ -162,6 +161,7 @@
 		F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectTableViewCell.swift; sourceTree = "<group>"; };
 		F0897B072AE692D400D8AE09 /* UIImageView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		F0B39BC62AE76FF900CE4889 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		F0BFCB5D2AEA524B00D3BEC2 /* MyProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProjectViewModel.swift; sourceTree = "<group>"; };
 		F13AECFF2AE5F8CB0098C654 /* ProjectDetailNoticeBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailNoticeBoardViewModel.swift; sourceTree = "<group>"; };
 		F13AED022AE611F00098C654 /* Rx+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Rx+UIViewController.swift"; sourceTree = "<group>"; };
 		F13AED052AE63D320098C654 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
@@ -315,6 +315,7 @@
 				6BBF707D2ADFB76000F58080 /* MyProjectVC.swift */,
 				F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */,
 				F1F7CE382AEA3BBA00F28E95 /* ProjectSearchViewVC.swift */,
+				F0BFCB5D2AEA524B00D3BEC2 /* MyProjectViewModel.swift */,
 			);
 			path = MyProject;
 			sourceTree = "<group>";
@@ -594,6 +595,7 @@
 				F13AED062AE63D320098C654 /* UIViewController+.swift in Sources */,
 				AB14BEBC2AE2505900ACE79F /* LoginVC.swift in Sources */,
 				313064E42ADFFA9C00D1CC6C /* DataModel.swift in Sources */,
+				F0BFCB5E2AEA524B00D3BEC2 /* MyProjectViewModel.swift in Sources */,
 				F1F51AC82AE9F523002E8507 /* ImageStorageManager.swift in Sources */,
 				F1E653E82AD8E73F00274A34 /* PaddingLabel.swift in Sources */,
 				F076F6FA2ADE80F000AD7435 /* MyProjectTableViewCell.swift in Sources */,
@@ -625,7 +627,7 @@
 				311FF5222AE90BDA008AB16E /* Button.swift in Sources */,
 				F1E18BD22AE105B50041638B /* ProjectBoardTableviewCell.swift in Sources */,
 				F1E18BD32AE105B50041638B /* Metrics.swift in Sources */,
-				F03126652AE90B0F000E337E /* ProjectSearchViewVC.swift in Sources */,
+				F03126652AE90B0F000E337E /* (null) in Sources */,
 				F03126662AE90B32000E337E /* ProjectRepository.swift in Sources */,
 				F03126642AE90B04000E337E /* ProfileViewModel.swift in Sources */,
 				F1E18BD42AE105B50041638B /* UIHoverButton.swift in Sources */,
@@ -660,6 +662,7 @@
 				F1E18BE12AE105B50041638B /* ProfileViewController.swift in Sources */,
 				F1E18BE22AE105B50041638B /* FirebaseManager.swift in Sources */,
 				F1E18BE32AE105B50041638B /* CodeFantasia.xcdatamodeld in Sources */,
+				F0BFCB5F2AEA541400D3BEC2 /* MyProjectViewModel.swift in Sources */,
 				F031266B2AE90B4C000E337E /* UIViewController+.swift in Sources */,
 				F03126692AE90B43000E337E /* Rx+UIViewController.swift in Sources */,
 				F1E18BE42AE105B50041638B /* TabbarM.swift in Sources */,
