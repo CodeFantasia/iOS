@@ -8,6 +8,9 @@
 import UIKit
 import Then
 import SnapKit
+import RxSwift
+import RxCocoa
+import Kingfisher
 
 final class ProjectDetailNoticeBoardViewController: UIViewController {
 
@@ -39,6 +42,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     private lazy var projectImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = .defaultProfileImage
+        $0.roundCornersForAspectFit(radius: .cornerRadius)
     }
     private lazy var techStackStackView = UIStackView().then {
         $0.axis = .vertical
@@ -61,7 +65,6 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     private lazy var recruitmentStatusTitleLabel = UILabel().then {
         $0.text = "모집 현황"
         $0.font = .subTitle
-//        $0.backgroundColor = .clear
     }
     private lazy var recruitmentStatusContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
         $0.text = """
@@ -123,8 +126,20 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.layer.masksToBounds = false
 
     }
-    private lazy var rightButton = UIBarButtonItem(image: .projectEditImage, style: .plain, target: self, action: #selector(editImageTapped))
-
+    private lazy var editButton = UIBarButtonItem(image: .projectEditImage, style: .plain, target: self, action: nil)
+    private lazy var reportButton = UIBarButtonItem(image: .reportImage, style: .plain, target: self, action: nil)
+    private let viewModel: ProjectDetailNoticeBoardViewModel
+    private let disposeBag = DisposeBag()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
+    init(viewModel: ProjectDetailNoticeBoardViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 //MARK: - View Life Cycle
@@ -132,8 +147,11 @@ extension ProjectDetailNoticeBoardViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        activityIndicator.startAnimating()
         // 파티장이라면
-        navigationItem.rightBarButtonItem = rightButton
+        navigationItem.rightBarButtonItems = [reportButton, editButton]
+        // 아니면
+//        navigationItem.rightBarButtonItems = [reportButton]
     }
 }
 
@@ -143,6 +161,8 @@ extension ProjectDetailNoticeBoardViewController {
         view.backgroundColor = .backgroundColor
         view.addSubview(scrollView)
         scrollView.addSubview(contentStackView)
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
         [projectTitleAndTeamLeaderProfileImageStackView, projectsubTitleLabel, projectImageView, techStackStackView, recruitmentStatusStackView, projectIntroduceStackView, projectPeriodStackView, projectMeetingTypeStackView, projectApplyButton].forEach {
             contentStackView.addArrangedSubview($0)
         }
@@ -201,5 +221,75 @@ extension ProjectDetailNoticeBoardViewController {
 
 //MARK: - binding
 extension ProjectDetailNoticeBoardViewController {
-    @objc private func editImageTapped() {}
+    private func bind() {
+        let inputs = ProjectDetailNoticeBoardViewModel.Input(
+            viewDidLoad: rx.viewDidLoad.asObservable(),
+            editImageTapped: editButton.rx.tap.asDriver(),
+            profileImageTapped: projectTeamLeaderProfileImageButton.rx.tap.asDriver(),
+            projectApplyButtonTapped: projectApplyButton.rx.tap.asDriver(),
+            projectReportButtonTapped: reportButton.rx.tap.asDriver()
+        )
+        let outputs = viewModel.transform(input: inputs)
+        
+        outputs.projectDataFetched
+            .withUnretained(self)
+            .subscribe(onNext: { owner, project in
+                DispatchQueue.main.async {
+                    owner.activityIndicator.stopAnimating()
+                    //TODO: project 모델 타이틀, 부 타이틀 없음
+                    owner.techStackContextView.text = project.platform.reduce("", {$0 + $1.rawValue + "\n"})
+                    owner.projectImageView.kf.setImage(with: URL(string: project.imageUrl ?? "")) { result in
+                        switch result {
+                        case .success(_):
+                            owner.projectImageView.roundCornersForAspectFit(radius: .cornerRadius)
+                        case .failure(_):
+                            owner.alertViewAlert(title: "오류 발생", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
+                        }
+                    }
+                    owner.recruitmentStatusContextLabel.text = project.recruitmentField ?? ""
+                    owner.projectIntroduceContextLabel.text = project.projectDescription ?? ""
+                    owner.projectMeetingTypeContextLabel.text = project.meetingType ?? ""
+                    owner.projectPeriodContextLabel.text = project.projectDuration ?? ""
+                }
+            }, onError: { [weak self] error in
+                DispatchQueue.main.async {
+                    self?.activityIndicator.stopAnimating()
+                    self?.alertViewActionSheet(
+                        title: "오류 발생",
+                        message: error.localizedDescription,
+                        acceptText: "확인",
+                        cancelText: nil
+                    )
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        outputs.projectApplyButtonDidTap
+            .drive(with: self, onNext: { owner, _ in
+                owner.alertViewAlert(title: "신청", message: "프로젝트에 신청하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
+                    owner.viewModel.projectApplyComplete.on(.next(()))
+                })
+            })
+            .disposed(by: disposeBag)
+        
+        outputs.projectLeaderProfileDidTap
+            .drive(with: self, onNext: { owner, _ in
+                // 프로필 뷰로
+            })
+            .disposed(by: disposeBag)
+        
+        outputs.projectReportButtonDidTap
+            .drive(with: self, onNext: { owner, _ in
+                owner.alertViewAlert(title: "신고", message: "프로젝트를 신고하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
+                    owner.viewModel.projectReportComplete.on(.next(()))
+                })
+            })
+            .disposed(by: disposeBag)
+        
+        outputs.projectEditButtonDidTap
+            .drive(with: self, onNext: { owner, _ in
+                // 편집 뷰로
+            })
+            .disposed(by: disposeBag)
+    }
 }
