@@ -99,11 +99,15 @@ class RegistrationController: UIViewController {
         guard let password = passwordTextField.text else { return }
         guard let name = nameTextField.text else { return }
         
-        Auth.auth().createUser(withEmail: email, password: password) {
-            
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("계정 등록 에러: \(error.localizedDescription)")
+                print("email: \(email), password: \(password)")
+                return
+            }
         }
         
-        print("EMail: \(email), password: \(password), name: \(name)")
+        print("계정 저장 완료! ")
     }
     
     @objc func handleAddProfilePhoto() {
