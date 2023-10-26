@@ -5,12 +5,13 @@
 //  Created by t2023-m0049 on 2023/10/16.
 //
 
+import Kingfisher
 import SnapKit
 // import SwiftUI
 import Then
 import UIKit
 
-class NewPageViewController: UIViewController {
+class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: - 변수선언
 
     // 스크롤 뷰
@@ -54,14 +55,15 @@ class NewPageViewController: UIViewController {
         return label
     }()
 
-    // 썸네일 텍스트뷰
-    private let thumbnailTextView: UITextView = {
-        let textView = UITextView()
-        textView.layer.cornerRadius = 8
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.black.cgColor
-        textView.backgroundColor = .white
-        return textView
+    // 썸네일 이미지 뷰
+    private let thumbnailImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 8
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.black.cgColor
+        imageView.backgroundColor = .white
+        return imageView
     }()
 
     // 출시 플랫폼 라벨
@@ -187,13 +189,23 @@ class NewPageViewController: UIViewController {
         button.backgroundColor = UIColor(hex: 0x000000)
         button.layer.cornerRadius = 15
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
+        button.addTarget(NewPageViewController.self, action: #selector(completeButtonTapped), for: .touchUpInside)
         return button
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+
+        // 출시 플랫폼 텍스트 필드를 탭할 때 모달 페이지를 표시
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(platformTextFieldTapped))
+        platformTextField.addGestureRecognizer(tapGesture)
+        platformTextField.isUserInteractionEnabled = true
+
+        // 썸네일 이미지 뷰를 탭할 때 이미지 선택 기능을 호출
+        let thumbnailTapGesture = UITapGestureRecognizer(target: self, action: #selector(thumbnailImageViewTapped))
+        thumbnailImageView.addGestureRecognizer(thumbnailTapGesture)
+        thumbnailImageView.isUserInteractionEnabled = true
     }
 
     private func setupUI() {
@@ -211,13 +223,13 @@ class NewPageViewController: UIViewController {
 
         let contentView = UIView()
 
-        // Title Label (제목 라벨)
+        // 제목 라벨
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(contentView).offset(100)
             $0.left.equalTo(contentView).offset(20)
         }
-        // Title Text Field (제목 텍스트 필드)
+        // 제목 텍스트 필드
         contentView.addSubview(titleTextField)
         titleTextField.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
@@ -231,18 +243,18 @@ class NewPageViewController: UIViewController {
             $0.top.equalTo(titleTextField.snp.bottom).offset(20)
             $0.left.equalTo(contentView).offset(20)
         }
-        contentView.addSubview(thumbnailTextView)
-        thumbnailTextView.snp.makeConstraints {
+        contentView.addSubview(thumbnailImageView)
+        thumbnailImageView.snp.makeConstraints {
             $0.top.equalTo(thumbnailLabel.snp.bottom).offset(10)
             $0.left.equalTo(contentView).offset(20)
             $0.right.equalTo(contentView).offset(-20)
-            $0.height.equalTo(100)
+            $0.height.equalTo(200)
         }
 
-        // 출시 플랫폼 라벨와 텍스트 필드 SnapKit 설정
+        // 출시 플랫폼 라벨와 텍스트 필드
         contentView.addSubview(platformLabel)
         platformLabel.snp.makeConstraints {
-            $0.top.equalTo(thumbnailTextView.snp.bottom).offset(20)
+            $0.top.equalTo(thumbnailImageView.snp.bottom).offset(20)
             $0.left.equalTo(contentView).offset(20)
         }
         contentView.addSubview(platformTextField)
@@ -253,7 +265,7 @@ class NewPageViewController: UIViewController {
             $0.height.equalTo(30)
         }
 
-        // 모집 기술 및 언어 라벨와 텍스트 필드 SnapKit 설정
+        // 모집 기술 및 언어 라벨와 텍스트 필드
         contentView.addSubview(techLanguageLabel)
         techLanguageLabel.snp.makeConstraints {
             $0.top.equalTo(platformTextField.snp.bottom).offset(20)
@@ -267,7 +279,7 @@ class NewPageViewController: UIViewController {
             $0.height.equalTo(30)
         }
 
-        // 모집 분야 라벨와 텍스트 필드 SnapKit 설정
+        // 모집 분야 라벨와 텍스트 필드
         contentView.addSubview(recruitmentFieldLabel)
         recruitmentFieldLabel.snp.makeConstraints {
             $0.top.equalTo(techLanguageTextField.snp.bottom).offset(20)
@@ -281,7 +293,7 @@ class NewPageViewController: UIViewController {
             $0.height.equalTo(30)
         }
 
-        // 프로젝트 소개 라벨와 텍스트뷰 SnapKit 설정
+        // 프로젝트 소개 라벨와 텍스트뷰
         contentView.addSubview(projectIntroLabel)
         projectIntroLabel.snp.makeConstraints {
             $0.top.equalTo(recruitmentFieldTextField.snp.bottom).offset(20)
@@ -295,7 +307,7 @@ class NewPageViewController: UIViewController {
             $0.height.equalTo(100)
         }
 
-        // 프로젝트 기간 라벨 1과 데이트 피커 1 SnapKit 설정
+        // 프로젝트 기간 라벨 1과 데이트 피커 1
         contentView.addSubview(projectDateLabel1)
         projectDateLabel1.snp.makeConstraints {
             $0.top.equalTo(projectIntroTextView.snp.bottom).offset(20)
@@ -308,7 +320,7 @@ class NewPageViewController: UIViewController {
             $0.height.equalTo(100)
         }
 
-        // 프로젝트 기간 라벨 2와 데이트 피커 2 SnapKit 설정
+        // 프로젝트 기간 라벨 2와 데이트 피커 2
         contentView.addSubview(projectDateLabel2)
         projectDateLabel2.snp.makeConstraints {
             $0.top.equalTo(projectIntroTextView.snp.bottom).offset(20)
@@ -321,7 +333,7 @@ class NewPageViewController: UIViewController {
             $0.height.equalTo(100)
         }
 
-        // 작성 완료 버튼 SnapKit 설정
+        // 작성 완료 버튼
         contentView.addSubview(completeButton)
         completeButton.snp.makeConstraints {
             $0.top.equalTo(projectDatePicker2.snp.bottom).offset(20)
@@ -342,13 +354,12 @@ class NewPageViewController: UIViewController {
         }
     }
 
-    
     // MARK: - 데이터 이동 함수
 
     @objc func completeButtonTapped() {
         // 사용자가 입력한 정보 가져오기
         let title = titleTextField.text ?? ""
-        let thumbnail = thumbnailTextView.text ?? ""
+//        let thumbnail = thumbnailImageView. ?? ""
         let platform = platformTextField.text ?? ""
         let techAndLanguage = techLanguageTextField.text ?? ""
         let recruitmentField = recruitmentFieldTextField.text ?? ""
@@ -369,21 +380,38 @@ class NewPageViewController: UIViewController {
             recruitmentField: recruitmentField
         )
         print(project)
-        // 이제 `project` 구조체를 적절한 위치로 저장하거나 활용하실 수 있습니다.
-        // 예를 들어, 이를 데이터베이스에 저장하거나 다른 뷰 컨트롤러로 전달할 수 있습니다.
     }
-}
 
-//    @objc func showPlatformSelection() {
-//        let platformSelectionVC = PlatformSelectionViewController()
-//
-//        // platformTextField를 설정합니다.
-//        platformSelectionVC.platformTextField = platformTextField
-//
-//        // 모달 뷰 컨트롤러를 표시합니다.
-//        present(platformSelectionVC, animated: true, completion: nil)
-//    }
-// }
+    // MARK: - 모달페이지함수
+
+    @objc func platformTextFieldTapped() {
+        // 출시 플랫폼 선택 뷰 컨트롤러를 표시
+        let platformSelectionVC = PlatformSelectionViewController()
+        platformSelectionVC.onPlatformSelected = { [weak self] platform in
+            self?.platformTextField.text = platform
+        }
+        present(platformSelectionVC, animated: true, completion: nil)
+    }
+
+    // MARK: - 썸네일이미지피커
+
+    @objc func thumbnailImageViewTapped() {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            present(imagePicker, animated: true, completion: nil)
+        }
+
+        // 이미지를 선택한 후 호출되는 함수
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            thumbnailImageView.image = selectedImage
+        }
+
+        picker.dismiss(animated: true, completion: nil)
+    }
+
+}
 
 //     //MARK: - 미리보기
 
