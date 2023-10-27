@@ -154,8 +154,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return textView
     }()
 
-    // 프로젝트 기간 라벨1
-    let projectDateLabel1: UILabel = {
+    // 프로젝트 시작 기간 라벨
+    let projectStartDateLabel: UILabel = {
         let label = UILabel()
         label.text = "프로젝트 시작일"
         label.textColor = UIColor(hex: 0x000000)
@@ -163,8 +163,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return label
     }()
 
-    // 프로젝트 기간 라벨2
-    let projectDateLabel2: UILabel = {
+    // 프로젝트 종료 기간 라벨
+    let projectEndDateLabel: UILabel = {
         let label = UILabel()
         label.text = "프로젝트 종료일"
         label.textColor = UIColor(hex: 0x000000)
@@ -173,14 +173,14 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     }()
 
     // 프로젝트 기간 데이트 피커1
-    let projectDatePicker1: UIDatePicker = {
+    let projectStartDatePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         return datePicker
     }()
 
     // 프로젝트 기간 데이트 피커2
-    let projectDatePicker2: UIDatePicker = {
+    let projectEndDatePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         return datePicker
@@ -354,36 +354,36 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             $0.height.equalTo(100)
         }
 
-        // 프로젝트 기간 라벨 1과 데이트 피커 1
-        contentView.addSubview(projectDateLabel1)
-        projectDateLabel1.snp.makeConstraints {
+        // 프로젝트 시작 기간 라벨과 데이트 피커
+        contentView.addSubview(projectStartDateLabel)
+        projectStartDateLabel.snp.makeConstraints {
             $0.top.equalTo(projectIntroTextView.snp.bottom).offset(20)
             $0.left.equalTo(contentView).offset(20)
         }
-        contentView.addSubview(projectDatePicker1)
-        projectDatePicker1.snp.makeConstraints {
-            $0.top.equalTo(projectDateLabel1.snp.bottom).offset(10)
+        contentView.addSubview(projectStartDatePicker)
+        projectStartDatePicker.snp.makeConstraints {
+            $0.top.equalTo(projectStartDateLabel.snp.bottom).offset(10)
             $0.left.equalTo(contentView).offset(20)
             $0.height.equalTo(100)
         }
 
-        // 프로젝트 기간 라벨 2와 데이트 피커 2
-        contentView.addSubview(projectDateLabel2)
-        projectDateLabel2.snp.makeConstraints {
+        // 프로젝트 종료 기간 라벨 2와 데이트 피커 2
+        contentView.addSubview(projectEndDateLabel)
+        projectEndDateLabel.snp.makeConstraints {
             $0.top.equalTo(projectIntroTextView.snp.bottom).offset(20)
-            $0.left.equalTo(projectDatePicker1.snp.right).offset(150)
+            $0.left.equalTo(projectStartDatePicker.snp.right).offset(150)
         }
-        contentView.addSubview(projectDatePicker2)
-        projectDatePicker2.snp.makeConstraints {
-            $0.top.equalTo(projectDateLabel2.snp.bottom).offset(10)
-            $0.left.equalTo(projectDatePicker1.snp.right).offset(150)
+        contentView.addSubview(projectEndDatePicker)
+        projectEndDatePicker.snp.makeConstraints {
+            $0.top.equalTo(projectEndDateLabel.snp.bottom).offset(10)
+            $0.left.equalTo(projectStartDatePicker.snp.right).offset(150)
             $0.height.equalTo(100)
         }
 
         // 모집유형 라벨과 텍스트필드
         contentView.addSubview(meetingTypeLabel)
         meetingTypeLabel.snp.makeConstraints {
-            $0.top.equalTo(projectDatePicker2.snp.bottom).offset(10)
+            $0.top.equalTo(projectEndDatePicker.snp.bottom).offset(10)
             $0.left.equalTo(contentView).offset(20)
         }
 
@@ -447,8 +447,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         // DateFormatter를 사용하여 문자열로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let projectStartDate = dateFormatter.string(from: projectDatePicker1.date)
-        let projectEndDate = dateFormatter.string(from: projectDatePicker2.date)
+        let projectStartDate = dateFormatter.string(from: projectStartDatePicker.date)
+        let projectEndDate = dateFormatter.string(from: projectEndDatePicker.date)
 
         let thumbnailImageURL = ""
 
@@ -470,7 +470,6 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         )
         // Firebase에 데이터 업로드
         projectRepository.create(project: projectInfo)
-        print("aaaa")
     }
 
     func convertToEnum(rawValue: String) -> Platform? {
