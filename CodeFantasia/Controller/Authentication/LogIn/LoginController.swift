@@ -65,6 +65,9 @@ class LoginController: UIViewController {
     // MARK: - Selectors
     
     @objc func handleLogin() {
+        let tabbarController = TabBarController()
+        tabbarController.modalPresentationStyle = .fullScreen
+        present(tabbarController, animated: true)
         print("Login!")
     }
     

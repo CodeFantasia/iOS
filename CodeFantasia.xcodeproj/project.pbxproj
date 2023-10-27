@@ -30,15 +30,7 @@
 		AB14BEBC2AE2505900ACE79F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBB2AE2505900ACE79F /* LoginController.swift */; };
 		AB14BEC02AE2506300ACE79F /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		AB14BEC12AE2506300ACE79F /* TermsOfConditionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */; };
-		AB9482382AEAFDB100F510BB /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
-		ABA2295F2AEB023400EDE1D5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ABA2295E2AEB023400EDE1D5 /* FirebaseAnalytics */; };
-		ABA229612AEB023400EDE1D5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = ABA229602AEB023400EDE1D5 /* FirebaseAuth */; };
-		ABA229632AEB023400EDE1D5 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = ABA229622AEB023400EDE1D5 /* FirebaseDatabase */; };
-		ABA229652AEB023400EDE1D5 /* FirebaseDynamicLinks in Frameworks */ = {isa = PBXBuildFile; productRef = ABA229642AEB023400EDE1D5 /* FirebaseDynamicLinks */; };
-		ABA229672AEB023400EDE1D5 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = ABA229662AEB023400EDE1D5 /* FirebaseFirestore */; };
-		ABA229692AEB023400EDE1D5 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = ABA229682AEB023400EDE1D5 /* FirebaseMessaging */; };
-		ABA2296B2AEB023400EDE1D5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = ABA2296A2AEB023400EDE1D5 /* FirebaseStorage */; };
-		ABA2296E2AEB028D00EDE1D5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = ABA2296D2AEB028D00EDE1D5 /* FirebaseAuth */; };
+		ABA2296F2AEB7CAC00EDE1D5 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */; };
 		ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */; };
 		ABC3DF262AD45E8B008CEF1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF252AD45E8B008CEF1A /* ViewController.swift */; };
@@ -716,7 +708,7 @@
 				F13AED042AE611F00098C654 /* Rx+UIViewController.swift in Sources */,
 				F1E18BDE2AE105B50041638B /* Images.swift in Sources */,
 				311FF5202AE90BC4008AB16E /* (null) in Sources */,
-				AB9482382AEAFDB100F510BB /* RegistrationController.swift in Sources */,
+				ABA2296F2AEB7CAC00EDE1D5 /* RegistrationController.swift in Sources */,
 				F1E18BDF2AE105B50041638B /* ProjectBoardVC.swift in Sources */,
 				311FF5242AE90BE0008AB16E /* Label.swift in Sources */,
 				311FF5212AE90BD1008AB16E /* (null) in Sources */,
