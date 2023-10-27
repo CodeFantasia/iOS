@@ -5,20 +5,19 @@
 //  Created by t2023-m0049 on 2023/10/16.
 //
 
+import Firebase
+import FirebaseStorage
 import Kingfisher
 import SnapKit
 // import SwiftUI
 import Then
 import UIKit
-import Firebase
-import FirebaseStorage
 
 class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: - 변수선언
 
-    //firebase 선언
+    // firebase 선언
     private let projectRepository: ProjectRepositoryProtocol = ProjectRepository(firebaseBaseManager: FireBaseManager())
-
 
     // 스크롤 뷰
     private let scrollView: UIScrollView = {
@@ -187,13 +186,55 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return datePicker
     }()
 
+    // 모임 유형 라벨
+    let meetingTypeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "모임 유형"
+        label.textColor = UIColor(hex: 0x000000)
+        label.sizeToFit()
+        return label
+    }()
+
+    // 모임 유형 텍스트 필드
+    let meetingTypeTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "모임 유형"
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.backgroundColor = .white
+        return textField
+    }()
+
+    // 신청 시 연락 방법 라벨
+    let contactMethodLabel: UILabel = {
+        let label = UILabel()
+        label.text = "연락 수단을 적어주세요."
+        label.textColor = UIColor(hex: 0x000000)
+        label.sizeToFit()
+        return label
+    }()
+
+    // 신청 시 연락 방법 텍스트 필드
+    let contactMethodTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "신청 시 연락 방법"
+        textField.borderStyle = .roundedRect
+        textField.layer.cornerRadius = 8
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.backgroundColor = .white
+        return textField
+    }()
+
     // 작성 완료 버튼
     private let completeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("작성 완료", for: .normal)
-        button.frame = CGRect(x: 10, y: 1000, width: UIScreen.main.bounds.width - 20, height: 30)
+//        button.frame = CGRect(x: 10, y: 1000, width: UIScreen.main.bounds.width - 20, height: 40)
         button.backgroundColor = UIColor(hex: 0x000000)
-        button.layer.cornerRadius = 15
+        button.layer.cornerRadius = 10
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         return button
@@ -330,19 +371,48 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         contentView.addSubview(projectDateLabel2)
         projectDateLabel2.snp.makeConstraints {
             $0.top.equalTo(projectIntroTextView.snp.bottom).offset(20)
-            $0.left.equalTo(projectDatePicker1.snp.right).offset(150) // 첫 번째 데이트 피커의 오른쪽에서 20pt 이동
+            $0.left.equalTo(projectDatePicker1.snp.right).offset(150)
         }
         contentView.addSubview(projectDatePicker2)
         projectDatePicker2.snp.makeConstraints {
             $0.top.equalTo(projectDateLabel2.snp.bottom).offset(10)
-            $0.left.equalTo(projectDatePicker1.snp.right).offset(150) // 첫 번째 데이트 피커의 오른쪽에서 20pt 이동
+            $0.left.equalTo(projectDatePicker1.snp.right).offset(150)
             $0.height.equalTo(100)
+        }
+
+        // 모집유형 라벨과 텍스트필드
+        contentView.addSubview(meetingTypeLabel)
+        meetingTypeLabel.snp.makeConstraints {
+            $0.top.equalTo(projectDatePicker2.snp.bottom).offset(10)
+            $0.left.equalTo(contentView).offset(20)
+        }
+
+        contentView.addSubview(meetingTypeTextField)
+        meetingTypeTextField.snp.makeConstraints {
+            $0.top.equalTo(meetingTypeLabel.snp.bottom).offset(10)
+            $0.left.equalTo(contentView).offset(20)
+            $0.right.equalTo(contentView).offset(-20)
+            $0.height.equalTo(30)
+        }
+        // 연락방법 라벨과 텍스트필드
+        contentView.addSubview(contactMethodLabel)
+        contactMethodLabel.snp.makeConstraints {
+            $0.top.equalTo(meetingTypeTextField.snp.bottom).offset(20)
+            $0.left.equalTo(contentView).offset(20)
+        }
+
+        contentView.addSubview(contactMethodTextField)
+        contactMethodTextField.snp.makeConstraints {
+            $0.top.equalTo(contactMethodLabel.snp.bottom).offset(10)
+            $0.left.equalTo(contentView).offset(20)
+            $0.right.equalTo(contentView).offset(-20)
+            $0.height.equalTo(30)
         }
 
         // 작성 완료 버튼
         contentView.addSubview(completeButton)
         completeButton.snp.makeConstraints {
-            $0.top.equalTo(projectDatePicker2.snp.bottom).offset(20)
+            $0.top.equalTo(contactMethodTextField.snp.bottom).offset(20)
             $0.left.equalTo(contentView).offset(10)
             $0.width.equalTo(UIScreen.main.bounds.width - 20)
             $0.height.equalTo(30)
@@ -367,40 +437,42 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
 //        projectRepository.create(project: projectInfo)
 //        print("aaa")
         let projectTitle = titleTextField.text
-            let platform = platformTextField.text
-            let techLanguage = techLanguageTextField.text
-            let recruitmentField = recruitmentFieldTextField.text
-            let projectDescription = projectIntroTextView.text
+        let platform = platformTextField.text
+        let techLanguage = techLanguageTextField.text
+        let recruitmentField = recruitmentFieldTextField.text
+        let projectDescription = projectIntroTextView.text
+        let meetingType = meetingTypeTextField.text
+        let contactMethod = contactMethodTextField.text
 
-            // 기간 데이터를 DateFormatter를 사용하여 문자열로 변환
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            let projectStartDate = dateFormatter.string(from: projectDatePicker1.date)
-            let projectEndDate = dateFormatter.string(from: projectDatePicker2.date)
+        // DateFormatter를 사용하여 문자열로 변환
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let projectStartDate = dateFormatter.string(from: projectDatePicker1.date)
+        let projectEndDate = dateFormatter.string(from: projectDatePicker2.date)
 
-            // 썸네일 이미지 URL (이미지를 Firebase Storage에 업로드한 후, 그 이미지의 URL을 사용)
-            let thumbnailImageURL: String = "이미지 URL을 여기에 넣어야 합니다"  // Firebase Storage에 업로드된 이미지의 URL로 설정
+        let thumbnailImageURL = ""
 
-            // Project 구조체에 데이터 할당
-            let projectInfo = Project(
-                projectTitle: projectTitle,
-                projecSubtitle: nil,  // 이 부분을 필요에 따라 채워넣으세요
-                techStack: [],  // 이 부분을 필요에 따라 채워넣으세요
-                recruitmentCount: 1,  // 이 부분을 필요에 따라 채워넣으세요
-                projectDescription: projectDescription,
-                projectDuration: "\(projectStartDate) - \(projectEndDate)",
-                meetingType: nil,  // 이 부분을 필요에 따라 채워넣으세요
-                imageUrl: thumbnailImageURL,
-                projectID: UUID(),
-                platform: [],  // 이 부분을 필요에 따라 채워넣으세요
-                recruitmentField: recruitmentField,
-                recruitingStatus: true,  // 모집 중이면 true, 모집 완료이면 false
-                teamMember: []  // 이 부분을 필요에 따라 채워넣으세요
-            )
-            // Firebase에 데이터 업로드
-            projectRepository.create(project: projectInfo)
+        // Project 구조체에 데이터 할당
+        let projectInfo = Project(
+            projectTitle: projectTitle,
+            projecSubtitle: nil,
+            techStack: [],
+            recruitmentCount: 1,
+            projectDescription: projectDescription,
+            projectDuration: "\(projectStartDate) - \(projectEndDate)",
+            meetingType: meetingType,
+            imageUrl: thumbnailImageURL,
+            projectID: UUID(),
+            platform: [], // 이 부분을 필요에 따라 채워넣으세요
+            recruitmentField: recruitmentField,
+            recruitingStatus: true,
+            teamMember: []
+        )
+        // Firebase에 데이터 업로드
+        projectRepository.create(project: projectInfo)
         print("aaaa")
-        }
+    }
+
     // MARK: - 모달페이지함수
 
     @objc func platformTextFieldTapped() {
@@ -415,13 +487,13 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     // MARK: - 썸네일이미지피커
 
     @objc func thumbnailImageViewTapped() {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            present(imagePicker, animated: true, completion: nil)
-        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
 
-        // 이미지를 선택한 후 호출되는 함수
+    // 이미지를 선택한 후 호출되는 함수
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
             thumbnailImageView.image = selectedImage
@@ -429,7 +501,6 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
 
         picker.dismiss(animated: true, completion: nil)
     }
-
 }
 
 //     //MARK: - 미리보기
