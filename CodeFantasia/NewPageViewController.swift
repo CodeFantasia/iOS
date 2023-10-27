@@ -463,7 +463,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             meetingType: meetingType,
             imageUrl: thumbnailImageURL,
             projectID: UUID(),
-            platform: [], // 이 부분을 필요에 따라 채워넣으세요
+            platform: [.CarrierAppStore], // 이 부분을 필요에 따라 채워넣으세요
             recruitmentField: recruitmentField,
             recruitingStatus: true,
             teamMember: []
@@ -471,6 +471,10 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Firebase에 데이터 업로드
         projectRepository.create(project: projectInfo)
         print("aaaa")
+    }
+
+    func convertToEnum(rawValue: String) -> Platform? {
+        return Platform(rawValue: rawValue)
     }
 
     // MARK: - 모달페이지함수
