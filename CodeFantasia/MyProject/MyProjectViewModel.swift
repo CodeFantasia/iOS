@@ -18,8 +18,8 @@ final class MyProjectViewModel {
         var projectDataFetched: Observable<Project>
     }
     private let disposeBag = DisposeBag()
-     let projectRepository: ProjectRepositoryProtocol
-    private let projectId: String
+    let projectRepository: ProjectRepositoryProtocol
+    let projectId: String
     
     init(
         projectRepository: ProjectRepositoryProtocol,
