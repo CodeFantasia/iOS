@@ -466,7 +466,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             platform: [.CarrierAppStore], // 이 부분을 필요에 따라 채워넣으세요
             recruitmentField: recruitmentField,
             recruitingStatus: true,
-            teamMember: []
+            teamMember: [],
+            contactMethod: contactMethod
         )
         // Firebase에 데이터 업로드
         projectRepository.create(project: projectInfo)

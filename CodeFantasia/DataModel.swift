@@ -35,7 +35,8 @@ struct Project: Codable {
     var platform: [Platform]
     var recruitmentField: String?
     var recruitingStatus: Bool?  // 추가 현재 모집중 모집 완료인지
-    var teamMember: [TeamMember]   // 추가
+    var teamMember: [TeamMember]
+    var contactMethod: String? // 추가
 }
 
 // 기술 스택
