@@ -437,13 +437,26 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
 //        projectRepository.create(project: projectInfo)
 //        print("aaa")
         let projectTitle = titleTextField.text
-        let platform = platformTextField.text
         let techLanguage = techLanguageTextField.text
         let recruitmentField = recruitmentFieldTextField.text
         let projectDescription = projectIntroTextView.text
         let meetingType = meetingTypeTextField.text
         let contactMethod = contactMethodTextField.text
 
+        // 출시 플랫폼 텍스트 필드에서 사용자 입력을 가져옵니다.
+        let platformInput = platformTextField.text
+
+        // 사용자 입력을 쉼표로 분할하여 문자열 배열로 만듭니다.
+        let platformsArray = platformInput?.components(separatedBy: "/").map { $0.trimmingCharacters(in: .whitespaces) } ?? []
+
+        // 각 텍스트를 enum 값으로 변환하여 배열에 추가합니다.
+        var selectedPlatforms: [Platform] = []
+        for platformText in platformsArray {
+            if let platform = Platform(rawValue: platformText) {
+                selectedPlatforms.append(platform)
+            }
+        }
+        
         // DateFormatter를 사용하여 문자열로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -463,7 +476,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             meetingType: meetingType,
             imageUrl: thumbnailImageURL,
             projectID: UUID(),
-            platform: [.CarrierAppStore], // 이 부분을 필요에 따라 채워넣으세요
+            platform: selectedPlatforms, // 이 부분을 필요에 따라 채워넣으세요
             recruitmentField: recruitmentField,
             recruitingStatus: true,
             teamMember: [],

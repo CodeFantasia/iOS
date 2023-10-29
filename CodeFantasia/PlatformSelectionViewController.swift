@@ -71,7 +71,8 @@ class PlatformSelectionViewController: UIViewController, UITableViewDelegate, UI
 
     @objc func selectComplete() {
         let selectedItems = selectedPlatforms.map { $0.rawValue }
-        onPlatformSelected?(selectedItems.joined(separator: "\n"))
+        let selectedItemsString = selectedItems.joined(separator: " / ") // '/'로 구분
+        onPlatformSelected?(selectedItemsString)
         dismiss(animated: true, completion: nil)
     }
 
