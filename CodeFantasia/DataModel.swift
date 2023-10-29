@@ -113,11 +113,11 @@ enum Platform: String, Codable {
     case CarrierAppStore = "휴대폰 캐리어 앱 스토어 (특정 휴대폰 캐리어에 의한 앱 출시)"
 }
 
-struct Role: Codable {
+struct Role: Codable, Equatable {
     var detailRole: String?
 }
 
-struct TeamMember: Codable {
+struct TeamMember: Codable, Equatable {
     let name: String
     let employeeID: Int
     // 다른 구성원 속성
