@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>DATABASE_URL</key>
+	<string>https://code-11ac9-default-rtdb.asia-southeast1.firebasedatabase.app/</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBRmnEE3dRNhEJFRASVsh3jTK3Py419yiQ</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,15 +17,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>code-11ac9.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:306080011775:ios:c532cb8f1138d43937c3ca</string>
 </dict>
