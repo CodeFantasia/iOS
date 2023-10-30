@@ -30,6 +30,7 @@
 		AB14BEBC2AE2505900ACE79F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBB2AE2505900ACE79F /* LoginController.swift */; };
 		AB14BEC02AE2506300ACE79F /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		AB14BEC12AE2506300ACE79F /* TermsOfConditionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */; };
+		AB5C72ED2AEF482000A631B0 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA229A82AEF44AE00EDE1D5 /* UserManager.swift */; };
 		ABA2296F2AEB7CAC00EDE1D5 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		ABA229A02AEF368C00EDE1D5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ABA2295E2AEB023400EDE1D5 /* FirebaseAnalytics */; };
 		ABA229A12AEF368C00EDE1D5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = ABA229602AEB023400EDE1D5 /* FirebaseAuth */; };
@@ -729,6 +730,7 @@
 				F031266A2AE90B48000E337E /* UIImageView+.swift in Sources */,
 				F1E18BE12AE105B50041638B /* ProfileViewController.swift in Sources */,
 				F1E18BE22AE105B50041638B /* FirebaseManager.swift in Sources */,
+				AB5C72ED2AEF482000A631B0 /* UserManager.swift in Sources */,
 				F1E18BE32AE105B50041638B /* CodeFantasia.xcdatamodeld in Sources */,
 				F0BFCB5F2AEA541400D3BEC2 /* MyProjectViewModel.swift in Sources */,
 				F031266B2AE90B4C000E337E /* UIViewController+.swift in Sources */,
