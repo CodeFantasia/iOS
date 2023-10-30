@@ -5,7 +5,7 @@
 //  Created by 서영덕 on 10/18/23.
 //
 
-import Foundation
+import UIKit
 
 // 사용자 프로필 정보를 나타내는 구조체
 struct UserProfile: Codable {
@@ -20,6 +20,14 @@ struct UserProfile: Codable {
     let profileImageURL: String?
     let userProjects: [String]
     let userID: UUID
+}
+
+// 사용자 회원가입 정보
+struct UserAuth: Codable {
+    let email: String
+    let password: String
+    let name: String
+    let profileImage: String
 }
 
 struct Project: Codable {
