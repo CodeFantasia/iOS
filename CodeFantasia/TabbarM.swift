@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 extension UIImage {
     func resize(to size: CGSize) -> UIImage? {
@@ -21,9 +22,38 @@ extension UIImage {
 
 class TabBarController: UITabBarController {
     
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
-        tabBar.isTranslucent = true
         super.viewDidLoad()
+        
+        authenticateUserAndConfigureUI()
+        configureUI()
+    }
+    
+    // MARK: - API
+    
+    func authenticateUserAndConfigureUI() {
+        if Auth.auth().currentUser == nil {
+            print("🤍 로그인 하지 않은 유저 두두두등장 🤍")
+        } else {
+            print("🤍 로그인 된 유저임 🤍")
+        }
+    }
+    
+    func logUserOut() {
+        do {
+            try Auth.auth().signOut()
+            print("🤍 로그아웃 성공! 🤍")
+        } catch let error {
+            print("🤍 로그아웃 실패 ㅠㅠ \(error) 🤍")
+        }
+    }
+    
+    // MARK: - Helpers
+    
+    func configureUI() {
+        tabBar.isTranslucent = true
         
         let iconSize = CGSize(width: 25, height: 25)
         
@@ -43,4 +73,5 @@ class TabBarController: UITabBarController {
         
         viewControllers = [tabbarMyProjectVC, tabbarMainVC, tabbarProfileVC]
     }
+
 }
