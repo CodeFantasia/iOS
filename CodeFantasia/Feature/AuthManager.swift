@@ -11,6 +11,7 @@ let STORAGE_REF = Storage.storage().reference()
 let STORAGE_PROFILE_IMAGES = STORAGE_REF.child("profile_images")
 
 struct AuthManager {
+
     static let shared = AuthManager()
     
     func registerUser(crudentials: UserAuth, completion: @escaping(Error?, DatabaseReference) -> Void) {
@@ -44,4 +45,9 @@ struct AuthManager {
             }
         }
     }
+    
+    func logUserIn(withEmail email: String, password: String, completion: @escaping(AuthDataResult?, Error?) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password, completion: completion)
+    }
+
 }

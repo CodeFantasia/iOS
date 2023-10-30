@@ -108,7 +108,12 @@ class RegistrationController: UIViewController {
         let newUser = UserAuth(email: email, password: password, name: name, profileImage: profileImage)
         
         AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
-            print("🤍 실시간 데이터 베이스에 유저 정보 업데이트 성공. 🤍")
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? TabBarController else { return }
+            
+            tab.configureUI()
+
+            self.dismiss(animated: true)
         }
     }
     
