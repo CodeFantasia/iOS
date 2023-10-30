@@ -16,7 +16,7 @@ struct IconModel {
 class ProjectBoardTableviewCell: UITableViewCell {
     
     let titleImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFit
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 10
     }
@@ -173,8 +173,17 @@ private extension ProjectBoardTableviewCell {
 
 // MARK: - Public Methods
 extension ProjectBoardTableviewCell {
-    func recruitmentLabelCheck(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String) {
-        titleImageView.image = image
+    func recruitmentLabelCheck(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String) {
+        if let validURL = imageURL {
+            URLSession.shared.dataTask(with: validURL) { (data, response, error) in
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self.titleImageView.image = image
+                    }
+                }
+            }.resume()
+        }
+        
         titleLabel.text = title
         subheadingLabel.text = detail
         self.icons = icons
