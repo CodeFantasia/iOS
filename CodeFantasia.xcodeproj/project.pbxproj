@@ -14,7 +14,6 @@
 		311FF5242AE90BE0008AB16E /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB62AE2503F00ACE79F /* Label.swift */; };
 		313064E42ADFFA9C00D1CC6C /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 313064E32ADFFA9C00D1CC6C /* DataModel.swift */; };
 		3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3191DEDE2AD8F9B30059AACB /* TabbarM.swift */; };
-		31A7F5042AEA79B600C37E3C /* ProjectSearchViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A7F5032AEA79B600C37E3C /* ProjectSearchViewVC.swift */; };
 		6BBF70772ADFB72100F58080 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70762ADFB72100F58080 /* ProfileViewController.swift */; };
 		6BBF707A2ADFB73700F58080 /* ProjectBoardTableviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */; };
 		6BBF707B2ADFB73700F58080 /* ProjectBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70792ADFB73700F58080 /* ProjectBoardVC.swift */; };
@@ -144,7 +143,6 @@
 /* Begin PBXFileReference section */
 		313064E32ADFFA9C00D1CC6C /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		3191DEDE2AD8F9B30059AACB /* TabbarM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarM.swift; sourceTree = "<group>"; };
-		31A7F5032AEA79B600C37E3C /* ProjectSearchViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectSearchViewVC.swift; sourceTree = "<group>"; };
 		6BBF70762ADFB72100F58080 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectBoardTableviewCell.swift; sourceTree = "<group>"; };
 		6BBF70792ADFB73700F58080 /* ProjectBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectBoardVC.swift; sourceTree = "<group>"; };
@@ -253,17 +251,9 @@
 			children = (
 				6BBF70782ADFB73600F58080 /* ProjectBoardTableviewCell.swift */,
 				6BBF70792ADFB73700F58080 /* ProjectBoardVC.swift */,
-				31A7F5032AEA79B600C37E3C /* ProjectSearchViewVC.swift */,
+				F1F7CE382AEA3BBA00F28E95 /* ProjectSearchViewVC.swift */,
 			);
 			path = ProjectBoard;
-			sourceTree = "<group>";
-		};
-		6BBF708C2AEA8F5900F58080 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				6BBF70842AE692E100F58080 /* UIImageView+.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		AB14BEBA2AE2505900ACE79F /* LogIn */ = {
@@ -362,7 +352,6 @@
 			children = (
 				6BBF707D2ADFB76000F58080 /* MyProjectVC.swift */,
 				F076F6F92ADE80F000AD7435 /* MyProjectTableViewCell.swift */,
-				F1F7CE382AEA3BBA00F28E95 /* ProjectSearchViewVC.swift */,
 				F0BFCB5D2AEA524B00D3BEC2 /* MyProjectViewModel.swift */,
 			);
 			path = MyProject;
@@ -389,13 +378,11 @@
 		F187DF212ADEA238001B097D /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				F13AED022AE611F00098C654 /* Rx+UIViewController.swift */,
 				F13AED0B2AE692FE0098C654 /* UIImageView+.swift */,
 				F187DF222ADEA249001B097D /* Date+Format.swift */,
 				F17108A32AE21AED0076C575 /* Data+.swift */,
 				F13AED022AE611F00098C654 /* Rx+UIViewController.swift */,
 				F0897B072AE692D400D8AE09 /* UIImageView+.swift */,
-				F13AED052AE63D320098C654 /* UIViewController+.swift */,
 				6BBF70882AE7DA3A00F58080 /* UIColor+.swift */,
 				F13AED052AE63D320098C654 /* UIViewController+.swift */,
 			);
@@ -656,7 +643,6 @@
 				6BBF70892AE7DA3A00F58080 /* UIColor+.swift in Sources */,
 				F17108A42AE21AED0076C575 /* Data+.swift in Sources */,
 				F1E653EA2AD8F63D00274A34 /* Images.swift in Sources */,
-				31A7F5042AEA79B600C37E3C /* ProjectSearchViewVC.swift in Sources */,
 				6BBF707B2ADFB73700F58080 /* ProjectBoardVC.swift in Sources */,
 				F1E653DE2AD8CDF900274A34 /* ProjectDetailNoticeBoardViewController.swift in Sources */,
 				6BBF70772ADFB72100F58080 /* ProfileViewController.swift in Sources */,

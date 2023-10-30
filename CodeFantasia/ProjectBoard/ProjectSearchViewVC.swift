@@ -16,11 +16,11 @@ class ProjectSearchViewVC: UIViewController {
         $0.backgroundColor = .clear
     }
     
-    private var filteredData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String)]
+    private var filteredData: [(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)]
     private let searchController = UISearchController(searchResultsController: nil)
-    var mockData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String)]
+    var mockData: [(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)]
     
-    init(mockData: [(image: UIImage?, title: String, detail: String, icons: [IconModel], status: String)]) {
+    init(mockData: [(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)]) {
         self.mockData = mockData
         self.filteredData = mockData
         super.init(nibName: nil, bundle: nil)
@@ -76,11 +76,9 @@ extension ProjectSearchViewVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectBoardCell", for: indexPath) as! ProjectBoardTableviewCell
         let dataItem = filteredData[indexPath.row]
-        cell.titleImageView.image = dataItem.image
-        cell.titleLabel.text = dataItem.title
-        cell.subheadingLabel.text = dataItem.detail
-        cell.icons = dataItem.icons
-        cell.recruitmentLabelCheck(image: dataItem.image, title: dataItem.title, detail: dataItem.detail, icons: dataItem.icons, status: dataItem.status)
+        
+        cell.recruitmentLabelCheck(imageURL: dataItem.imageURL, title: dataItem.title, detail: dataItem.detail, icons: dataItem.icons, status: dataItem.status)
+        
         cell.backgroundColor = .clear
         cell.layer.borderColor = UIColor.black.cgColor
         cell.contentView.backgroundColor = .white
