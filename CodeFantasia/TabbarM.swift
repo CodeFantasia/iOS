@@ -27,17 +27,23 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        logUserOut()
         authenticateUserAndConfigureUI()
-        configureUI()
     }
     
     // MARK: - API
     
     func authenticateUserAndConfigureUI() {
         if Auth.auth().currentUser == nil {
-            print("🤍 로그인 하지 않은 유저 두두두등장 🤍")
+            DispatchQueue.main.async {
+                self.view.backgroundColor = UIColor.primaryColor
+                
+                let loginController = UINavigationController(rootViewController: LoginController())
+                loginController.modalPresentationStyle = .fullScreen
+                self.present(loginController, animated: false)
+            }
         } else {
-            print("🤍 로그인 된 유저임 🤍")
+            configureUI()
         }
     }
     
