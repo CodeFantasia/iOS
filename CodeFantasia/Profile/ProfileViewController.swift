@@ -275,18 +275,24 @@ extension ProfileViewController {
             .disposed(by: disposeBag)
 
         outputs.logoutDidTap
-               .withUnretained(self)
-               .subscribe { [weak self] _ in
-                   guard let self = self else { return }
-                   do {
-                       try Auth.auth().signOut()
-                       self.dismiss(animated: true) {
-                           self.navigationController?.popToRootViewController(animated: true)
-                               }
-                   } catch let signOutError as NSError {
-                       print("Error signing out: \(signOutError)")
-                   }
-               }
-               .disposed(by: disposeBag)
-       }
+            .withUnretained(self)
+            .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                do {
+                    try Auth.auth().signOut()
+                    
+                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
+                      fatalError("could not get scene delegate ")
+                    }
+                    DispatchQueue.main.async {
+                        sceneDelegate.window?.rootViewController = TabBarController()
+                    }
+                  
+                } catch let signOutError as NSError {
+                    print("Error signing out: \(signOutError)")
+                }
+            }
+            .disposed(by: disposeBag)
+    }
 }
+
