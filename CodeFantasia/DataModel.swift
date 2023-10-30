@@ -23,11 +23,11 @@ struct UserProfile: Codable {
 }
 
 // 사용자 회원가입 정보
-struct UserAuth: Codable {
+struct UserAuth {
     let email: String
     let password: String
     let name: String
-    let profileImage: String
+    let profileImage: UIImage
 }
 
 struct Project: Codable {

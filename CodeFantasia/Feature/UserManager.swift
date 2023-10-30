@@ -12,8 +12,12 @@ let STORAGE_PROFILE_IMAGES = STORAGE_REF.child("profile_images")
 struct AuthService {
     static let shared = AuthService()
     
-    func registerUser() {
-        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
+    func registerUser(crudentials: UserAuth, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        let email = crudentials.email
+        let password = crudentials.password
+        let name = crudentials.name
+        
+        guard let imageData = crudentials.profileImage.jpegData(compressionQuality: 0.3) else { return }
         let filename = NSUUID().uuidString
         let storageRef = STORAGE_PROFILE_IMAGES.child(filename)
         
@@ -33,10 +37,7 @@ struct AuthService {
                                   "name" : name,
                                   "profileImageUrl" : profileImageUrl]
                     
-                    REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
-                        print("실시간 데이터 베이스에 유저 정보 업데이트 성공.")
-                        print("email: \(email), name: \(name), profileImageUrl: \(profileImageUrl)")
-                    }
+                    REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
                 }
                 
             }

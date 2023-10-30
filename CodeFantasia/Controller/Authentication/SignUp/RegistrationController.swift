@@ -96,7 +96,6 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleRegsiter() {
-        
         guard let profileImage = profileImage else {
             print("프로필 사진이 선택되지 않았습니다.")
             return
@@ -105,7 +104,12 @@ class RegistrationController: UIViewController {
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         guard let name = nameTextField.text else { return }
-
+        
+        let newUser = UserAuth(email: email, password: password, name: name, profileImage: profileImage)
+        
+        AuthService().registerUser(crudentials: newUser) { (error, ref) in
+            print("🤍 실시간 데이터 베이스에 유저 정보 업데이트 성공. 🤍")
+        }
     }
     
     @objc func handleAddProfilePhoto() {
