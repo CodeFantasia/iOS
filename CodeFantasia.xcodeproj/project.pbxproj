@@ -29,7 +29,7 @@
 		AB14BEBC2AE2505900ACE79F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBB2AE2505900ACE79F /* LoginController.swift */; };
 		AB14BEC02AE2506300ACE79F /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		AB14BEC12AE2506300ACE79F /* TermsOfConditionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */; };
-		AB5C72ED2AEF482000A631B0 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA229A82AEF44AE00EDE1D5 /* UserManager.swift */; };
+		AB5C72ED2AEF482000A631B0 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */; };
 		ABA2296F2AEB7CAC00EDE1D5 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		ABA229A02AEF368C00EDE1D5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ABA2295E2AEB023400EDE1D5 /* FirebaseAnalytics */; };
 		ABA229A12AEF368C00EDE1D5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = ABA229602AEB023400EDE1D5 /* FirebaseAuth */; };
@@ -39,7 +39,7 @@
 		ABA229A52AEF368C00EDE1D5 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = ABA229682AEB023400EDE1D5 /* FirebaseMessaging */; };
 		ABA229A62AEF368C00EDE1D5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = ABA2296A2AEB023400EDE1D5 /* FirebaseStorage */; };
 		ABA229A72AEF368C00EDE1D5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = ABA2296D2AEB028D00EDE1D5 /* FirebaseAuth */; };
-		ABA229A92AEF44AE00EDE1D5 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA229A82AEF44AE00EDE1D5 /* UserManager.swift */; };
+		ABA229A92AEF44AE00EDE1D5 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */; };
 		ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */; };
 		ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */; };
 		ABC3DF262AD45E8B008CEF1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3DF252AD45E8B008CEF1A /* ViewController.swift */; };
@@ -161,7 +161,7 @@
 		AB14BEBB2AE2505900ACE79F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfConditionsController.swift; sourceTree = "<group>"; };
-		ABA229A82AEF44AE00EDE1D5 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		ABC3DF1E2AD45E8B008CEF1A /* CodeFantasia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeFantasia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC3DF212AD45E8B008CEF1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABC3DF232AD45E8B008CEF1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -410,7 +410,7 @@
 				F1E18B482AE0F9A40041638B /* FirebaseManager.swift */,
 				F1F51AC72AE9F522002E8507 /* ImageStorageManager.swift */,
 				F1F51ACA2AEA0CF0002E8507 /* NetworkManager.swift */,
-				ABA229A82AEF44AE00EDE1D5 /* UserManager.swift */,
+				ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -628,7 +628,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BBF707F2ADFB76000F58080 /* MyProjectVC.swift in Sources */,
-				ABA229A92AEF44AE00EDE1D5 /* UserManager.swift in Sources */,
+				ABA229A92AEF44AE00EDE1D5 /* AuthManager.swift in Sources */,
 				F187DF232ADEA249001B097D /* Date+Format.swift in Sources */,
 				F13AED002AE5F8CB0098C654 /* ProjectDetailNoticeBoardViewModel.swift in Sources */,
 				F1E653E42AD8E0F200274A34 /* Fonts.swift in Sources */,
@@ -726,7 +726,7 @@
 				F031266A2AE90B48000E337E /* UIImageView+.swift in Sources */,
 				F1E18BE12AE105B50041638B /* ProfileViewController.swift in Sources */,
 				F1E18BE22AE105B50041638B /* FirebaseManager.swift in Sources */,
-				AB5C72ED2AEF482000A631B0 /* UserManager.swift in Sources */,
+				AB5C72ED2AEF482000A631B0 /* AuthManager.swift in Sources */,
 				F1E18BE32AE105B50041638B /* CodeFantasia.xcdatamodeld in Sources */,
 				F0BFCB5F2AEA541400D3BEC2 /* MyProjectViewModel.swift in Sources */,
 				F031266B2AE90B4C000E337E /* UIViewController+.swift in Sources */,
