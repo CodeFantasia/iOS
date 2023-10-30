@@ -26,8 +26,7 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        logUserOut()
+
         authenticateUserAndConfigureUI()
     }
     
@@ -46,15 +45,16 @@ class TabBarController: UITabBarController {
             configureUI()
         }
     }
-    
-    func logUserOut() {
-        do {
-            try Auth.auth().signOut()
-            print("🤍 로그아웃 성공! 🤍")
-        } catch let error {
-            print("🤍 로그아웃 실패 ㅠㅠ \(error) 🤍")
-        }
-    }
+
+    // 테스트 용!
+//    func logUserOut() {
+//        do {
+//            try Auth.auth().signOut()
+//            print("🤍 로그아웃 성공! 🤍")
+//        } catch let error {
+//            print("🤍 로그아웃 실패 ㅠㅠ \(error) 🤍")
+//        }
+//    }
     
     // MARK: - Helpers
     
