@@ -1,9 +1,14 @@
 
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class RegistrationController: UIViewController {
 
     // MARK: - Properties
+    
+    private let imagePicker = UIImagePickerController()
+    private var profileImage: UIImage?
     
     private let addPhotoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -12,8 +17,6 @@ class RegistrationController: UIViewController {
         button.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
         return button
     }()
-    
-    private let imagePicker = UIImagePickerController()
     
     private let alreadyHaveAccountButton: UIButton = {
         let button = Utilities().attributedButton("Already have an account?", " Log in")
@@ -83,7 +86,7 @@ class RegistrationController: UIViewController {
         super.viewDidLoad()
 
         configureUI()
-        setKeyboardObserver()
+        // setKeyboardObserver()
     }
     
     // MARK: - Selectors
@@ -93,7 +96,20 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleRegsiter() {
-        print("Register!")
+        guard let profileImage = profileImage else {
+            print("프로필 사진이 선택되지 않았습니다.")
+            return
+        }
+        
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        guard let name = nameTextField.text else { return }
+        
+        let newUser = UserAuth(email: email, password: password, name: name, profileImage: profileImage)
+        
+        AuthService().registerUser(crudentials: newUser) { (error, ref) in
+            print("🤍 실시간 데이터 베이스에 유저 정보 업데이트 성공. 🤍")
+        }
     }
     
     @objc func handleAddProfilePhoto() {
@@ -140,6 +156,7 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let profileImage = info[.editedImage] as? UIImage else { return }
+        self.profileImage = profileImage
         
         addPhotoButton.layer.cornerRadius = 130 / 2
         addPhotoButton.layer.masksToBounds = true
