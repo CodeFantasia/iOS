@@ -20,8 +20,8 @@ final class ProjectDetailNoticeBoardViewModel {
     }
     struct Output {
         var projectDataFetched: Observable<Project>
-        var projectApplyButtonDidTap: Driver<Void>
-        var projectLeaderProfileDidTap: Driver<Void>
+        var projectApplyButtonDidTap: Driver<String?>
+        var projectLeaderProfileDidTap: Driver<Int?>
         var projectEditButtonDidTap: Driver<Void>
         var projectReportButtonDidTap: Driver<Void>
 //        var projectApplySuccess: Observable<Void>
@@ -34,6 +34,7 @@ final class ProjectDetailNoticeBoardViewModel {
     private let disposeBag = DisposeBag()
     private let projectRepository: ProjectRepositoryProtocol
     private let projectId: String
+    private var project: Project?
     
     init(
         projectRepository: ProjectRepositoryProtocol,
@@ -51,6 +52,7 @@ final class ProjectDetailNoticeBoardViewModel {
                 .subscribe { projectId in
                     self.projectRepository.read(projectId: self.projectId)
                         .subscribe(onSuccess: { project in
+                            self.project = project
                             observer.onNext(project)
                         }, onFailure: { error in
                             observer.onError(error)
@@ -74,8 +76,13 @@ final class ProjectDetailNoticeBoardViewModel {
         
         return Output(
             projectDataFetched: projectData,
-            projectApplyButtonDidTap: input.projectApplyButtonTapped,
-            projectLeaderProfileDidTap: input.profileImageTapped,
+            projectApplyButtonDidTap: input.projectApplyButtonTapped.map { [weak self] _ in
+                self?.project?.contactMethod
+            },
+            projectLeaderProfileDidTap: input.profileImageTapped.map { [weak self] _ in
+                // 리더 어떻게 할지 정해야 함 
+                self?.project?.teamMember.first(where: {$0.category == Role(detailRole: "leader")})?.employeeID
+            },
             projectEditButtonDidTap: input.editImageTapped,
             projectReportButtonDidTap: input.projectReportButtonTapped
         )

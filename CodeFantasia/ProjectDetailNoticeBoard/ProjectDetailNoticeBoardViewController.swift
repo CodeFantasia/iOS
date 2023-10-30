@@ -265,16 +265,21 @@ extension ProjectDetailNoticeBoardViewController {
             .disposed(by: disposeBag)
         
         outputs.projectApplyButtonDidTap
-            .drive(with: self, onNext: { owner, _ in
-                owner.alertViewAlert(title: "신청", message: "프로젝트에 신청하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
+            .drive(with: self, onNext: { owner, applyMethod in
+                owner.alertViewAlert(title: "신청", message: applyMethod ?? "", cancelText: nil, acceptCompletion:  {
                     owner.viewModel.projectApplyComplete.on(.next(()))
                 })
             })
             .disposed(by: disposeBag)
         
         outputs.projectLeaderProfileDidTap
-            .drive(with: self, onNext: { owner, _ in
+            .drive(with: self, onNext: { owner, leaderUserId in
                 // 프로필 뷰로
+                if let leaderUserId {
+                    let profileViewController = ProfileViewController(viewModel: ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: String(leaderUserId)))
+                    owner.present(profileViewController, animated: true)
+                }
+                
             })
             .disposed(by: disposeBag)
         
