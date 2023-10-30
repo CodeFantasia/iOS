@@ -11,6 +11,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import Kingfisher
+import FirebaseAuth
 
 class ProfileViewController: UIViewController {
 
@@ -147,7 +148,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor.backgroundColor
         navigationbarTitle()
         setupLayout()
@@ -274,10 +275,18 @@ extension ProfileViewController {
             .disposed(by: disposeBag)
 
         outputs.logoutDidTap
-            .withUnretained(self)
-            .subscribe { _ in
-                //로그아웃
-            }
-            .disposed(by: disposeBag)
-    }
+               .withUnretained(self)
+               .subscribe { [weak self] _ in
+                   guard let self = self else { return }
+                   do {
+                       try Auth.auth().signOut()
+                       self.dismiss(animated: true) {
+                           self.navigationController?.popToRootViewController(animated: true)
+                               }
+                   } catch let signOutError as NSError {
+                       print("Error signing out: \(signOutError)")
+                   }
+               }
+               .disposed(by: disposeBag)
+       }
 }
