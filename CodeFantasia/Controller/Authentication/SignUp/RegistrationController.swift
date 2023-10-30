@@ -102,6 +102,10 @@ class RegistrationController: UIViewController {
             return
         }
         
+        guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
+        let filename = NSUUID().uuidString
+        let storageRef = STORAGE_PROFILE_IMAGES.child(filename)
+        
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
         guard let name = nameTextField.text else { return }
@@ -115,9 +119,7 @@ class RegistrationController: UIViewController {
             guard let uid = result?.user.uid else { return }
             
             let values = ["email": email, "name": name]
-            let ref = Database.database().reference().child("users").child(uid)
-            
-            ref.updateChildValues(values) { (error, ref) in
+            REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
                 print("실시간 데이터 베이스에 유저 정보 업데이트 성공.")
             }
             
