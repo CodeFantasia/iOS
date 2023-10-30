@@ -1,3 +1,4 @@
+
 import UIKit
 
 class LoginController: UIViewController {
@@ -65,10 +66,23 @@ class LoginController: UIViewController {
     // MARK: - Selectors
     
     @objc func handleLogin() {
-        let tabbarController = TabBarController()
-        tabbarController.modalPresentationStyle = .fullScreen
-        present(tabbarController, animated: true)
-        print("Login!")
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        AuthManager.shared.logUserIn(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("🤍 로그인 실패 \(error.localizedDescription) 🤍")
+                return
+            }
+
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? TabBarController else { return }
+            
+            tab.configureUI()
+
+            self.dismiss(animated: true)
+        }
+
     }
     
     @objc func handleShowSignUp() {
