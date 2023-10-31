@@ -11,6 +11,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import Kingfisher
+import FirebaseAuth
 
 class ProfileViewController: UIViewController {
 
@@ -147,7 +148,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor.backgroundColor
         navigationbarTitle()
         setupLayout()
@@ -275,9 +276,23 @@ extension ProfileViewController {
 
         outputs.logoutDidTap
             .withUnretained(self)
-            .subscribe { _ in
-                //로그아웃
+            .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                do {
+                    try Auth.auth().signOut()
+                    
+                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
+                      fatalError("could not get scene delegate ")
+                    }
+                    DispatchQueue.main.async {
+                        sceneDelegate.window?.rootViewController = TabBarController()
+                    }
+                  
+                } catch let signOutError as NSError {
+                    print("Error signing out: \(signOutError)")
+                }
             }
             .disposed(by: disposeBag)
     }
 }
+
