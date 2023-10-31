@@ -76,7 +76,7 @@ class RegistrationController: UIViewController {
         }
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.buttonTitle
-        button.addTarget(self, action: #selector(handleRegsiter), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
     
@@ -95,7 +95,7 @@ class RegistrationController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func handleRegsiter() {
+    @objc func handleRegister() {
         guard let profileImage = profileImage else {
             print("프로필 사진이 선택되지 않았습니다.")
             return
