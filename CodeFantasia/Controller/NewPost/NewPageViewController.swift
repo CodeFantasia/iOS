@@ -26,6 +26,13 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return scrollView
     }()
 
+    // 뒤로가기 버튼 생성
+    let backButton = UIButton().then {
+        $0.setTitle("뒤로가기", for: .normal)
+        $0.setTitleColor(.black, for: .normal)
+        $0.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+    }
+
     // 임시저장 버튼
     private let saveButton = UIButton().then {
         $0.setTitle("임시저장", for: .normal)
@@ -255,10 +262,10 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         thumbnailImageView.isUserInteractionEnabled = true
     }
 
+    // MARK: - 레이아웃설정
+
     private func setupUI() {
         view.backgroundColor = .white
-
-        // MARK: - 레이아웃설정
 
         view.addSubview(saveButton)
         saveButton.snp.makeConstraints {
@@ -268,12 +275,18 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             $0.height.equalTo(30)
         }
 
+        view.addSubview(backButton)
+        backButton.snp.makeConstraints {
+            $0.centerY.equalTo(saveButton)
+            $0.left.equalTo(view).offset(10)
+        }
+
         let contentView = UIView()
 
         // 제목 라벨
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(contentView).offset(100)
+            $0.top.equalTo(contentView).offset(20)
             $0.left.equalTo(contentView).offset(20)
         }
         // 제목 텍스트 필드
@@ -430,6 +443,16 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
 
+    // MARK: - 뒤로가기 버튼 함수
+
+    @objc func backButtonTapped() {
+        dismissNewPageViewController()
+    }
+
+    @objc func dismissNewPageViewController() {
+        dismiss(animated: true, completion: nil)
+    }
+
     // MARK: - 데이터 이동 함수
 
     @objc func completeButtonTapped() {
@@ -456,7 +479,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
                 selectedPlatforms.append(platform)
             }
         }
-        
+
         // DateFormatter를 사용하여 문자열로 변환
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -482,6 +505,21 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             teamMember: [],
             contactMethod: contactMethod
         )
+        // 작성폼이 비어있는지 판별한다는 느낌적인 느낌
+        if projectTitle?.isEmpty ?? true ||
+               techLanguage?.isEmpty ?? true ||
+               recruitmentField?.isEmpty ?? true ||
+               projectDescription?.isEmpty ?? true ||
+               meetingType?.isEmpty ?? true ||
+               contactMethod?.isEmpty ?? true ||
+               platformInput?.isEmpty ?? true {
+                // 어떤 필드라도 비어 있다면 반드시 경고 표시
+                let alertController = UIAlertController(title: "Warning!", message: "Complete your mission", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Copy that.", style: .default, handler: nil)
+                alertController.addAction(okAction)
+                present(alertController, animated: true, completion: nil)
+                return
+            }
         // Firebase에 데이터 업로드
         projectRepository.create(project: projectInfo)
     }
