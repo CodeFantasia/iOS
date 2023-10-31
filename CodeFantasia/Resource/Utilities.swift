@@ -60,4 +60,42 @@ class Utilities {
         
         return button
     }
+    
+    func inputFormView(withLabel labelStr: String, firstSectionLength: Int, textfield: UITextField, textfieldHeight: CGFloat?) -> UIView {
+        let view = UIView()
+        
+        let label = UILabel()
+        if firstSectionLength == 0 {
+            label.text = labelStr
+        } else {
+            label.configureAttributedString(content: labelStr, sectionLength: firstSectionLength)
+        }
+
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.left.top.equalToSuperview()
+        }
+        
+        view.addSubview(textfield)
+        textfield.snp.makeConstraints { make in
+            make.top.equalTo(label.snp.bottom).offset(2)
+            make.left.equalTo(label)
+            if let textfieldHeight = textfieldHeight {
+                make.height.equalTo(textfieldHeight)
+            } else {
+                make.height.equalTo(CGFloat.minimumFormHeight)
+            }
+        }
+        
+        let dividerView = UIView()
+        dividerView.backgroundColor = .lightGray
+        view.addSubview(dividerView)
+        dividerView.snp.makeConstraints { make in
+            make.top.equalTo(textfield.snp.bottom).offset(2)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(0.75)
+        }
+        
+        return view
+    }
 }
