@@ -34,10 +34,20 @@ class RegistrationController: UIViewController {
         return view
     }()
     
+    private let passwordCheckFailed: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.smallTitle
+        label.text = "영문과 숫자를 사용하여 6~20자로 작성해주세요."
+        label.textColor = .systemRed
+        return label
+    }()
+
     private lazy var passwordCheckContainerView: UIView = {
         let view = Utilities().inputContainerView(withImage: UIImage(named: "ic_lock_outline_white_2x")!, textField: passwordCheckTextField)
         return view
     }()
+    
+    
     
     private lazy var nameContainerView: UIView = {
         let view = Utilities().inputContainerView(withImage: UIImage(named: "ic_person_outline_white_2x")!, textField: nameTextField)
@@ -106,7 +116,11 @@ class RegistrationController: UIViewController {
         
         if !passwordCheck(password: password) {
             print("경고 경고 비밀번호 이상이상")
+            passwordContainerView.shake()
+            passwordCheckFailed.isHidden = false
             return
+        } else {
+            passwordCheckFailed.isHidden = true
         }
         
         guard let passwordCheck = passwordCheckTextField.text else { return }
@@ -159,17 +173,24 @@ class RegistrationController: UIViewController {
         stack.axis = .vertical
         stack.spacing = 20
         stack.distribution = .fillEqually
-        
+
         view.addSubview(stack)
         stack.snp.makeConstraints { make in
             make.top.equalTo(addPhotoButton.snp.bottom).offset(CGFloat.spacing)
             make.left.right.equalToSuperview().inset(8)
         }
+        
+        passwordCheckFailed.isHidden = true
+        view.addSubview(passwordCheckFailed)
+        passwordCheckFailed.snp.makeConstraints { make in
+            make.top.equalTo(passwordContainerView.snp.bottom).offset(5)
+            make.left.equalTo(passwordContainerView).offset(2)
+        }
     }
     
     // MARK: - Password Check
     func passwordCheck(password: String) -> Bool {
-        if (password.count < 0 || password.count > 20) || containsAlphanumeric(password) {
+        if (password.count < 6 || password.count > 20) || !containsAlphanumeric(password) {
                 return false
         }
 
@@ -177,13 +198,10 @@ class RegistrationController: UIViewController {
     }
     
     func containsAlphanumeric(_ input: String) -> Bool {
-        let alphanumericPattern = ".*[a-zA-Z0-9].*"
-        if let range = input.range(of: alphanumericPattern, options: .regularExpression) {
-            return !range.isEmpty
-        } else {
-            return false
-        }
+        let alphanumericPattern = "^(?=.*[A-Za-z])(?=.*\\d).{6,20}$"
+        return NSPredicate(format: "SELF MATCHES %@", alphanumericPattern).evaluate(with: input)
     }
+
 }
 
 // MARK: - UIImagePickerControllerDelegate
