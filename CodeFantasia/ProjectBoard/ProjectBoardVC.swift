@@ -18,39 +18,40 @@ class ProjectBoardVC: UIViewController {
         $0.backgroundColor = .clear
     }
     
+    private let refreshControl = UIRefreshControl()
     private let projectRepository: ProjectRepositoryProtocol = ProjectRepository(firebaseBaseManager: FireBaseManager())
     private var projectsData: [(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)] = []
     private var bag = DisposeBag()
-
+    
+    
     private func fetchDataFromFirebase() {
         projectRepository.readAll()
-          .observe(on: MainScheduler.instance)
-          .subscribe(onSuccess: { [weak self] projects in
-            self?.projectsData = projects.map { project in
-              let imageURL = URL(string: project.imageUrl ?? "")
-              let statusString = project.recruitingStatus ?? false ? "모집 중" : "모집 완료"
-              let icons: [IconModel] = project.techStack.map { tech in
-                return IconModel(image: UIImage(named: tech.techForCategory(.frontendDevelopment)?.first ?? "") ?? UIImage())
-              }
-              // projectID도 추가합니다.
-                return (imageURL, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString, project.projectID)
-            }
-            self?.tableView.reloadData()
-          }, onFailure: { error in
-            print("Error fetching data: \(error)")
-          })
-          .disposed(by: bag)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onSuccess: { [weak self] projects in
+                self?.projectsData = projects.map { project in
+                    let imageURL = URL(string: project.imageUrl ?? "")
+                    let statusString = project.recruitingStatus ?? false ? "모집 중" : "모집 완료"
+                    let icons: [IconModel] = project.techStack.map { tech in
+                        return IconModel(image: UIImage(named: tech.techForCategory(.frontendDevelopment)?.first ?? "") ?? UIImage())
+                    }
+                    // projectID도 추가합니다.
+                    return (imageURL, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString, project.projectID)
+                }
+                self?.tableView.reloadData()
+            }, onFailure: { error in
+                print("Error fetching data: \(error)")
+            })
+            .disposed(by: bag)
     }
-
-
-
-
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
         self.fetchDataFromFirebase()
-
+        
         setupNavigationBar()
         setupTableView()
         
@@ -58,8 +59,12 @@ class ProjectBoardVC: UIViewController {
         navigationController?.navigationBar.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         navigationController?.navigationBar.tintColor = .black
     }
-
-
+    
+    @objc private func handleRefresh() {
+        fetchDataFromFirebase()
+        refreshControl.endRefreshing()
+    }
+    
 }
 
 // MARK: - TableView DataSource & Delegate
@@ -86,7 +91,7 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
         cell.subheadingLabel.text = dataItem.detail
         cell.icons = dataItem.icons
         cell.recruitmentLabelCheck(imageURL: dataItem.imageURL, title: dataItem.title, detail: dataItem.detail, icons: dataItem.icons, status: dataItem.status)
-
+        
         cell.backgroundColor = .clear
         cell.layer.borderColor = UIColor.black.cgColor
         cell.contentView.backgroundColor = .white
@@ -94,7 +99,7 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
         
         return cell
     }
-
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 170
@@ -104,9 +109,9 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let selectedProject = projectsData[indexPath.row]
-
+        
         let projectId = selectedProject.5.uuidString
-
+        
         let viewModel = ProjectDetailNoticeBoardViewModel(projectRepository: projectRepository, projectId: projectId)
         
         let detailVC = ProjectDetailNoticeBoardViewController(viewModel: viewModel)
@@ -114,7 +119,7 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
         // detailVC를 네비게이션 스택에 푸시하여 화면에 표시합니다.
         navigationController?.pushViewController(detailVC, animated: true)
     }
-
+    
 }
 
 // MARK: - Actions & Event Handlers (추후에 분리)
@@ -143,7 +148,7 @@ private extension ProjectBoardVC {
             $0.font = UIFont.boldSystemFont(ofSize: 24)
             $0.textColor = .black
         }
-
+        
         let customTitleBarItem = UIBarButtonItem(customView: customTitleLabel)
         navigationItem.leftBarButtonItem = customTitleBarItem
         
@@ -151,22 +156,22 @@ private extension ProjectBoardVC {
             $0.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
             $0.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         }
-
+        
         let bellButtonView = UIButton(type: .system).then {
             $0.setImage(UIImage(systemName: "bell"), for: .normal)
             $0.addTarget(self, action: #selector(bellButtonTapped), for: .touchUpInside)
         }
-
+        
         let pencilButtonView = UIButton(type: .system).then {
             $0.setImage(UIImage(systemName: "pencil"), for: .normal)
             $0.addTarget(self, action: #selector(pencilButtonTapped), for: .touchUpInside)
         }
-
+        
         let stackView = UIStackView(arrangedSubviews: [searchButtonView, bellButtonView, pencilButtonView]).then {
             $0.axis = .horizontal
             $0.spacing = 10
         }
-
+        
         let stackBarButton = UIBarButtonItem(customView: stackView)
         navigationItem.rightBarButtonItem = stackBarButton
     }
