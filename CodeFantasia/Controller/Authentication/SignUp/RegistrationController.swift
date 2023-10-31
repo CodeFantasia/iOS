@@ -66,7 +66,7 @@ class RegistrationController: UIViewController {
         return textfield
     }()
     
-    private let registerationButton: UIButton = {
+    private let registrationButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Register", for: .normal)
         button.setTitleColor(.primaryColor, for: .normal)
@@ -103,6 +103,19 @@ class RegistrationController: UIViewController {
         
         guard let email = emailTextField.text else { return }
         guard let password = passwordTextField.text else { return }
+        
+        if !passwordCheck(password: password) {
+            print("경고 경고 비밀번호 이상이상")
+            return
+        }
+        
+        guard let passwordCheck = passwordCheckTextField.text else { return }
+        
+        if password != passwordCheck {
+            print("경고 경고 비밀번호 일치하지 않음")
+            return
+        }
+        
         guard let name = nameTextField.text else { return }
         
         let newUser = UserAuth(email: email, password: password, name: name, profileImage: profileImage)
@@ -142,7 +155,7 @@ class RegistrationController: UIViewController {
             make.height.width.equalTo(150)
         }
 
-        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, passwordCheckContainerView, nameContainerView, registerationButton])
+        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, passwordCheckContainerView, nameContainerView, registrationButton])
         stack.axis = .vertical
         stack.spacing = 20
         stack.distribution = .fillEqually
@@ -151,6 +164,24 @@ class RegistrationController: UIViewController {
         stack.snp.makeConstraints { make in
             make.top.equalTo(addPhotoButton.snp.bottom).offset(CGFloat.spacing)
             make.left.right.equalToSuperview().inset(8)
+        }
+    }
+    
+    // MARK: - Password Check
+    func passwordCheck(password: String) -> Bool {
+        if (password.count < 0 || password.count > 20) || containsAlphanumeric(password) {
+                return false
+        }
+
+        return true
+    }
+    
+    func containsAlphanumeric(_ input: String) -> Bool {
+        let alphanumericPattern = ".*[a-zA-Z0-9].*"
+        if let range = input.range(of: alphanumericPattern, options: .regularExpression) {
+            return !range.isEmpty
+        } else {
+            return false
         }
     }
 }
@@ -173,4 +204,5 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
         
         dismiss(animated: true, completion: nil)
     }
+    
 }
