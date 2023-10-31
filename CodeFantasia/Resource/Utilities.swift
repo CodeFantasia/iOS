@@ -67,6 +67,7 @@ class Utilities {
         let label = UILabel()
         if firstSectionLength == 0 {
             label.text = labelStr
+            label.font = UIFont.subTitle
         } else {
             label.configureAttributedString(content: labelStr, sectionLength: firstSectionLength)
         }
