@@ -27,6 +27,7 @@
 		AB14BEBC2AE2505900ACE79F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBB2AE2505900ACE79F /* LoginController.swift */; };
 		AB14BEC02AE2506300ACE79F /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		AB14BEC12AE2506300ACE79F /* TermsOfConditionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */; };
+		AB41CB892AF224A000B43C63 /* UserDataManageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBDF5362AF0430400D240FD /* UserDataManageController.swift */; };
 		AB5C352D2AF0BD520056E646 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352C2AF0BD520056E646 /* UILabel+.swift */; };
 		AB5C352E2AF0BD520056E646 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352C2AF0BD520056E646 /* UILabel+.swift */; };
 		AB5C35302AF14FAC0056E646 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352F2AF14FAC0056E646 /* UIView+.swift */; };
@@ -732,6 +733,7 @@
 				F13AED0D2AE693000098C654 /* UIImageView+.swift in Sources */,
 				F13AED042AE611F00098C654 /* Rx+UIViewController.swift in Sources */,
 				F1E18BDE2AE105B50041638B /* Images.swift in Sources */,
+				AB41CB892AF224A000B43C63 /* UserDataManageController.swift in Sources */,
 				311FF5202AE90BC4008AB16E /* (null) in Sources */,
 				ABA2296F2AEB7CAC00EDE1D5 /* RegistrationController.swift in Sources */,
 				F1E18BDF2AE105B50041638B /* ProjectBoardVC.swift in Sources */,

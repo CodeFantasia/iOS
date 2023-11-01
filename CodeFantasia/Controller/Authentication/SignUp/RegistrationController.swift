@@ -100,9 +100,9 @@ class RegistrationController: UIViewController {
         return textfield
     }()
     
-    private let registrationButton: UIButton = {
+    private let nextButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Register", for: .normal)
+        button.setTitle("Next", for: .normal)
         button.setTitleColor(.primaryColor, for: .normal)
         button.backgroundColor = .white
         button.snp.makeConstraints { make in
@@ -110,7 +110,7 @@ class RegistrationController: UIViewController {
         }
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.buttonTitle
-        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
         return button
     }()
     
@@ -129,22 +129,27 @@ class RegistrationController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func handleRegister() {
-        let profileImage = profileImage ?? UIImage(named: "default_profile")
-        guard let email = emailTextField.text, emailVerify(email: email) else { return }
-        guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
-        guard let name = nameTextField.text, nameVerify(name: name) else { return }
+    @objc func handleNextButton() {
+        navigationController?.pushViewController(UserDataManageController(), animated: true)
         
-        let newUser = UserAuth(email: email, password: password, name: name, profileImage: profileImage ?? UIImage())
-        
-        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
-            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-            guard let tab = window.rootViewController as? TabBarController else { return }
-            
-            tab.configureUI()
 
-            self.dismiss(animated: true)
-        }
+        
+        
+//        let profileImage = profileImage ?? UIImage(named: "default_profile")
+//        guard let email = emailTextField.text, emailVerify(email: email) else { return }
+//        guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
+//        guard let name = nameTextField.text, nameVerify(name: name) else { return }
+//
+//        let newUser = UserAuth(email: email, password: password, name: name, profileImage: profileImage ?? UIImage())
+//
+//        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
+//            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+//            guard let tab = window.rootViewController as? TabBarController else { return }
+//
+//            tab.configureUI()
+//
+//            self.dismiss(animated: true)
+//        }
     }
     
     @objc func handleAddProfilePhoto() {
@@ -254,8 +259,8 @@ class RegistrationController: UIViewController {
             make.left.equalTo(nameContainerView).offset(5)
         }
         
-        view.addSubview(registrationButton)
-        registrationButton.snp.makeConstraints { make in
+        view.addSubview(nextButton)
+        nextButton.snp.makeConstraints { make in
             make.top.equalTo(nameContainerView.snp.bottom).offset(45)
             make.left.right.equalTo(stack)
         }
