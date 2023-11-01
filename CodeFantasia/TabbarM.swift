@@ -60,18 +60,19 @@ class TabBarController: UITabBarController {
     // MARK: - Helpers
     
     func configureUI() {
+        let userId = Auth.auth().currentUser?.uid
         tabBar.isTranslucent = true
         
         let iconSize = CGSize(width: 25, height: 25)
         
-        let tabbarMyProjectVC = UINavigationController(rootViewController: MyProjectVC(viewModel: MyProjectViewModel(projectRepository: ProjectRepository(firebaseBaseManager: FireBaseManager()), projectId: "CB7598EE-5B02-43EE-8112-B11890E38069")))
+        let tabbarMyProjectVC = UINavigationController(rootViewController: MyProjectVC(viewModel: MyProjectViewModel(projectRepository: ProjectRepository(firebaseBaseManager: FireBaseManager()), projectId: userId!)))
         let firstTabIcon = UIImage(named: "TabbarMyProject")?.withRenderingMode(.alwaysOriginal).resize(to: iconSize)
         tabbarMyProjectVC.tabBarItem = UITabBarItem(title: "나의 프로젝트", image: firstTabIcon, tag: 0)
         
         let tabbarMainVC = UINavigationController(rootViewController: ProjectBoardVC())
         let secondTabIcon = UIImage(named: "TabbarHome")?.withRenderingMode(.alwaysOriginal).resize(to: iconSize)
         tabbarMainVC.tabBarItem = UITabBarItem(title: "홈", image: secondTabIcon, tag: 1)
-        let tabbarProfileVC = UINavigationController(rootViewController: ProfileViewController(viewModel: ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: "08CBFD37-5391-4BB8-AF24-3F313590619B")))
+        let tabbarProfileVC = UINavigationController(rootViewController: ProfileViewController(viewModel: ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: userId!)))
         let thirdTabIcon = UIImage(named: "TabbarProfile")?.withRenderingMode(.alwaysOriginal).resize(to: iconSize)
         tabbarProfileVC.tabBarItem = UITabBarItem(title: "프로필", image: thirdTabIcon, tag: 2)
         
