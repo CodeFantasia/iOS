@@ -29,6 +29,8 @@
 		AB14BEC12AE2506300ACE79F /* TermsOfConditionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */; };
 		AB5C352D2AF0BD520056E646 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352C2AF0BD520056E646 /* UILabel+.swift */; };
 		AB5C352E2AF0BD520056E646 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352C2AF0BD520056E646 /* UILabel+.swift */; };
+		AB5C35302AF14FAC0056E646 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352F2AF14FAC0056E646 /* UIView+.swift */; };
+		AB5C35312AF14FAC0056E646 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352F2AF14FAC0056E646 /* UIView+.swift */; };
 		AB5C72ED2AEF482000A631B0 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */; };
 		ABA2296F2AEB7CAC00EDE1D5 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		ABA229A02AEF368C00EDE1D5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ABA2295E2AEB023400EDE1D5 /* FirebaseAnalytics */; };
@@ -161,6 +163,7 @@
 		AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfConditionsController.swift; sourceTree = "<group>"; };
 		AB5C352C2AF0BD520056E646 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		AB5C352F2AF14FAC0056E646 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		ABBDF5362AF0430400D240FD /* UserDataManageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManageController.swift; sourceTree = "<group>"; };
 		ABC3DF1E2AD45E8B008CEF1A /* CodeFantasia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeFantasia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -403,6 +406,7 @@
 				6BBF70882AE7DA3A00F58080 /* UIColor+.swift */,
 				F13AED052AE63D320098C654 /* UIViewController+.swift */,
 				AB5C352C2AF0BD520056E646 /* UILabel+.swift */,
+				AB5C352F2AF14FAC0056E646 /* UIView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -635,6 +639,7 @@
 				F187DF232ADEA249001B097D /* Date+Format.swift in Sources */,
 				F13AED002AE5F8CB0098C654 /* ProjectDetailNoticeBoardViewModel.swift in Sources */,
 				F1E653E42AD8E0F200274A34 /* Fonts.swift in Sources */,
+				AB5C35302AF14FAC0056E646 /* UIView+.swift in Sources */,
 				AB14BEC12AE2506300ACE79F /* TermsOfConditionsController.swift in Sources */,
 				AB14BEB92AE2504700ACE79F /* TextField.swift in Sources */,
 				ABC3DF262AD45E8B008CEF1A /* ViewController.swift in Sources */,
@@ -733,6 +738,7 @@
 				F0BFCB5F2AEA541400D3BEC2 /* MyProjectViewModel.swift in Sources */,
 				F031266B2AE90B4C000E337E /* UIViewController+.swift in Sources */,
 				F03126692AE90B43000E337E /* Rx+UIViewController.swift in Sources */,
+				AB5C35312AF14FAC0056E646 /* UIView+.swift in Sources */,
 				F1E18BE42AE105B50041638B /* TabbarM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
