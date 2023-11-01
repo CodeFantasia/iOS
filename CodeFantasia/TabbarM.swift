@@ -77,8 +77,7 @@ class TabBarController: UITabBarController {
         tabbarProfileVC.tabBarItem = UITabBarItem(title: "프로필", image: thirdTabIcon, tag: 2)
         
         tabBar.tintColor = UIColor.black
-        tabBar.backgroundColor = UIColor.clear
-        
+        tabBar.backgroundColor = UIColor.white
         viewControllers = [tabbarMyProjectVC, tabbarMainVC, tabbarProfileVC]
     }
 

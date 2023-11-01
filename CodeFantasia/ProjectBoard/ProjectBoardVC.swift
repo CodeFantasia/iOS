@@ -34,7 +34,7 @@ class ProjectBoardVC: UIViewController {
                     let icons: [IconModel] = project.techStack.map { tech in
                         return IconModel(image: UIImage(named: tech.techForCategory(.frontendDevelopment)?.first ?? "") ?? UIImage())
                     }
-                    // projectID도 추가합니다.
+
                     return (imageURL, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString, project.projectID)
                 }
                 self?.tableView.reloadData()
@@ -116,7 +116,6 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
         
         let detailVC = ProjectDetailNoticeBoardViewController(viewModel: viewModel)
         
-        // detailVC를 네비게이션 스택에 푸시하여 화면에 표시합니다.
         navigationController?.pushViewController(detailVC, animated: true)
     }
     
@@ -125,19 +124,18 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
 // MARK: - Actions & Event Handlers (추후에 분리)
 extension ProjectBoardVC {
     @objc func searchButtonTapped() {
-        let mockData = projectsData.map { (image: $0.0, title: $0.1, detail: $0.2, icons: $0.3, status: $0.4) }
+        _ = projectsData.map { (image: $0.0, title: $0.1, detail: $0.2, icons: $0.3, status: $0.4) }
         let searchVC = ProjectSearchViewVC(mockData: projectsData)
         navigationController?.pushViewController(searchVC, animated: true)
     }
     
-    @objc func bellButtonTapped() {
-        // TODO: Implement bell action
-    }
+//    @objc func bellButtonTapped() {
+//        // TODO: Implement bell action
+//    }
     
-    // 새 글 작성 페이지를 모달형식으로 띄우게 변경하였습니다 영덕넴 ㅎㅎ(현빈)
     @objc func pencilButtonTapped() {
         let newPageViewController = NewPageViewController()
-        newPageViewController.modalPresentationStyle = .fullScreen // 풀스크린 모달로 설정
+        newPageViewController.modalPresentationStyle = .fullScreen
         present(newPageViewController, animated: true, completion: nil)
     }
 }
@@ -159,17 +157,17 @@ private extension ProjectBoardVC {
             $0.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         }
         
-        let bellButtonView = UIButton(type: .system).then {
-            $0.setImage(UIImage(systemName: "bell"), for: .normal)
-            $0.addTarget(self, action: #selector(bellButtonTapped), for: .touchUpInside)
-        }
+//        let bellButtonView = UIButton(type: .system).then {
+//            $0.setImage(UIImage(systemName: "bell"), for: .normal)
+//            $0.addTarget(self, action: #selector(bellButtonTapped), for: .touchUpInside)
+//        }
         
         let pencilButtonView = UIButton(type: .system).then {
             $0.setImage(UIImage(systemName: "pencil"), for: .normal)
             $0.addTarget(self, action: #selector(pencilButtonTapped), for: .touchUpInside)
         }
         
-        let stackView = UIStackView(arrangedSubviews: [searchButtonView, bellButtonView, pencilButtonView]).then {
+        let stackView = UIStackView(arrangedSubviews: [searchButtonView/*, bellButtonView*/, pencilButtonView]).then {
             $0.axis = .horizontal
             $0.spacing = 10
         }
