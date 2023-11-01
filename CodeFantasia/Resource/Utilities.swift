@@ -41,6 +41,32 @@ class Utilities {
         return view
     }
     
+    func createInputContainerView(title: String, textField: UITextField) -> UIView {
+        let container = UIView()
+        
+        // 타이틀 라벨
+        let titleLabel = UILabel()
+        titleLabel.text = title
+        titleLabel.textColor = .black
+        
+        container.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(container)
+            make.left.equalTo(container)
+        }
+        
+        // 뷰에 입력
+        container.addSubview(textField)
+        textField.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(10)
+            make.left.equalTo(container)
+            make.right.equalTo(container)
+            make.height.equalTo(CGFloat.minimumFormHeight)
+        }
+        
+        return container
+    }
+    
     func textField(withPlaceholder placeholder: String) -> UITextField {
         let textfield = UITextField()
         textfield.font = UIFont.systemFont(ofSize: 16)

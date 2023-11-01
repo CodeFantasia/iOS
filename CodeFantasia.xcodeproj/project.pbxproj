@@ -267,6 +267,15 @@
 			path = ProjectBoard;
 			sourceTree = "<group>";
 		};
+		6BBF708F2AF14B2000F58080 /* NewPost */ = {
+			isa = PBXGroup;
+			children = (
+				6BC007BD2ADD0BA5005E544F /* NewPageViewController.swift */,
+				6BBF70822AE62A9C00F58080 /* PlatformSelectionViewController.swift */,
+			);
+			path = NewPost;
+			sourceTree = "<group>";
+		};
 		AB14BEBA2AE2505900ACE79F /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,8 +331,6 @@
 				F1E653DC2AD8CD8F00274A34 /* ProjectDetailNoticeBoard */,
 				F070B73A2ADFA2A500B13419 /* MyProject */,
 				F070B73B2ADFA2C900B13419 /* Profile */,
-				6BC007BD2ADD0BA5005E544F /* NewPageViewController.swift */,
-				6BBF70822AE62A9C00F58080 /* PlatformSelectionViewController.swift */,
 				3191DEDE2AD8F9B30059AACB /* TabbarM.swift */,
 				ABC3DF452AD4617C008CEF1A /* MainVC.swift */,
 				ABC3DF252AD45E8B008CEF1A /* ViewController.swift */,
@@ -352,6 +359,7 @@
 		ABD01AE12AEADC5C00C3C08A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6BBF708F2AF14B2000F58080 /* NewPost */,
 				ABD01AE22AEADC6600C3C08A /* Authentication */,
 			);
 			path = Controller;
