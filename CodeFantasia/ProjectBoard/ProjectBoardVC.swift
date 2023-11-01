@@ -134,9 +134,11 @@ extension ProjectBoardVC {
         // TODO: Implement bell action
     }
     
+    // 새 글 작성 페이지를 모달형식으로 띄우게 변경하였습니다 영덕넴 ㅎㅎ(현빈)
     @objc func pencilButtonTapped() {
         let newPageViewController = NewPageViewController()
-        navigationController?.pushViewController(newPageViewController, animated: true)
+        newPageViewController.modalPresentationStyle = .fullScreen // 풀스크린 모달로 설정
+        present(newPageViewController, animated: true, completion: nil)
     }
 }
 

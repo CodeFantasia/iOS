@@ -5,6 +5,7 @@
 //  Created by t2023-m0049 on 2023/10/23.
 //
 import UIKit
+import SnapKit
 
 class PlatformSelectionViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var onPlatformSelected: ((String) -> Void)?
@@ -51,22 +52,28 @@ class PlatformSelectionViewController: UIViewController, UITableViewDelegate, UI
         completeButton.setTitle("선택 완료", for: .normal)
         completeButton.backgroundColor = .black
         completeButton.addTarget(self, action: #selector(selectComplete), for: .touchUpInside)
+        completeButton.layer.cornerRadius = 10.0
         view.addSubview(completeButton)
 
-        completeButton.translatesAutoresizingMaskIntoConstraints = false
-        completeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        completeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        completeButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        completeButton.snp.makeConstraints {
+            $0.leading.equalTo(view)
+            $0.trailing.equalTo(view)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.left.equalTo(view).offset(10)
+            $0.right.equalTo(view).offset(-10)
+
+        }
 
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
 
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: completeButton.topAnchor).isActive = true
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(view)
+            $0.leading.equalTo(view)
+            $0.trailing.equalTo(view)
+            $0.bottom.equalTo(completeButton.snp.top)
+        }
     }
 
     @objc func selectComplete() {
