@@ -15,17 +15,17 @@ final class ProfileViewModel {
     
     struct Input {
         var viewDidLoad: Observable<Void>
-        var profileEditTapped: Observable<Void>
-        var logoutTapped: Observable<Void>
+        var profileEditTapped: Driver<Void>
+        var logoutTapped: Driver<Void>
     }
     struct Output {
         var userDataFetched: Observable<UserProfile>
-        var profileEditDidTap: Observable<Void>
-        var logoutDidTap: Observable<Void>
+        var profileEditDidTap: Driver<Void>
+        var logoutDidTap: Driver<Void>
     }
     private let disposeBag = DisposeBag()
-    let userRepository: UserRepositoryProtocol
-    let userId: String
+    private let userRepository: UserRepositoryProtocol
+    private let userId: String
     
     init(
         userRepository: UserRepositoryProtocol,
@@ -37,7 +37,8 @@ final class ProfileViewModel {
     
     func transform(input: Input) -> Output {
         
-        let userData = Observable<UserProfile>.create { observer in
+        let userData = Observable<UserProfile>.create { [weak self] observer in
+            guard let self else { return Disposables.create() }
             input.viewDidLoad
                 .withUnretained(self)
                 .subscribe { userId in

@@ -234,14 +234,14 @@ extension ProfileViewController {
     private func bind() {
         let inputs = ProfileViewModel.Input(
             viewDidLoad: rx.viewDidLoad.asObservable(),
-            profileEditTapped: editButton.rx.tap.asObservable(),
-            logoutTapped: logoutButton.rx.tap.asObservable()
+            profileEditTapped: editButton.rx.tap.asDriver(),
+            logoutTapped: logoutButton.rx.tap.asDriver()
         )
         let outputs = viewModel.transform(input: inputs)
-
+        
         outputs.userDataFetched
-            .subscribe(onNext: { [weak self] user in
-                guard let self else {return}
+            .withUnretained(self)
+            .subscribe(onNext: { owner, user in
                 DispatchQueue.main.async {
                     self.interestLabel.text = user.areasOfInterest.reduce("", {$0 + $1.rawValue + "\n"})
                     self.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
@@ -252,47 +252,47 @@ extension ProfileViewController {
                             self.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
                         }
                     }
-
+                    
                     self.nicknameLabel.text = user.nickname
                     self.produceContent.text = user.selfIntroduction ?? ""
                     self.urlLabel.text = user.portfolioURL ?? ""
                 }
-            }, onError: { error in
-                self.alertViewActionSheet(
-                    title: "오류 발생",
-                    message: error.localizedDescription,
-                    acceptText: "확인",
-                    cancelText: nil
-                )
+            }, onError: { [weak self] error in
+                DispatchQueue.main.async {
+                    self?.alertViewActionSheet(
+                        title: "오류 발생",
+                        message: error.localizedDescription,
+                        acceptText: "확인",
+                        cancelText: nil
+                    )
+                }
             })
             .disposed(by: disposeBag)
-
+        
         outputs.profileEditDidTap
-            .withUnretained(self)
-            .subscribe { _ in
-                //프로필 수정
-            }
+            .drive (onNext: { owner in
+                
+            })
             .disposed(by: disposeBag)
-
+        
         outputs.logoutDidTap
-            .withUnretained(self)
-            .subscribe { [weak self] _ in
+            .drive (onNext: { [weak self] owner in
                 guard let self = self else { return }
                 do {
                     try Auth.auth().signOut()
                     
-                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
-                      fatalError("could not get scene delegate ")
-                    }
                     DispatchQueue.main.async {
+                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
+                        fatalError("could not get scene delegate ")
+                    }
                         sceneDelegate.window?.rootViewController = TabBarController()
                     }
-                  
+                    
                 } catch let signOutError as NSError {
                     print("Error signing out: \(signOutError)")
                 }
-            }
+            })
             .disposed(by: disposeBag)
+            }
     }
-}
 

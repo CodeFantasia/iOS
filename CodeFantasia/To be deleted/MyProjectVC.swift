@@ -37,10 +37,6 @@ class MyProjectVC: UITableViewController {
         super.viewDidLoad()
         navigationbarTitle()
         
-        //        let proData = Project(projectTitle: "테스트를 위한 제목",projecSubtitle: "테스트를 위한 부제목(상세내용) 임시 데이터입니다",techStack: [], recruitmentCount: 6, imageUrl: "https://www.navercorp.com/img/ko/og/logo.png",projectID: UUID(), platform: [], teamMember: [])
-        //
-        //        viewModel.projectRepository.create(project: proData)
-        //
         tableView.backgroundColor = UIColor.backgroundColor
         tableView.separatorStyle = .none
         tableView.register(MyProjectTableViewCell.self, forCellReuseIdentifier: MyProjectTableViewCell.identifier)
