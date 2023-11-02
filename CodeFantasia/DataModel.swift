@@ -48,7 +48,7 @@ struct Project: Codable {
 }
 
 // 기술 스택
-enum TechCategory: String, Codable {
+enum TechCategory: String, Codable, CaseIterable {
     case frontendDevelopment
     case backendDevelopment
     case databases
