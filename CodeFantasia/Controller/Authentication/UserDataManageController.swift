@@ -6,6 +6,17 @@ import FirebaseStorage
 class UserDataManageController: UIViewController {
     
     // MARK: - Properties
+    
+    private let imagePicker = UIImagePickerController()
+    private var profileImage: UIImage?
+    
+    private let addPhotoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "plus_photo"), for: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
+        return button
+    }()
 
     private lazy var nicknameView: UIView = {
         let view = Utilities().inputFormView(withLabel: "*닉네임 (영어, 한글 3~12자 입력)", firstSectionLength: 4, textview: nicknameTextView, textviewHeight: nil)
@@ -93,10 +104,24 @@ class UserDataManageController: UIViewController {
         navigationController?.navigationBar.isHidden = true 
     }
     
+    @objc func handleAddProfilePhoto() {
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     // MARK: - Helpers
     
     func configureUI() {
         view.backgroundColor = UIColor.primaryColor
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true 
+        
+        view.addSubview(addPhotoButton)
+        addPhotoButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.height.width.equalTo(130)
+        }
 
         let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton])
         stackview.axis = .vertical
@@ -105,7 +130,7 @@ class UserDataManageController: UIViewController {
         
         view.addSubview(stackview)
         stackview.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(50)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
             make.left.right.equalToSuperview().inset(CGFloat.spacing)
         }
 
@@ -123,3 +148,23 @@ class UserDataManageController: UIViewController {
     
 }
 
+// MARK: - UIImagePickerControllerDelegate
+
+extension UserDataManageController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let profileImage = info[.editedImage] as? UIImage else { return }
+        self.profileImage = profileImage
+        
+        addPhotoButton.layer.cornerRadius = 130 / 2
+        addPhotoButton.layer.masksToBounds = true
+        addPhotoButton.imageView?.contentMode = .scaleToFill
+        addPhotoButton.imageView?.clipsToBounds = true
+        addPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        addPhotoButton.layer.borderColor = UIColor.white.cgColor
+        addPhotoButton.layer.borderWidth = 3
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+}
