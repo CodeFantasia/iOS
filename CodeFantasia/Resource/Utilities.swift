@@ -104,9 +104,10 @@ class Utilities {
         }
         
         view.addSubview(textview)
+        textview.backgroundColor = UIColor.primaryColor
         textview.snp.makeConstraints { make in
             make.top.equalTo(label.snp.bottom).offset(2)
-            make.left.equalTo(label)
+            make.left.right.equalToSuperview()
             if let textviewHeight = textviewHeight {
                 make.height.equalTo(textviewHeight)
             } else {
@@ -127,7 +128,7 @@ class Utilities {
             if let textviewHeight = textviewHeight {
                 make.height.equalTo(20 + textviewHeight)
             } else {
-                make.height.equalTo(30 + CGFloat.minimumFormHeight)
+                make.height.equalTo(20 + CGFloat.minimumFormHeight)
             }
         }
         

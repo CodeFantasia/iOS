@@ -43,28 +43,33 @@ class UserDataManageController: UIViewController {
         return view
     }()
     
-    private let nicknameTextView: UITextView = {
-        let textview = UITextView()
+    private lazy var nicknameTextView: UITextView = {
+        let textview = TextView()
+        textview.placeholder(withPlaceholder: "닉네임을 입력해주세요.")
         return textview
     }()
     
     private let techStackTextView: UITextView = {
-        let textview = UITextView()
+        let textview = TextView()
+        textview.placeholder(withPlaceholder: "기술스택을 선택해주세요.")
         return textview
     }()
     
     private let interestTextView: UITextView = {
-        let textview = UITextView()
+        let textview = TextView()
+        textview.placeholder(withPlaceholder: "관심분야를 선택해주세요.")
         return textview
     }()
     
     private let portfolioTextView: UITextView = {
-        let textview = UITextView()
+        let textview = TextView()
+        textview.placeholder(withPlaceholder: "포트폴리오 링크를 입력해주세요.")
         return textview
     }()
     
     private let selfIntroductionTextView: UITextView = {
-        let textview = UITextView()
+        let textview = TextView()
+        textview.placeholder(withPlaceholder: "자기 소개를 입력해주세요.")
         return textview
     }()
     
@@ -91,6 +96,7 @@ class UserDataManageController: UIViewController {
         
         configureNavBar()
         configureUI()
+        configureTapGesture()
     }
     
     // MARK: - Selectors
@@ -107,6 +113,7 @@ class UserDataManageController: UIViewController {
     @objc func handleAddProfilePhoto() {
         present(imagePicker, animated: true, completion: nil)
     }
+
     
     // MARK: - Helpers
     
@@ -114,7 +121,7 @@ class UserDataManageController: UIViewController {
         view.backgroundColor = UIColor.primaryColor
         
         imagePicker.delegate = self
-        imagePicker.allowsEditing = true 
+        imagePicker.allowsEditing = true
         
         view.addSubview(addPhotoButton)
         addPhotoButton.snp.makeConstraints { make in
@@ -167,4 +174,20 @@ extension UserDataManageController: UIImagePickerControllerDelegate, UINavigatio
         dismiss(animated: true, completion: nil)
     }
     
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension UserDataManageController: UIGestureRecognizerDelegate {
+    func configureTapGesture() {
+        let nicknameTap = UITapGestureRecognizer(target: self, action: #selector(handleNicknameTap))
+        nicknameTap.delegate = self
+        nicknameTextView.addGestureRecognizer(nicknameTap)
+    }
+    
+    // MARK: - Tap Gesture Selectors
+    
+    @objc func handleNicknameTap() {
+        nicknameTextView.becomeFirstResponder()
+    }
 }
