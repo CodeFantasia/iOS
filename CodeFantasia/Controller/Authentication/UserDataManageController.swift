@@ -8,69 +8,65 @@ class UserDataManageController: UIViewController {
     // MARK: - Properties
 
     private lazy var nicknameView: UIView = {
-        let view = Utilities().inputFormView(withLabel: "*닉네임 (영어, 한글 3~12자 입력)", firstSectionLength: 4, textfield: nicknameTextField, textfieldHeight: nil)
+        let view = Utilities().inputFormView(withLabel: "*닉네임 (영어, 한글 3~12자 입력)", firstSectionLength: 4, textview: nicknameTextView, textviewHeight: nil)
         return view
     }()
     
     private lazy var techStackView: UIView = {
-        let view = Utilities().inputFormView(withLabel: "*기술스택 (1개 이상 선택)", firstSectionLength: 5, textfield: techStackTextField, textfieldHeight: nil)
+        let view = Utilities().inputFormView(withLabel: "*기술스택 (1개 이상 선택)", firstSectionLength: 5, textview: techStackTextView, textviewHeight: nil)
         return view
     }()
     
     private lazy var interestFieldView: UIView = {
-        let view = Utilities().inputFormView(withLabel: "*관심분야 (1개 이상 선택)", firstSectionLength: 5, textfield: interestTextField, textfieldHeight: nil)
+        let view = Utilities().inputFormView(withLabel: "*관심분야 (1개 이상 선택)", firstSectionLength: 5, textview: interestTextView, textviewHeight: nil)
         return view
     }()
     
     private lazy var portfolioUrlView: UIView = {
-        let view = Utilities().inputFormView(withLabel: "포트폴리오 링크", firstSectionLength: 0, textfield: portfolioURLTextField, textfieldHeight: nil)
+        let view = Utilities().inputFormView(withLabel: "포트폴리오 링크", firstSectionLength: 0, textview: portfolioTextView, textviewHeight: nil)
         return view
     }()
     
     private lazy var selfIntroductionView: UIView = {
-        let view = Utilities().inputFormView(withLabel: "자기소개", firstSectionLength: 0, textfield: selfIntroductionTextField, textfieldHeight: nil)
+        let view = Utilities().inputFormView(withLabel: "자기소개", firstSectionLength: 0, textview: selfIntroductionTextView, textviewHeight: 100)
         return view
     }()
     
-    private let nicknameTextField: UITextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "닉네임을 입력해주세요."
-        return textfield
+    private let nicknameTextView: UITextView = {
+        let textview = UITextView()
+        return textview
     }()
     
-    private let techStackTextField: UITextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "기술 스택을 선택해주세요."
-        return textfield
+    private let techStackTextView: UITextView = {
+        let textview = UITextView()
+        return textview
     }()
     
-    private let interestTextField: UITextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "관심분야를 입력해주세요."
-        return textfield
+    private let interestTextView: UITextView = {
+        let textview = UITextView()
+        return textview
     }()
     
-    private let portfolioURLTextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "링크를 입력해주세요"
-        return textfield
+    private let portfolioTextView: UITextView = {
+        let textview = UITextView()
+        return textview
     }()
     
-    private let selfIntroductionTextField = {
-        let textfield = UITextField()
-        textfield.placeholder = "자기소개를 입력해주세요."
-        return textfield
+    private let selfIntroductionTextView: UITextView = {
+        let textview = UITextView()
+        return textview
     }()
     
     private let doneButton: UIButton = {
         let button = UIButton()
-        button.setTitle("완료", for: .normal)
+        button.setTitle("Done", for: .normal)
         button.backgroundColor = UIColor.white
         button.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
         button.layer.cornerRadius = CGFloat.cornerRadius
         button.titleLabel?.font = UIFont.buttonTitle
+        button.setTitleColor(.primaryColor, for: .normal)
         button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
         return button
     }()
@@ -102,10 +98,10 @@ class UserDataManageController: UIViewController {
     func configureUI() {
         view.backgroundColor = UIColor.primaryColor
 
-        let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton])
+        let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton])
         stackview.axis = .vertical
         stackview.spacing = 20
-        stackview.distribution = .fillEqually
+        stackview.distribution = .fillProportionally
         
         view.addSubview(stackview)
         stackview.snp.makeConstraints { make in

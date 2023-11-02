@@ -87,7 +87,7 @@ class Utilities {
         return button
     }
     
-    func inputFormView(withLabel labelStr: String, firstSectionLength: Int, textfield: UITextField, textfieldHeight: CGFloat?) -> UIView {
+    func inputFormView(withLabel labelStr: String, firstSectionLength: Int, textview: UITextView, textviewHeight: CGFloat?) -> UIView {
         let view = UIView()
         
         let label = UILabel()
@@ -103,24 +103,32 @@ class Utilities {
             make.left.top.equalToSuperview()
         }
         
-        view.addSubview(textfield)
-        textfield.snp.makeConstraints { make in
+        view.addSubview(textview)
+        textview.snp.makeConstraints { make in
             make.top.equalTo(label.snp.bottom).offset(2)
             make.left.equalTo(label)
-            if let textfieldHeight = textfieldHeight {
-                make.height.equalTo(textfieldHeight)
+            if let textviewHeight = textviewHeight {
+                make.height.equalTo(textviewHeight)
             } else {
                 make.height.equalTo(CGFloat.minimumFormHeight)
             }
         }
         
         let dividerView = UIView()
-        dividerView.backgroundColor = .lightGray
+        dividerView.backgroundColor = .white
         view.addSubview(dividerView)
         dividerView.snp.makeConstraints { make in
-            make.top.equalTo(textfield.snp.bottom).offset(2)
+            make.top.equalTo(textview.snp.bottom).offset(2)
             make.left.right.equalToSuperview()
             make.height.equalTo(0.75)
+        }
+        
+        view.snp.makeConstraints { make in
+            if let textviewHeight = textviewHeight {
+                make.height.equalTo(20 + textviewHeight)
+            } else {
+                make.height.equalTo(30 + CGFloat.minimumFormHeight)
+            }
         }
         
         return view
