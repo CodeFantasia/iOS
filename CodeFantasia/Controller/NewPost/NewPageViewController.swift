@@ -77,6 +77,13 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return imageView
     }()
     
+    let plusIconImageView: UIImageView = {
+        let iconImageView = UIImageView(image: UIImage(named: "plus_icon"))
+        iconImageView.contentMode = .scaleAspectFit
+        iconImageView.isHidden = true // 초기에는 숨김
+        return iconImageView
+    }()
+    
     // 출시 플랫폼 라벨
     private let platformLabel: UILabel = {
         let label = UILabel()
@@ -548,6 +555,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             return
         }
         // Firebase에 데이터 업로드
+        dismissNewPageViewController()
         projectRepository.create(project: projectInfo)
     }
     
@@ -573,6 +581,9 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
+        
+        // 이미지피커가 열릴 때 + 아이콘 숨김
+        plusIconImageView.isHidden = true
     }
     
     // 이미지를 선택한 후 호출되는 함수
@@ -582,6 +593,9 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
         
         picker.dismiss(animated: true, completion: nil)
+        
+        // 이미지 선택 후 + 아이콘 다시 표시
+        plusIconImageView.isHidden = false
     }
     
     
