@@ -82,6 +82,7 @@ class UserDataManageController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureNavBar()
         configureUI()
     }
     
@@ -101,11 +102,6 @@ class UserDataManageController: UIViewController {
     func configureUI() {
         view.backgroundColor = UIColor.primaryColor
 
-        navigationController?.navigationBar.isHidden = false
-        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backBarButton))
-        navigationItem.leftBarButtonItem = backButton
-        
-
         let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton])
         stackview.axis = .vertical
         stackview.spacing = 20
@@ -117,6 +113,16 @@ class UserDataManageController: UIViewController {
             make.left.right.equalToSuperview().inset(CGFloat.spacing)
         }
 
+    }
+    
+    func configureNavBar() {
+        navigationController?.navigationBar.isHidden = false
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backBarButton))
+        backButton.tintColor = .white
+        navigationItem.leftBarButtonItem = backButton
+        
+        navigationItem.title = "회원 정보 입력"
+        navigationItem.titleView?.tintColor = .white
     }
     
 }
