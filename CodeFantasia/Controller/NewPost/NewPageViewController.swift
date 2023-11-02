@@ -9,7 +9,6 @@ import Firebase
 import FirebaseStorage
 import Kingfisher
 import SnapKit
-// import SwiftUI
 import Then
 import UIKit
 
@@ -589,13 +588,44 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - UITextFieldDelegate
     
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = textField.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
-        updateSuggestions(for: newText)
+        // 콤마를 기준으로 문자열 분할
+        let components = newText.components(separatedBy: ",")
+        
+        // 마지막 구성 요소를 가져옵니다 (현재 입력 중인 텍스트)
+        let lastComponent = components.last?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        
+        // 이 텍스트를 사용하여 자동완성 수행
+        updateSuggestions(for: lastComponent)
         
         return true
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 선택된 기술 스택 이름 가져오기
+        let selectedTechName = filteredTechStacks[indexPath.row]
+        
+        // 텍스트 필드의 현재 텍스트 가져오기
+        let currentText = techLanguageTextField.text ?? ""
+        
+        // 마지막 콤마를 기준으로 텍스트 분할
+        var components = currentText.components(separatedBy: ",")
+        
+        // 마지막 구성 요소를 선택한 기술 스택 이름으로 대체
+        components[components.count - 1] = selectedTechName
+        
+        // 구성 요소를 쉼표로 결합하여 새 텍스트 생성
+        let newText = components.joined(separator: ",")
+        
+        // 텍스트 필드에 새 텍스트 설정
+        techLanguageTextField.text = newText
+        
+        // 테이블 뷰 숨기기
+        tableView.isHidden = true
     }
     
     // MARK: - UITableViewDataSource
@@ -617,9 +647,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         return cell
     }
-
-
     
+
     // MARK: - UITableViewDelegate
     
     // 사용자 입력을 기반으로 제안을 업데이트하는 도우미 함수
