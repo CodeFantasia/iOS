@@ -10,8 +10,7 @@ class UserDataManageController: UIViewController {
     private let scrollview: UIScrollView = {
         let scrollview = UIScrollView()
         scrollview.isScrollEnabled = true
-        scrollview.showsVerticalScrollIndicator = true 
-        scrollview.backgroundColor = .red
+        scrollview.showsVerticalScrollIndicator = true
         return scrollview
     }()
     
@@ -104,7 +103,7 @@ class UserDataManageController: UIViewController {
         
         configureNavBar()
         configureUI()
-        configureTapGesture()
+        self.hideKeyboard()
     }
     
     // MARK: - Selectors
@@ -151,9 +150,7 @@ class UserDataManageController: UIViewController {
         stackview.snp.makeConstraints { make in
             make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
             make.left.right.width.equalToSuperview().inset(CGFloat.spacing)
-            make.width.equalTo(500)
-            make.height.equalTo(1000)
-            make.width.bottom.equalToSuperview().inset(CGFloat.spacing)
+            make.bottom.equalToSuperview().inset(CGFloat.spacing)
         }
 
     }
@@ -189,13 +186,4 @@ extension UserDataManageController: UIImagePickerControllerDelegate, UINavigatio
         dismiss(animated: true, completion: nil)
     }
     
-}
-
-// MARK: - UIGestureRecognizerDelegate
-
-extension UserDataManageController: UIGestureRecognizerDelegate {
-    func configureTapGesture() {
-        
-    }
-
 }
