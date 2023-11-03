@@ -497,11 +497,20 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         //        projectRepository.create(project: projectInfo)
         //        print("aaa")
         let projectTitle = titleTextField.text
-        let techLanguage = techLanguageTextField.text
+        let techLanguage = techLanguageTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         let recruitmentField = recruitmentFieldTextField.text
         let projectDescription = projectIntroTextView.text
         let meetingType = meetingTypeTextField.text
         let contactMethod = contactMethodTextField.text
+        
+        // TechStack 배열을 생성합니다.
+        let techStacks = techLanguage?.components(separatedBy: CharacterSet(charactersIn: "[]"))
+                                      .filter { !$0.isEmpty && $0 != "," }
+                                      .map { TechStack(technologies: [$0]) } ?? []
+
+        // 생성된 TechStack 배열을 출력합니다.
+        print("TechStacks: \(techStacks)")
+
         
         // 출시 플랫폼 텍스트 필드에서 사용자 입력을 가져옵니다.
         let platformInput = platformTextField.text
@@ -529,21 +538,22 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         let projectInfo = Project(
             projectTitle: projectTitle,
             projecSubtitle: nil,
-            techStack: [],
+            techStack: techStacks, // 여기에 techStacks 배열을 할당합니다.
             recruitmentCount: 1,
             projectDescription: projectDescription,
             projectDuration: "\(projectStartDate) - \(projectEndDate)",
             meetingType: meetingType,
             imageUrl: thumbnailImageURL,
             projectID: UUID(),
-            platform: selectedPlatforms, // 이 부분을 필요에 따라 채워넣으세요
+            platform: selectedPlatforms,
             recruitmentField: recruitmentField,
             recruitingStatus: true,
             teamMember: [],
             contactMethod: contactMethod,
             writerID: writerId
         )
-        // 작성폼이 비어있는지 판별한다는 느낌적인 느낌
+        
+        // 작성폼이 비어있는지 판별합니다.
         if projectTitle?.isEmpty ?? true ||
             techLanguage?.isEmpty ?? true ||
             recruitmentField?.isEmpty ?? true ||
@@ -551,13 +561,14 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             meetingType?.isEmpty ?? true ||
             contactMethod?.isEmpty ?? true ||
             platformInput?.isEmpty ?? true {
-            // 어떤 필드라도 비어 있다면 반드시 경고 표시
+            // 어떤 필드라도 비어 있다면 경고를 표시합니다.
             let alertController = UIAlertController(title: "Warning!", message: "Complete your mission", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "Copy that.", style: .default, handler: nil)
             alertController.addAction(okAction)
             present(alertController, animated: true, completion: nil)
             return
         }
+        
         // Firebase에 데이터 업로드
         dismissNewPageViewController()
         projectRepository.create(project: projectInfo)
@@ -606,45 +617,79 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // MARK: - UITextFieldDelegate
     
-
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        // 텍스트 필드의 현재 텍스트와 변경될 텍스트를 결합합니다.
         let currentText = textField.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
-        // 콤마를 기준으로 문자열 분할
+        // 새로운 텍스트를 사용하여 자동완성 수행
         let components = newText.components(separatedBy: ",")
-        
-        // 마지막 구성 요소를 가져옵니다 (현재 입력 중인 텍스트)
         let lastComponent = components.last?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        
-        // 이 텍스트를 사용하여 자동완성 수행
         updateSuggestions(for: lastComponent)
         
+        // 라벨에 표시될 내용을 출력합니다.
+        print("TextField is changing to: \(newText)")
+        
+        // 텍스트 필드에 대한 직접 변경을 허용합니다.
         return true
     }
-
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 선택된 기술 스택 이름 가져오기
         let selectedTechName = filteredTechStacks[indexPath.row]
         
-        // 텍스트 필드의 현재 텍스트 가져오기
+        // 현재 텍스트필드의 텍스트를 가져옵니다.
         let currentText = techLanguageTextField.text ?? ""
         
-        // 마지막 콤마를 기준으로 텍스트 분할
+        // 마지막 콤마로 분할하여 마지막 입력된 텍스트를 제외한 나머지를 가져옵니다.
         var components = currentText.components(separatedBy: ",")
+        if !components.isEmpty {
+            components.removeLast() // 마지막 입력된 텍스트를 제거
+        }
         
-        // 마지막 구성 요소를 선택한 기술 스택 이름으로 대체
-        components[components.count - 1] = selectedTechName
+        // 새로운 태그를 추가합니다.
+        let newTag = "[\(selectedTechName)]"
         
-        // 구성 요소를 쉼표로 결합하여 새 텍스트 생성
-        let newText = components.joined(separator: ",")
-        
-        // 텍스트 필드에 새 텍스트 설정
+        // 새로운 태그를 기존 텍스트에 추가합니다. 여기서 끝에 콤마와 공백을 추가하지 않습니다.
+        let newText = (components + [newTag]).joined(separator: "") + ","
         techLanguageTextField.text = newText
         
-        // 테이블 뷰 숨기기
+        // 라벨에 표시될 내용을 출력합니다.
+        print("Selected technology: \(selectedTechName), New TextField content: \(newText)")
+        
         tableView.isHidden = true
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == techLanguageTextField {
+            // 현재 텍스트 필드의 텍스트를 가져와서 쉼표로 분리한 후, 공백을 제거합니다.
+            var techStacks = textField.text?
+                .components(separatedBy: ",")
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) } ?? []
+            
+            // 마지막 입력값이 자동완성 목록에 없으면 "etc"로 대체합니다.
+            if let lastTech = techStacks.last, !lastTech.isEmpty {
+                let allTechStacks = getAllTechStacks()
+                if !allTechStacks.contains(where: { $0.lowercased() == lastTech.lowercased() }) {
+                    techStacks[techStacks.count - 1] = "[etc]"
+                }
+            }
+            
+            // 변경된 배열을 다시 쉼표로 조합하여 텍스트 필드에 설정합니다.
+            let newText = techStacks.joined(separator: "")
+            textField.text = newText
+            if !techStacks.isEmpty {
+                // 마지막에 쉼표와 공백을 추가합니다.
+                textField.text?.append(",")
+            }
+            
+            // 라벨에 표시될 내용을 출력합니다.
+            print("TextField did end editing with content: \(newText)")
+        }
+    }
+    
+    
     
     // MARK: - UITableViewDataSource
     
@@ -666,31 +711,25 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return cell
     }
     
-
+    
     // MARK: - UITableViewDelegate
     
     // 사용자 입력을 기반으로 제안을 업데이트하는 도우미 함수
     private func updateSuggestions(for text: String) {
         let allTechStacks = getAllTechStacks()
         filteredTechStacks = allTechStacks.filter { $0.lowercased().contains(text.lowercased()) }
-
+        
         suggestionsTableView.reloadData()
         suggestionsTableView.isHidden = filteredTechStacks.isEmpty
     }
-
+    
     // TechStack의 모든 기술 스택을 하나의 배열로 반환하는 함수
     private func getAllTechStacks() -> [String] {
         let techStackInstance = TechStack()
-        var allTechs: [String] = []
-        for category in TechCategory.allCases {
-            if let techs = techStackInstance.techForCategory(category) {
-                allTechs.append(contentsOf: techs)
-            }
-        }
-        return allTechs
+        // 이미 'technologies'는 모든 기술을 포함하는 배열이므로, 그대로 반환합니다.
+        return techStackInstance.technologies
     }
 }
-
 
 
 //     //MARK: - 미리보기
