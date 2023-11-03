@@ -48,7 +48,7 @@ class ProjectBoardVC: UIViewController {
             .disposed(by: bag)
     }
 
-    
+// MARK: - ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,9 +56,11 @@ class ProjectBoardVC: UIViewController {
         tableView.addSubview(refreshControl)
         
         self.fetchDataFromFirebase()
+        self.hideKeyboard()
         
         setupNavigationBar()
         setupTableView()
+        setupFloatingActionButton()
         
         view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         navigationController?.navigationBar.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
@@ -138,10 +140,10 @@ extension ProjectBoardVC {
 //        // TODO: Implement bell action
 //    }
     
-    @objc func pencilButtonTapped() {
-        let newPageViewController = NewPageViewController(data: nil)
-        newPageViewController.modalPresentationStyle = .fullScreen
-        present(newPageViewController, animated: true, completion: nil)
+    @objc func plusButtonTapped() {
+        let newPageVC = NewPageViewController(data: nil)
+        newPageVC.modalPresentationStyle = .fullScreen
+        present(newPageVC, animated: true, completion: nil)
     }
 }
 
@@ -167,12 +169,12 @@ private extension ProjectBoardVC {
 //            $0.addTarget(self, action: #selector(bellButtonTapped), for: .touchUpInside)
 //        }
         
-        let pencilButtonView = UIButton(type: .system).then {
-            $0.setImage(UIImage(systemName: "pencil"), for: .normal)
-            $0.addTarget(self, action: #selector(pencilButtonTapped), for: .touchUpInside)
-        }
+//        let pencilButtonView = UIButton(type: .system).then {
+//            $0.setImage(UIImage(systemName: "pencil"), for: .normal)
+//            $0.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+//        }
         
-        let stackView = UIStackView(arrangedSubviews: [searchButtonView/*, bellButtonView*/, pencilButtonView]).then {
+        let stackView = UIStackView(arrangedSubviews: [searchButtonView/*, bellButtonView*//*, pencilButtonView*/]).then {
             $0.axis = .horizontal
             $0.spacing = 10
         }
@@ -180,6 +182,8 @@ private extension ProjectBoardVC {
         let stackBarButton = UIBarButtonItem(customView: stackView)
         navigationItem.rightBarButtonItem = stackBarButton
     }
+    
+    
     
     func setupTableView() {
         view.addSubview(tableView)
@@ -191,4 +195,22 @@ private extension ProjectBoardVC {
             make.left.right.bottom.equalToSuperview()
         }
     }
+    
+    func setupFloatingActionButton() {
+        let plusButtonView = UIButton(type: .custom).then {
+            $0.setImage(UIImage(systemName: "plus"), for: .normal)
+            $0.tintColor = .black
+            $0.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+            $0.primaryColorConfigure(title: "")
+            $0.layer.cornerRadius = 28
+        }
+
+        view.addSubview(plusButtonView)
+        plusButtonView.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            make.right.equalToSuperview().offset(-16)
+            make.width.height.equalTo(56)
+        }
+    }
 }
+

@@ -37,6 +37,17 @@ class ProjectSearchViewVC: UIViewController, UISearchResultsUpdating, UISearchBa
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.shadowColor = nil
+
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        searchController.searchBar.backgroundImage = UIImage()
+        
         if let filterImage = UIImage(systemName: "slider.vertical.3") {
             let filterButton = UIBarButtonItem(image: filterImage, style: .plain, target: self, action: #selector(filterButtonTapped))
             navigationItem.rightBarButtonItem = filterButton
