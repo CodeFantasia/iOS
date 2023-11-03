@@ -8,6 +8,8 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import FirebaseAuth
+import UIKit
 
 final class ProfileViewModel {
     
@@ -23,6 +25,7 @@ final class ProfileViewModel {
         var profileEditDidTap: Driver<Void>
         var logoutDidTap: Driver<Void>
     }
+    let logoutComplete = PublishSubject<Void>()
     private let disposeBag = DisposeBag()
     private let userRepository: UserRepositoryProtocol
     private let userId: String
@@ -53,6 +56,25 @@ final class ProfileViewModel {
             .disposed(by: self.disposeBag)
             return Disposables.create()
         }
+        
+        logoutComplete.subscribe { [weak self] _ in
+            guard let self = self else { return }
+            do {
+                try Auth.auth().signOut()
+                
+                DispatchQueue.main.async {
+                guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
+                    fatalError("could not get scene delegate ")
+                }
+                    sceneDelegate.window?.rootViewController = TabBarController()
+                }
+                
+            } catch let signOutError as NSError {
+                print("Error signing out: \(signOutError)")
+            }
+        }
+        .disposed(by: disposeBag)
+        
         return Output(
             userDataFetched: userData,
             profileEditDidTap: input.profileEditTapped,
