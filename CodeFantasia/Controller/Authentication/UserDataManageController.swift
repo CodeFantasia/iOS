@@ -7,6 +7,14 @@ class UserDataManageController: UIViewController {
     
     // MARK: - Properties
     
+    private let scrollview: UIScrollView = {
+        let scrollview = UIScrollView()
+        scrollview.isScrollEnabled = true
+        scrollview.showsVerticalScrollIndicator = true 
+        scrollview.backgroundColor = .red
+        return scrollview
+    }()
+    
     private let imagePicker = UIImagePickerController()
     private var profileImage: UIImage?
     
@@ -123,22 +131,29 @@ class UserDataManageController: UIViewController {
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         
-        view.addSubview(addPhotoButton)
+        view.addSubview(scrollview)
+        scrollview.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(CGFloat.spacing)
+        }
+
+        scrollview.addSubview(addPhotoButton)
         addPhotoButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.height.width.equalTo(130)
         }
 
         let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton])
         stackview.axis = .vertical
         stackview.spacing = 20
         stackview.distribution = .fillProportionally
-        
-        view.addSubview(stackview)
+
+        scrollview.addSubview(stackview)
         stackview.snp.makeConstraints { make in
             make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
-            make.left.right.equalToSuperview().inset(CGFloat.spacing)
+            make.left.right.width.equalToSuperview().inset(CGFloat.spacing)
+            make.width.equalTo(500)
+            make.height.equalTo(1000)
+            make.width.bottom.equalToSuperview().inset(CGFloat.spacing)
         }
 
     }
@@ -180,14 +195,7 @@ extension UserDataManageController: UIImagePickerControllerDelegate, UINavigatio
 
 extension UserDataManageController: UIGestureRecognizerDelegate {
     func configureTapGesture() {
-        let nicknameTap = UITapGestureRecognizer(target: self, action: #selector(handleNicknameTap))
-        nicknameTap.delegate = self
-        nicknameTextView.addGestureRecognizer(nicknameTap)
+        
     }
-    
-    // MARK: - Tap Gesture Selectors
-    
-    @objc func handleNicknameTap() {
-        nicknameTextView.becomeFirstResponder()
-    }
+
 }

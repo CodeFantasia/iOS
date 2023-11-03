@@ -44,7 +44,7 @@ extension TextView: UITextViewDelegate {
         if let text = self.text {
             if text.isEmpty {
                 self.text = placeholder
-                self.textColor = .lightGray
+                self.textColor = .darkGray
                 self.font = UIFont.body
             }
         }
