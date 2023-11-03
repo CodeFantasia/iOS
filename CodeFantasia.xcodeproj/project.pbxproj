@@ -29,6 +29,9 @@
 		AB14BEBC2AE2505900ACE79F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBB2AE2505900ACE79F /* LoginController.swift */; };
 		AB14BEC02AE2506300ACE79F /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		AB14BEC12AE2506300ACE79F /* TermsOfConditionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */; };
+		AB41CB892AF224A000B43C63 /* UserDataManageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBDF5362AF0430400D240FD /* UserDataManageController.swift */; };
+		AB41CB942AF37A9400B43C63 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB41CB932AF37A9400B43C63 /* TextView.swift */; };
+		AB41CB952AF37A9400B43C63 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB41CB932AF37A9400B43C63 /* TextView.swift */; };
 		AB5C352D2AF0BD520056E646 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352C2AF0BD520056E646 /* UILabel+.swift */; };
 		AB5C352E2AF0BD520056E646 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352C2AF0BD520056E646 /* UILabel+.swift */; };
 		AB5C35302AF14FAC0056E646 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352F2AF14FAC0056E646 /* UIView+.swift */; };
@@ -165,6 +168,7 @@
 		AB14BEBB2AE2505900ACE79F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfConditionsController.swift; sourceTree = "<group>"; };
+		AB41CB932AF37A9400B43C63 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		AB5C352C2AF0BD520056E646 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		AB5C352F2AF14FAC0056E646 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -297,6 +301,18 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
+		AB41CB962AF4FC1C00B43C63 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				AB14BEB82AE2504700ACE79F /* TextField.swift */,
+				AB41CB932AF37A9400B43C63 /* TextView.swift */,
+				ABD01AE32AEADD2200C3C08A /* Utilities.swift */,
+				AB14BEB42AE2503B00ACE79F /* Button.swift */,
+				F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */,
+			);
+			path = CustomUI;
+			sourceTree = "<group>";
+		};
 		ABA2296C2AEB028D00EDE1D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,6 +342,7 @@
 		ABC3DF202AD45E8B008CEF1A /* CodeFantasia */ = {
 			isa = PBXGroup;
 			children = (
+				AB41CB962AF4FC1C00B43C63 /* CustomUI */,
 				ABD01AE12AEADC5C00C3C08A /* Controller */,
 				F17108A62AE220300076C575 /* Repository */,
 				F1E18B472AE0F99A0041638B /* Feature */,
@@ -451,11 +468,7 @@
 				F1E653E32AD8E0F200274A34 /* Fonts.swift */,
 				F1E653E52AD8E3A900274A34 /* Palette.swift */,
 				F1E653E92AD8F63D00274A34 /* Images.swift */,
-				AB14BEB42AE2503B00ACE79F /* Button.swift */,
 				F1E653EB2ADD539D00274A34 /* Metrics.swift */,
-				AB14BEB82AE2504700ACE79F /* TextField.swift */,
-				F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */,
-				ABD01AE32AEADD2200C3C08A /* Utilities.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -690,6 +703,7 @@
 				F0B39BC72AE76FF900CE4889 /* ProfileViewModel.swift in Sources */,
 				F1E18B492AE0F9A40041638B /* FirebaseManager.swift in Sources */,
 				ABC3DF2C2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld in Sources */,
+				AB41CB942AF37A9400B43C63 /* TextView.swift in Sources */,
 				F13AED032AE611F00098C654 /* Rx+UIViewController.swift in Sources */,
 				F053DFDE2AE7A99100BFFF6A /* UserRepository.swift in Sources */,
 				3191DEDF2AD8F9B30059AACB /* TabbarM.swift in Sources */,
@@ -717,6 +731,7 @@
 				F1E18BD52AE105B50041638B /* MainVC.swift in Sources */,
 				F031266D2AE90B66000E337E /* TextField.swift in Sources */,
 				F03126672AE90B34000E337E /* UserRepository.swift in Sources */,
+				AB41CB952AF37A9400B43C63 /* TextView.swift in Sources */,
 				F03126702AE90B7D000E337E /* LoginController.swift in Sources */,
 				F1E18BD62AE105B50041638B /* NewPageViewController.swift in Sources */,
 				F1E18BD72AE105B50041638B /* CustomAlert.swift in Sources */,
@@ -737,6 +752,7 @@
 				F13AED0D2AE693000098C654 /* UIImageView+.swift in Sources */,
 				F13AED042AE611F00098C654 /* Rx+UIViewController.swift in Sources */,
 				F1E18BDE2AE105B50041638B /* Images.swift in Sources */,
+				AB41CB892AF224A000B43C63 /* UserDataManageController.swift in Sources */,
 				311FF5202AE90BC4008AB16E /* (null) in Sources */,
 				ABA2296F2AEB7CAC00EDE1D5 /* RegistrationController.swift in Sources */,
 				F1E18BDF2AE105B50041638B /* ProjectBoardVC.swift in Sources */,
