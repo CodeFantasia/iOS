@@ -87,7 +87,7 @@ class Utilities {
         return button
     }
     
-    func dropdownInputFormView(withLabel labelStr: String, firstSectionLength: Int, textview: UITextView, textviewHeight: CGFloat?) -> UIView {
+    func dropdownInputFormView(withLabel labelStr: String, firstSectionLength: Int, textview: UITextView, textviewHeight: CGFloat?) -> (UIView, UIButton) {
         let view = UIView()
         
         let label = UILabel()
@@ -143,7 +143,7 @@ class Utilities {
             }
         }
         
-        return view
+        return (view, dropdownButton)
     }
     
     func inputFormView(withLabel labelStr: String, firstSectionLength: Int, textview: UITextView, textviewHeight: CGFloat?) -> UIView {

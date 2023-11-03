@@ -31,12 +31,14 @@ class UserDataManageController: UIViewController {
     }()
     
     private lazy var techStackView: UIView = {
-        let view = Utilities().dropdownInputFormView(withLabel: "*기술스택 (1개 이상 선택)", firstSectionLength: 5, textview: techStackTextView, textviewHeight: nil)
+        let (view, dropdownButton) = Utilities().dropdownInputFormView(withLabel: "*기술스택 (1개 이상 선택)", firstSectionLength: 5, textview: techStackTextView, textviewHeight: nil)
+        dropdownButton.addTarget(self, action: #selector(handleTechStackButton), for: .touchUpInside)
         return view
     }()
     
     private lazy var interestFieldView: UIView = {
-        let view = Utilities().dropdownInputFormView(withLabel: "*관심분야 (1개 이상 선택)", firstSectionLength: 5, textview: interestTextView, textviewHeight: nil)
+        let (view, dropdownButton) = Utilities().dropdownInputFormView(withLabel: "*관심분야 (1개 이상 선택)", firstSectionLength: 5, textview: interestTextView, textviewHeight: nil)
+        dropdownButton.addTarget(self, action: #selector(handleInterestFieldButton), for: .touchUpInside)
         return view
     }()
     
@@ -118,6 +120,14 @@ class UserDataManageController: UIViewController {
     
     @objc func handleAddProfilePhoto() {
         present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @objc func handleTechStackButton() {
+        print("기술 스택")
+    }
+    
+    @objc func handleInterestFieldButton() {
+        print("관심 분야")
     }
 
     
