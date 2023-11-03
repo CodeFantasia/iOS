@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
 
 
 
@@ -18,6 +19,10 @@ class ProjectSearchViewVC: UIViewController, UISearchResultsUpdating, UISearchBa
         $0.separatorStyle = .none
         $0.backgroundColor = .clear
     }
+    
+    private var projectsData: [(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)] = []
+    private let projectRepository: ProjectRepositoryProtocol = ProjectRepository(firebaseBaseManager: FireBaseManager())
+    
     
     private var filteredData: [(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)]
     private let searchController = UISearchController(searchResultsController: nil)
@@ -188,3 +193,26 @@ class HalfSizePresentationController: UIPresentationController {
         presentedViewController.dismiss(animated: true)
     }
 }
+
+// MARK: - TableView Delegate
+extension ProjectSearchViewVC {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard indexPath.row < filteredData.count else {
+            print("Selected index is out of range.")
+            return
+        }
+
+        let selectedProject = filteredData[indexPath.row]
+        
+        let projectId = selectedProject.5.uuidString
+        
+        let viewModel = ProjectDetailNoticeBoardViewModel(projectRepository: projectRepository, projectId: projectId)
+        
+        let detailVC = ProjectDetailNoticeBoardViewController(viewModel: viewModel)
+        
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
