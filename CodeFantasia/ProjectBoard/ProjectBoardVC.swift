@@ -31,18 +31,23 @@ class ProjectBoardVC: UIViewController {
                 self?.projectsData = projects.map { project in
                     let imageURL = URL(string: project.imageUrl ?? "")
                     let statusString = project.recruitingStatus ?? false ? "모집 중" : "모집 완료"
-                    let icons: [IconModel] = project.techStack.map { tech in
-                        return IconModel(image: UIImage(named: tech.techForCategory(.frontendDevelopment)?.first ?? "") ?? UIImage())
+                    let icons: [IconModel] = project.techStack.flatMap { techStack in
+                        techStack.technologies.map { techName in
+                            return IconModel(image: UIImage(named: techName) ?? UIImage())
+                        }
                     }
 
                     return (imageURL, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString, project.projectID)
                 }
                 self?.tableView.reloadData()
-            }, onFailure: { error in
+                self?.refreshControl.endRefreshing()
+            }, onFailure: { [weak self] error in
                 print("Error fetching data: \(error)")
+                self?.refreshControl.endRefreshing()
             })
             .disposed(by: bag)
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

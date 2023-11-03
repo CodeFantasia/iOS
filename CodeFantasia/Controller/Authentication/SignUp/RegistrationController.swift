@@ -7,17 +7,6 @@ class RegistrationController: UIViewController {
 
     // MARK: - Properties
     
-    private let imagePicker = UIImagePickerController()
-    private var profileImage: UIImage?
-    
-    private let addPhotoButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "plus_photo"), for: .normal)
-        button.tintColor = .white
-        button.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
-        return button
-    }()
-    
     private let alreadyHaveAccountButton: UIButton = {
         let button = Utilities().attributedButton("Already have an account?", " Log in")
         button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
@@ -100,9 +89,9 @@ class RegistrationController: UIViewController {
         return textfield
     }()
     
-    private let registrationButton: UIButton = {
+    private let nextButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Register", for: .normal)
+        button.setTitle("Next", for: .normal)
         button.setTitleColor(.primaryColor, for: .normal)
         button.backgroundColor = .white
         button.snp.makeConstraints { make in
@@ -110,7 +99,7 @@ class RegistrationController: UIViewController {
         }
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.buttonTitle
-        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleNextButton), for: .touchUpInside)
         return button
     }()
     
@@ -129,27 +118,29 @@ class RegistrationController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func handleRegister() {
-        let profileImage = profileImage ?? UIImage(named: "default_profile")
-        guard let email = emailTextField.text, emailVerify(email: email) else { return }
-        guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
-        guard let name = nameTextField.text, nameVerify(name: name) else { return }
+    @objc func handleNextButton() {
+        navigationController?.pushViewController(UserDataManageController(), animated: true)
         
-        let newUser = UserAuth(email: email, password: password, name: name, profileImage: profileImage ?? UIImage())
-        
-        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
-            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-            guard let tab = window.rootViewController as? TabBarController else { return }
-            
-            tab.configureUI()
 
-            self.dismiss(animated: true)
-        }
+        
+        
+//        let profileImage = profileImage ?? UIImage(named: "default_profile")
+//        guard let email = emailTextField.text, emailVerify(email: email) else { return }
+//        guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
+//        guard let name = nameTextField.text, nameVerify(name: name) else { return }
+//
+//        let newUser = UserAuth(email: email, password: password, name: name, profileImage: profileImage ?? UIImage())
+//
+//        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
+//            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+//            guard let tab = window.rootViewController as? TabBarController else { return }
+//
+//            tab.configureUI()
+//
+//            self.dismiss(animated: true)
+//        }
     }
-    
-    @objc func handleAddProfilePhoto() {
-        present(imagePicker, animated: true, completion: nil)
-    }
+
     
     // MARK: - Helpers
     
@@ -199,20 +190,10 @@ class RegistrationController: UIViewController {
     func configureUI() {
         view.backgroundColor = .primaryColor
         
-        imagePicker.delegate = self
-        imagePicker.allowsEditing = true
-        
         view.addSubview(alreadyHaveAccountButton)
         alreadyHaveAccountButton.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(40)
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
-        }
-        
-        view.addSubview(addPhotoButton)
-        addPhotoButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.height.width.equalTo(150)
         }
 
         let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, passwordCheckContainerView, nameContainerView])
@@ -222,7 +203,7 @@ class RegistrationController: UIViewController {
 
         view.addSubview(stack)
         stack.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(CGFloat.spacing)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
             make.left.right.equalToSuperview().inset(8)
         }
         
@@ -254,8 +235,8 @@ class RegistrationController: UIViewController {
             make.left.equalTo(nameContainerView).offset(5)
         }
         
-        view.addSubview(registrationButton)
-        registrationButton.snp.makeConstraints { make in
+        view.addSubview(nextButton)
+        nextButton.snp.makeConstraints { make in
             make.top.equalTo(nameContainerView.snp.bottom).offset(45)
             make.left.right.equalTo(stack)
         }
@@ -284,25 +265,4 @@ class RegistrationController: UIViewController {
         let pattern = "^[a-zA-Z가-힣]*$"
         return NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: input)
     }
-}
-
-// MARK: - UIImagePickerControllerDelegate
-
-extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let profileImage = info[.editedImage] as? UIImage else { return }
-        self.profileImage = profileImage
-        
-        addPhotoButton.layer.cornerRadius = 130 / 2
-        addPhotoButton.layer.masksToBounds = true
-        addPhotoButton.imageView?.contentMode = .scaleToFill
-        addPhotoButton.imageView?.clipsToBounds = true
-        addPhotoButton.setImage(profileImage.withRenderingMode(.alwaysOriginal), for: .normal)
-        addPhotoButton.layer.borderColor = UIColor.white.cgColor
-        addPhotoButton.layer.borderWidth = 3
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
 }
