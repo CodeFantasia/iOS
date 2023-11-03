@@ -38,8 +38,10 @@ class ProjectBoardVC: UIViewController {
                     return (imageURL, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString, project.projectID)
                 }
                 self?.tableView.reloadData()
+                self?.refreshControl.endRefreshing()
             }, onFailure: { error in
                 print("Error fetching data: \(error)")
+                self.refreshControl.endRefreshing()
             })
             .disposed(by: bag)
     }

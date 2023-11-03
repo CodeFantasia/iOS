@@ -21,7 +21,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     // 스크롤 뷰
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = true // 수직 스크롤바 표시 여부
+        scrollView.showsVerticalScrollIndicator = true
         return scrollView
     }()
     
@@ -80,7 +80,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     let plusIconImageView: UIImageView = {
         let iconImageView = UIImageView(image: UIImage(named: "plus_icon"))
         iconImageView.contentMode = .scaleAspectFit
-        iconImageView.isHidden = true // 초기에는 숨김
+        iconImageView.isHidden = true
         return iconImageView
     }()
     
@@ -469,7 +469,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         suggestionsTableView.snp.makeConstraints {
             $0.top.equalTo(techLanguageTextField.snp.bottom)
             $0.left.right.equalTo(techLanguageTextField)
-            $0.height.equalTo(200) // 필요에 따라 조정
+            $0.height.equalTo(200)
         }
         suggestionsTableView.dataSource = self
         suggestionsTableView.delegate = self
@@ -533,7 +533,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             meetingType: meetingType,
             imageUrl: thumbnailImageURL,
             projectID: UUID(),
-            platform: selectedPlatforms, // 이 부분을 필요에 따라 채워넣으세요
+            platform: selectedPlatforms,
             recruitmentField: recruitmentField,
             recruitingStatus: true,
             teamMember: [],
@@ -620,25 +620,18 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 선택된 기술 스택 이름 가져오기
         let selectedTechName = filteredTechStacks[indexPath.row]
         
-        // 텍스트 필드의 현재 텍스트 가져오기
         let currentText = techLanguageTextField.text ?? ""
         
-        // 마지막 콤마를 기준으로 텍스트 분할
         var components = currentText.components(separatedBy: ",")
         
-        // 마지막 구성 요소를 선택한 기술 스택 이름으로 대체
         components[components.count - 1] = selectedTechName
         
-        // 구성 요소를 쉼표로 결합하여 새 텍스트 생성
         let newText = components.joined(separator: ",")
         
-        // 텍스트 필드에 새 텍스트 설정
         techLanguageTextField.text = newText
         
-        // 테이블 뷰 숨기기
         tableView.isHidden = true
     }
     
@@ -665,7 +658,6 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
 
     // MARK: - UITableViewDelegate
     
-    // 사용자 입력을 기반으로 제안을 업데이트하는 도우미 함수
     private func updateSuggestions(for text: String) {
         let allTechStacks = getAllTechStacks()
         filteredTechStacks = allTechStacks.filter { $0.lowercased().contains(text.lowercased()) }
@@ -674,7 +666,6 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         suggestionsTableView.isHidden = filteredTechStacks.isEmpty
     }
 
-    // TechStack의 모든 기술 스택을 하나의 배열로 반환하는 함수
     private func getAllTechStacks() -> [String] {
         let techStackInstance = TechStack()
         var allTechs: [String] = []

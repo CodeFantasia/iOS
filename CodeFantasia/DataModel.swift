@@ -31,8 +31,8 @@ struct UserAuth {
 }
 
 struct Project: Codable {
-    var projectTitle: String?  // 추가
-    var projecSubtitle: String?  // 추가
+    var projectTitle: String?
+    var projecSubtitle: String?
     var techStack: [TechStack]
     var recruitmentCount: Int
     var projectDescription: String?
@@ -42,9 +42,9 @@ struct Project: Codable {
     var projectID: UUID
     var platform: [Platform]
     var recruitmentField: String?
-    var recruitingStatus: Bool?  // 추가 현재 모집중 모집 완료인지
+    var recruitingStatus: Bool?
     var teamMember: [TeamMember]
-    var contactMethod: String? // 추가
+    var contactMethod: String?
 }
 
 // 기술 스택
@@ -61,6 +61,7 @@ enum TechCategory: String, Codable, CaseIterable {
     case databaseORM
     case frontendLibrariesAndFrameworks
     case testingFrameworks
+    case etc
 }
 
 struct TechStack: Codable {
@@ -71,12 +72,13 @@ struct TechStack: Codable {
         .servers: ["Apache", "Nginx", "Tomcat"],
         .cloudAndDeployment: ["Amazon Web Services (AWS)", "Microsoft Azure", "Google Cloud Platform (GCP)", "Docker", "Kubernetes", "Heroku"],
         .versionControl: ["Git", "GitHub", "GitLab"],
-        .programmingLanguages: ["Python", "Java", "C++", "C#", "JavaScript", "Ruby", "Swift", "Kotlin", "Go", "Rust"],
+        .programmingLanguages: ["C++", "C#", "Ruby", "Swift", "Kotlin", "Go", "Rust"],
         .dataAnalysisAndMachineLearning: ["TensorFlow", "PyTorch", "scikit-learn", "Pandas", "NumPy"],
-        .webFrameworksAndLibraries: ["Flask", "Django", "Express.js", "Ruby on Rails", "Spring Boot"],
+        .webFrameworksAndLibraries: ["Flask", "Django", "Express.js", "Spring Boot"],
         .databaseORM: ["SQLAlchemy", "Hibernate", "ActiveRecord"],
         .frontendLibrariesAndFrameworks: ["Bootstrap", "Material-UI", "Foundation", "Semantic UI"],
-        .testingFrameworks: ["JUnit", "pytest", "Jasmine", "Jest"]
+        .testingFrameworks: ["JUnit", "pytest", "Jasmine", "Jest"],
+        .etc: ["etc"]
     ]
     
     // 함수를 사용하여 각 카테고리에 해당하는 기술들을 반환합니다.
