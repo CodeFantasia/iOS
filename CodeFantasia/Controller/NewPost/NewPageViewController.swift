@@ -21,7 +21,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     // 스크롤 뷰
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = true // 수직 스크롤바 표시 여부
         return scrollView
     }()
     
@@ -80,7 +80,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     let plusIconImageView: UIImageView = {
         let iconImageView = UIImageView(image: UIImage(named: "plus_icon"))
         iconImageView.contentMode = .scaleAspectFit
-        iconImageView.isHidden = true
+        iconImageView.isHidden = true // 초기에는 숨김
         return iconImageView
     }()
     
@@ -469,7 +469,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         suggestionsTableView.snp.makeConstraints {
             $0.top.equalTo(techLanguageTextField.snp.bottom)
             $0.left.right.equalTo(techLanguageTextField)
-            $0.height.equalTo(200)
+            $0.height.equalTo(200) // 필요에 따라 조정
         }
         suggestionsTableView.dataSource = self
         suggestionsTableView.delegate = self
@@ -533,7 +533,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             meetingType: meetingType,
             imageUrl: thumbnailImageURL,
             projectID: UUID(),
-            platform: selectedPlatforms,
+            platform: selectedPlatforms, // 이 부분을 필요에 따라 채워넣으세요
             recruitmentField: recruitmentField,
             recruitingStatus: true,
             teamMember: [],
@@ -604,36 +604,49 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string == "," {
+            // 쉼표가 입력되었을 때는 추가 동작을 수행하지 않습니다.
+            return false
+        }
+
+        // 텍스트 필드의 현재 텍스트와 변경될 텍스트를 결합합니다.
         let currentText = textField.text ?? ""
         let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
         
-        // 콤마를 기준으로 문자열 분할
+        // 새로운 텍스트를 사용하여 자동완성 수행
         let components = newText.components(separatedBy: ",")
-        
-        // 마지막 구성 요소를 가져옵니다 (현재 입력 중인 텍스트)
         let lastComponent = components.last?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        
-        // 이 텍스트를 사용하여 자동완성 수행
         updateSuggestions(for: lastComponent)
         
+        // 텍스트 필드에 대한 직접 변경을 허용합니다.
         return true
     }
+
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedTechName = filteredTechStacks[indexPath.row]
         
-        let currentText = techLanguageTextField.text ?? ""
+        // 현재 텍스트필드의 텍스트를 가져옵니다.
+        var currentText = techLanguageTextField.text ?? ""
         
+        // 마지막 콤마로 분할하여 마지막 입력된 텍스트를 제외한 나머지를 가져옵니다.
         var components = currentText.components(separatedBy: ",")
+        if !components.isEmpty {
+            components.removeLast() // 마지막 입력된 텍스트를 제거
+        }
         
-        components[components.count - 1] = selectedTechName
+        // 새로운 태그를 추가합니다.
+        let newTag = "[\(selectedTechName)]"
         
-        let newText = components.joined(separator: ",")
-        
-        techLanguageTextField.text = newText
+        // 새로운 태그를 기존 텍스트에 추가합니다. 여기서 끝에 콤마와 공백을 추가하지 않습니다.
+        techLanguageTextField.text = (components + [newTag]).joined(separator: "")
         
         tableView.isHidden = true
     }
+
+
+
+
     
     // MARK: - UITableViewDataSource
     
@@ -677,7 +690,6 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return allTechs
     }
 }
-
 
 
 //     //MARK: - 미리보기
