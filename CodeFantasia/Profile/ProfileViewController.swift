@@ -277,23 +277,11 @@ extension ProfileViewController {
             .disposed(by: disposeBag)
         
         outputs.logoutDidTap
-            .drive (onNext: { [weak self] owner in
-                guard let self = self else { return }
-                do {
-                    try Auth.auth().signOut()
-                    
-                    DispatchQueue.main.async {
-                    guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
-                        fatalError("could not get scene delegate ")
-                    }
-                        sceneDelegate.window?.rootViewController = TabBarController()
-                    }
-                    
-                } catch let signOutError as NSError {
-                    print("Error signing out: \(signOutError)")
-                }
+            .drive(with: self, onNext: { owner, _ in
+                owner.alertViewAlert(title: "로그아웃", message: "로그아웃 하시겠습니까?", cancelText: "아니요", acceptCompletion:  {
+                    owner.viewModel.logoutComplete.on(.next(()))
+                })
             })
             .disposed(by: disposeBag)
             }
     }
-

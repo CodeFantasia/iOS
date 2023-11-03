@@ -13,7 +13,6 @@ final class ProjectDetailNoticeBoardViewModel {
     
     struct Input {
         var viewDidLoad: Observable<Void>
-        var editImageTapped: Driver<Void>
         var profileImageTapped: Driver<Void>
         var projectApplyButtonTapped: Driver<Void>
         var projectReportButtonTapped: Driver<Void>
@@ -22,15 +21,16 @@ final class ProjectDetailNoticeBoardViewModel {
         var projectDataFetched: Observable<Project>
         var projectApplyButtonDidTap: Driver<String?>
         var projectLeaderProfileDidTap: Driver<Int?>
-        var projectEditButtonDidTap: Driver<Void>
         var projectReportButtonDidTap: Driver<Void>
 //        var projectApplySuccess: Observable<Void>
 //        var projectApplyFail: Observable<Void>
 //        var projectReportSuccess: Observable<Void>
 //        var projectReportFail: Observable<Void>
     }
+    let projectDeleteComplete = PublishSubject<Void>()
     let projectApplyComplete = PublishSubject<Void>()
     let projectReportComplete = PublishSubject<Void>()
+    let projectEditComplete = PublishSubject<Void>()
     private let disposeBag = DisposeBag()
     private let projectRepository: ProjectRepositoryProtocol
     private let projectId: String
@@ -65,12 +65,20 @@ final class ProjectDetailNoticeBoardViewModel {
         
         //TODO: - apply, report 기능 추가
         projectApplyComplete.subscribe { _ in
-
         }
         .disposed(by: disposeBag)
         
         projectReportComplete.subscribe { _ in
-            
+        }
+        .disposed(by: disposeBag)
+        
+        projectDeleteComplete.subscribe { _ in
+            self.projectRepository.delete(projectId: self.projectId)
+        }
+        .disposed(by: disposeBag)
+        
+        projectEditComplete.subscribe { _ in
+            self.projectRepository.update(project: self.project!)
         }
         .disposed(by: disposeBag)
         
@@ -80,10 +88,8 @@ final class ProjectDetailNoticeBoardViewModel {
                 self?.project?.contactMethod
             },
             projectLeaderProfileDidTap: input.profileImageTapped.map { [weak self] _ in
-                // 리더 어떻게 할지 정해야 함 
                 self?.project?.teamMember.first(where: {$0.category == Role(detailRole: "leader")})?.employeeID
             },
-            projectEditButtonDidTap: input.editImageTapped,
             projectReportButtonDidTap: input.projectReportButtonTapped
         )
     }

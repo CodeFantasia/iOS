@@ -11,6 +11,7 @@ import SnapKit
 import RxSwift
 import RxCocoa
 import Kingfisher
+import FirebaseAuth
 
 final class ProjectDetailNoticeBoardViewController: UIViewController {
 
@@ -18,7 +19,6 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     private lazy var contentStackView = UIStackView().then {
         $0.axis = .vertical
         $0.distribution = .fill
-//        $0.spacing = 20
         $0.spacing = .spacing
         $0.isLayoutMarginsRelativeArrangement = true
         $0.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -110,7 +110,6 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.numberOfLines = 0
     }
     private lazy var projectApplyButton = UIHoverButton().then {
-        $0.setTitle("신청하기", for: .normal)
         $0.titleLabel?.font = .buttonTitle
         $0.setTitleColor(.black, for: .normal)
         $0.backgroundColor = .buttonPrimaryColor
@@ -126,8 +125,22 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.layer.masksToBounds = false
 
     }
-    private lazy var editButton = UIBarButtonItem(image: .projectEditImage, style: .plain, target: self, action: nil)
     private lazy var reportButton = UIBarButtonItem(image: .reportImage, style: .plain, target: self, action: nil)
+    private var menuItems: [UIAction] {
+        return [
+            UIAction(title: "수정하기", image: UIImage(systemName: "pencil"), handler: { [weak self] _ in
+                self?.alertViewAlert(title: "수정", message: "프로젝트를 수정하시겠습니까?", cancelText: "아니요", acceptCompletion: {
+                    let editView = NewPageViewController()
+                    editView.modalPresentationStyle = .fullScreen
+                    self?.present(editView, animated: true)})}),
+            
+            UIAction(title: "삭제하기", image: .projectDeleteImage, attributes: .destructive, handler: { [weak self] _ in
+                self?.alertViewAlert(title: "삭제", message: "프로젝트를 삭제하시겠습니까?", cancelText: "아니요", acceptCompletion: {
+                    self?.viewModel.projectDeleteComplete.on(.next(())) })})
+        ]
+    }
+    private lazy var editMenu = UIMenu(title: "",image: nil, identifier: nil, options: [], children: menuItems)
+    
     private let viewModel: ProjectDetailNoticeBoardViewModel
     private let disposeBag = DisposeBag()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
@@ -146,12 +159,9 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
 extension ProjectDetailNoticeBoardViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        exchange()
         configure()
         activityIndicator.startAnimating()
-        // 파티장이라면
-        navigationItem.rightBarButtonItems = [reportButton, editButton]
-        // 아니면
-//        navigationItem.rightBarButtonItems = [reportButton]
     }
 }
 
@@ -224,7 +234,6 @@ extension ProjectDetailNoticeBoardViewController {
     private func bind() {
         let inputs = ProjectDetailNoticeBoardViewModel.Input(
             viewDidLoad: rx.viewDidLoad.asObservable(),
-            editImageTapped: editButton.rx.tap.asDriver(),
             profileImageTapped: projectTeamLeaderProfileImageButton.rx.tap.asDriver(),
             projectApplyButtonTapped: projectApplyButton.rx.tap.asDriver(),
             projectReportButtonTapped: reportButton.rx.tap.asDriver()
@@ -236,7 +245,6 @@ extension ProjectDetailNoticeBoardViewController {
             .subscribe(onNext: { owner, project in
                 DispatchQueue.main.async {
                     owner.activityIndicator.stopAnimating()
-                    //TODO: project 모델 타이틀, 부 타이틀 없음
                     owner.techStackContextView.text = project.platform.reduce("", {$0 + $1.rawValue + "\n"})
                     owner.projectImageView.kf.setImage(with: URL(string: project.imageUrl ?? "")) { result in
                         switch result {
@@ -246,6 +254,7 @@ extension ProjectDetailNoticeBoardViewController {
                             owner.alertViewAlert(title: "오류 발생", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
                         }
                     }
+                    owner.projectTitleLabel.text = project.projectTitle ?? ""
                     owner.recruitmentStatusContextLabel.text = project.recruitmentField ?? ""
                     owner.projectIntroduceContextLabel.text = project.projectDescription ?? ""
                     owner.projectMeetingTypeContextLabel.text = project.meetingType ?? ""
@@ -279,7 +288,6 @@ extension ProjectDetailNoticeBoardViewController {
                     let profileViewController = ProfileViewController(viewModel: ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: String(leaderUserId)))
                     owner.present(profileViewController, animated: true)
                 }
-                
             })
             .disposed(by: disposeBag)
         
@@ -290,11 +298,25 @@ extension ProjectDetailNoticeBoardViewController {
                 })
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension ProjectDetailNoticeBoardViewController {
+    func exchange() {
+        let postAuthor = Auth.auth().currentUser?.uid
+        let currentAutor = Auth.auth().currentUser?.uid
         
-        outputs.projectEditButtonDidTap
-            .drive(with: self, onNext: { owner, _ in
-                // 편집 뷰로
-            })
-            .disposed(by: disposeBag)
+        if let currentAutor = currentAutor, let postAuthor = postAuthor {
+            if currentAutor == postAuthor {
+                projectApplyButton.isHidden = true
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "",
+                                                                     image: UIImage(systemName: "ellipsis.circle"),
+                                                                     primaryAction: nil,
+                                                                     menu: editMenu)
+            } else {
+                projectApplyButton.setTitle("신청하기", for: .normal)
+                navigationItem.rightBarButtonItem = reportButton
+            }
+        }
     }
 }
