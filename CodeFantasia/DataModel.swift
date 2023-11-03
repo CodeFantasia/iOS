@@ -48,43 +48,46 @@ struct Project: Codable {
     var writerID: String? // 게시자 아이디
 }
 
-// 기술 스택
-enum TechCategory: String, Codable, CaseIterable {
-    case frontendDevelopment
-    case backendDevelopment
-    case databases
-    case servers
-    case cloudAndDeployment
-    case versionControl
-    case programmingLanguages
-    case dataAnalysisAndMachineLearning
-    case webFrameworksAndLibraries
-    case databaseORM
-    case frontendLibrariesAndFrameworks
-    case testingFrameworks
-}
+//// 기술 스택
+//enum TechCategory: String, Codable, CaseIterable {
+//    case frontendDevelopment
+//    case backendDevelopment
+//    case databases
+//    case servers
+//    case cloudAndDeployment
+//    case versionControl
+//    case programmingLanguages
+//    case dataAnalysisAndMachineLearning
+//    case webFrameworksAndLibraries
+//    case databaseORM
+//    case frontendLibrariesAndFrameworks
+//    case testingFrameworks
+//}
 
 struct TechStack: Codable {
-    private var techDictionary: [TechCategory: [String]] = [
-        .frontendDevelopment: ["HTML", "CSS", "JavaScript", "React", "Angular", "Vue.js"],
-        .backendDevelopment: ["Node.js", "Java", "Python", "Ruby on Rails", "PHP", ".NET", "Spring"],
-        .databases: ["MySQL", "PostgreSQL", "MongoDB", "Oracle", "SQLite"],
-        .servers: ["Apache", "Nginx", "Tomcat"],
-        .cloudAndDeployment: ["Amazon Web Services (AWS)", "Microsoft Azure", "Google Cloud Platform (GCP)", "Docker", "Kubernetes", "Heroku"],
-        .versionControl: ["Git", "GitHub", "GitLab"],
-        .programmingLanguages: ["Python", "Java", "C++", "C#", "JavaScript", "Ruby", "Swift", "Kotlin", "Go", "Rust"],
-        .dataAnalysisAndMachineLearning: ["TensorFlow", "PyTorch", "scikit-learn", "Pandas", "NumPy"],
-        .webFrameworksAndLibraries: ["Flask", "Django", "Express.js", "Ruby on Rails", "Spring Boot"],
-        .databaseORM: ["SQLAlchemy", "Hibernate", "ActiveRecord"],
-        .frontendLibrariesAndFrameworks: ["Bootstrap", "Material-UI", "Foundation", "Semantic UI"],
-        .testingFrameworks: ["JUnit", "pytest", "Jasmine", "Jest"]
+    var technologies: [String] = [
+        "HTML", "CSS", "JavaScript", "React", "Angular", "Vue.js",
+        "Node.js", "Java", "Python", "Ruby on Rails", "PHP", ".NET", "Spring",
+        "MySQL", "PostgreSQL", "MongoDB", "Oracle", "SQLite",
+        "Apache", "Nginx", "Tomcat",
+        "Amazon Web Services (AWS)", "Microsoft Azure", "Google Cloud Platform (GCP)", "Docker", "Kubernetes", "Heroku",
+        "Git", "GitHub", "GitLab",
+        "C++", "C#", "Ruby", "Swift", "Kotlin", "Go", "Rust",
+        "TensorFlow", "PyTorch", "scikit-learn", "Pandas", "NumPy",
+        "Flask", "Django", "Express.js", "Spring Boot",
+        "SQLAlchemy", "Hibernate", "ActiveRecord",
+        "Bootstrap", "Material-UI", "Foundation", "Semantic UI",
+        "JUnit", "pytest", "Jasmine", "Jest",
+        "etc"
     ]
-    
-    // 함수를 사용하여 각 카테고리에 해당하는 기술들을 반환합니다.
-    func techForCategory(_ category: TechCategory) -> [String]? {
-        return techDictionary[category]
-    }
 }
+
+    
+//    // 함수를 사용하여 각 카테고리에 해당하는 기술들을 반환합니다.
+//    func techForCategory(_ category: TechCategory) -> [String]? {
+//        return techDictionary[category]
+//    }
+//}
 
 enum AreasOfInterest: String, Codable {
     case iOSDevelopment = "iOS 개발"
