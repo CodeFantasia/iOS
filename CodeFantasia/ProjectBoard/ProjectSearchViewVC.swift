@@ -13,6 +13,9 @@ import Then
 
 class ProjectSearchViewVC: UIViewController, UISearchResultsUpdating, UISearchBarDelegate, UITableViewDataSource, UITableViewDelegate, UIViewControllerTransitioningDelegate, FilterBottomSheetDelegate {
 
+    private let projectRepository: ProjectRepositoryProtocol = ProjectRepository(firebaseBaseManager: FireBaseManager())
+    private var projectsData: [(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)] = []
+    
     private let tableView = UITableView().then {
         $0.register(ProjectBoardTableviewCell.self, forCellReuseIdentifier: "ProjectBoardCell")
         $0.separatorStyle = .none
@@ -112,6 +115,27 @@ class ProjectSearchViewVC: UIViewController, UISearchResultsUpdating, UISearchBa
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        // 이 부분에서 ProjectSearchViewVC의 데이터 소스에서 선택된 프로젝트를 가져옵니다.
+        // 예시로 프로젝트 배열이 `projectsData`라고 가정합니다.
+        let selectedProject = projectsData[indexPath.row]
+
+        // 'Project' 구조체에서 'projectID'를 가져옵니다.
+        let projectId = selectedProject.projectID
+
+        // 'ProjectDetailNoticeBoardViewModel'을 초기화합니다.
+        let viewModel = ProjectDetailNoticeBoardViewModel(projectRepository: projectRepository, projectId: projectId.uuidString)
+
+        // 'ProjectDetailNoticeBoardViewController' 인스턴스를 생성합니다.
+        let detailVC = ProjectDetailNoticeBoardViewController(viewModel: viewModel)
+
+        // 'ProjectDetailNoticeBoardViewController'를 네비게이션 스택에 푸시합니다.
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredData.count
