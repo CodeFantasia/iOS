@@ -87,6 +87,65 @@ class Utilities {
         return button
     }
     
+    func dropdownInputFormView(withLabel labelStr: String, firstSectionLength: Int, textview: UITextView, textviewHeight: CGFloat?) -> UIView {
+        let view = UIView()
+        
+        let label = UILabel()
+        if firstSectionLength == 0 {
+            label.text = labelStr
+            label.font = UIFont.subTitle
+        } else {
+            label.configureAttributedString(content: labelStr, sectionLength: firstSectionLength)
+        }
+
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.left.top.equalToSuperview()
+        }
+        
+        view.addSubview(textview)
+        textview.backgroundColor = UIColor.primaryColor
+        textview.snp.makeConstraints { make in
+            make.top.equalTo(label.snp.bottom).offset(2)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview().offset(-30)
+            if let textviewHeight = textviewHeight {
+                make.height.equalTo(textviewHeight)
+            } else {
+                make.height.equalTo(CGFloat.minimumFormHeight)
+            }
+        }
+        
+        let dropdownButton = UIButton(type: .system)
+        dropdownButton.setImage(UIImage(named: "down_arrow_24pt"), for: .normal)
+        dropdownButton.tintColor = .white
+        view.addSubview(dropdownButton)
+        dropdownButton.snp.makeConstraints { make in
+            make.top.bottom.equalTo(textview)
+            make.left.equalTo(textview.snp.right).offset(2)
+            make.right.equalToSuperview()
+        }
+        
+        let dividerView = UIView()
+        dividerView.backgroundColor = .white
+        view.addSubview(dividerView)
+        dividerView.snp.makeConstraints { make in
+            make.top.equalTo(textview.snp.bottom).offset(2)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(0.75)
+        }
+        
+        view.snp.makeConstraints { make in
+            if let textviewHeight = textviewHeight {
+                make.height.equalTo(20 + textviewHeight)
+            } else {
+                make.height.equalTo(20 + CGFloat.minimumFormHeight)
+            }
+        }
+        
+        return view
+    }
+    
     func inputFormView(withLabel labelStr: String, firstSectionLength: Int, textview: UITextView, textviewHeight: CGFloat?) -> UIView {
         let view = UIView()
         

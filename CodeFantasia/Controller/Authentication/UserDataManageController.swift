@@ -24,19 +24,19 @@ class UserDataManageController: UIViewController {
         button.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
         return button
     }()
-
+    
     private lazy var nicknameView: UIView = {
         let view = Utilities().inputFormView(withLabel: "*닉네임 (영어, 한글 3~12자 입력)", firstSectionLength: 4, textview: nicknameTextView, textviewHeight: nil)
         return view
     }()
     
     private lazy var techStackView: UIView = {
-        let view = Utilities().inputFormView(withLabel: "*기술스택 (1개 이상 선택)", firstSectionLength: 5, textview: techStackTextView, textviewHeight: nil)
+        let view = Utilities().dropdownInputFormView(withLabel: "*기술스택 (1개 이상 선택)", firstSectionLength: 5, textview: techStackTextView, textviewHeight: nil)
         return view
     }()
     
     private lazy var interestFieldView: UIView = {
-        let view = Utilities().inputFormView(withLabel: "*관심분야 (1개 이상 선택)", firstSectionLength: 5, textview: interestTextView, textviewHeight: nil)
+        let view = Utilities().dropdownInputFormView(withLabel: "*관심분야 (1개 이상 선택)", firstSectionLength: 5, textview: interestTextView, textviewHeight: nil)
         return view
     }()
     
@@ -93,7 +93,6 @@ class UserDataManageController: UIViewController {
         button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
         return button
     }()
-    
 
     
     // MARK: - Lifecycle
