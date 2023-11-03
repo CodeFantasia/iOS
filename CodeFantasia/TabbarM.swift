@@ -61,11 +61,12 @@ class TabBarController: UITabBarController {
     
     func configureUI() {
         let userId = Auth.auth().currentUser?.uid
+        
         tabBar.isTranslucent = true
         
         let iconSize = CGSize(width: 25, height: 25)
         
-        let tabbarMyProjectVC = UINavigationController(rootViewController: MyProjectVC(viewModel: MyProjectViewModel(projectRepository: ProjectRepository(firebaseBaseManager: FireBaseManager()), projectId: userId!)))
+        let tabbarMyProjectVC = UINavigationController(rootViewController: MyProjectVC(viewModel: MyProjectViewModel(projectRepository: ProjectRepository(firebaseBaseManager: FireBaseManager()))))
         let firstTabIcon = UIImage(named: "TabbarMyProject")?.withRenderingMode(.alwaysOriginal).resize(to: iconSize)
         tabbarMyProjectVC.tabBarItem = UITabBarItem(title: "나의 프로젝트", image: firstTabIcon, tag: 0)
         
