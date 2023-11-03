@@ -131,6 +131,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
             UIAction(title: "수정하기", image: UIImage(systemName: "pencil"), handler: { [weak self] _ in
                 self?.alertViewAlert(title: "수정", message: "프로젝트를 수정하시겠습니까?", cancelText: "아니요", acceptCompletion: {
                     let editView = NewPageViewController()
+                    let newPage = testController(data: project?)
                     editView.modalPresentationStyle = .fullScreen
                     self?.present(editView, animated: true)})}),
             

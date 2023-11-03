@@ -13,7 +13,41 @@ import Then
 import UIKit
 import FirebaseAuth
 
+class testController: UIViewController{
+    let data: Project?
+    
+    let label = UILabel()
+    
+    init(data: Project?) {
+        self.data = data
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        setUp()
+    }
+    // 데이터가있는지 판별
+    func setUp() {
+        if data != nil {
+            label.text = "new post"
+        } else {
+            label.text = "old post"
+        }
+    }
+    
+}
+
+
+
+
 class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
+    
+    
+    
     // MARK: - 변수선언
     
     let writerId = Auth.auth().currentUser?.uid
