@@ -45,10 +45,11 @@ struct Project: Codable {
     var recruitingStatus: Bool?  // 추가 현재 모집중 모집 완료인지
     var teamMember: [TeamMember]
     var contactMethod: String? // 추가
+    var writerID: String? // 게시자 아이디
 }
 
 // 기술 스택
-enum TechCategory: String, Codable {
+enum TechCategory: String, Codable, CaseIterable {
     case frontendDevelopment
     case backendDevelopment
     case databases
