@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Firebase
 
 final class MyProjectViewModel {
     
@@ -16,29 +17,28 @@ final class MyProjectViewModel {
     }
     struct Output {
         var projectDataFetched: Observable<Project>
+        var userAuthConfirmed: Driver<Bool>
     }
     private let disposeBag = DisposeBag()
     let projectRepository: ProjectRepositoryProtocol
-    let projectId: String
-    
+
     init(
-        projectRepository: ProjectRepositoryProtocol,
-        projectId: String
+        projectRepository: ProjectRepositoryProtocol
     ) {
         self.projectRepository = projectRepository
-        self.projectId = projectId
     }
     
     func transform(input: Input) -> Output {
-        
-        let projectData = Observable<Project>.create { [weak self] observer in
+        let currentAuthor = Auth.auth().currentUser?.uid
+        let projectData = Observable<[Project]>.create { [weak self] observer in
             guard let self else { return Disposables.create() }
             input.viewDidLoad
-                .subscribe { projectId in
-                    self.projectRepository.read(projectId: self.projectId)
-                        .subscribe(onSuccess: { project in
-                            observer.onNext(project)
-                        }, onFailure: { error in
+                .subscribe { _ in
+                    self.projectRepository.readAll()
+                        .subscribe(onSuccess: { projects in
+                            let filteredProjects = projects.filter { $0.writerID == currentAuthor }
+                            observer.onNext(filteredProjects)
+                        }, onError: { error in
                             observer.onError(error)
                         })
                         .disposed(by: self.disposeBag)
@@ -46,9 +46,15 @@ final class MyProjectViewModel {
                 .disposed(by: self.disposeBag)
             return Disposables.create()
         }
-        
+
         return Output(
-            projectDataFetched: projectData
+            projectDataFetched: projectData.flatMap { Observable.from($0) },
+            userAuthConfirmed: projectData.map { [weak self] project in
+                guard let self else {
+                    return false // Handle the case where currentAuthor is nil
+                }
+                return true
+            }.asDriver(onErrorJustReturn: false)
         )
     }
 }

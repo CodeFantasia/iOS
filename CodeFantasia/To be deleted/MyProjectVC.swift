@@ -13,8 +13,15 @@ import Firebase
 
 class MyProjectVC: UITableViewController {
     
-    private var projectDataArray: [Project] = []
+    private lazy var emptyView: UIStackView = UIStackView().then {
+        $0.layoutMargins = UIEdgeInsets(top: .spacing, left: 20, bottom: 20, right: 20)
+        $0.isLayoutMarginsRelativeArrangement = true
+        $0.axis = .vertical
+        $0.spacing = .spacing
+    }
     
+    var projectDataArray: [Project] = []
+
     let emptyButton = UIButton().then {
         $0.primaryColorConfigure(title: "새글작성")
         $0.addTarget(self, action: #selector(emptyButtonTapped), for: .touchUpInside)
@@ -49,6 +56,7 @@ class MyProjectVC: UITableViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         bind()
+        tableView.reloadData()
     }
     
     required init?(coder: NSCoder) {
@@ -58,9 +66,6 @@ class MyProjectVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationbarTitle()
-        ifEmpty()
-        ifEmptyViewLayout()
-        
         tableView.backgroundColor = UIColor.backgroundColor
         tableView.separatorStyle = .none
         tableView.register(MyProjectTableViewCell.self, forCellReuseIdentifier: MyProjectTableViewCell.identifier)
@@ -79,14 +84,30 @@ extension MyProjectVC {
         outputs.projectDataFetched
             .withUnretained(self)
             .subscribe(onNext: { owner, project in
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                     owner.projectDataArray.append(project)
-                    self.tableView.reloadData()
+                    tableView.reloadData()
                 }
             })
             .disposed(by: disposeBag)
-    }
-}
+        
+        outputs.userAuthConfirmed
+            .drive(onNext: { [weak self] isUserAuthenticated in
+                guard let self = self else { return }
+                if isUserAuthenticated {
+                    // User is authenticated, you can show the content.
+                    self.tableView.isHidden = false
+                    self.emptyView.isHidden = true
+                } else {
+                    // User is not authenticated, show empty view.
+                    self.tableView.isHidden = true
+                    self.ifEmptyViewLayout()
+                    self.view.addSubview(self.emptyView)
+                    self.emptyView.isHidden = false
+                }
+            })
+            .disposed(by: disposeBag)
+    }}
 
 extension MyProjectVC {
     
@@ -115,51 +136,36 @@ extension MyProjectVC {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let moveDetail = ProjectDetailNoticeBoardViewController(viewModel: ProjectDetailNoticeBoardViewModel(projectRepository: ProjectRepository(firebaseBaseManager: FireBaseManager()), projectId: viewModel.projectId))
+        let project = projectDataArray[indexPath.row]
+        let projectId = project.projectID.uuidString
+        let moveDetail = ProjectDetailNoticeBoardViewController(viewModel: ProjectDetailNoticeBoardViewModel(projectRepository: ProjectRepository(firebaseBaseManager: FireBaseManager()), projectId: projectId))
         self.navigationController?.pushViewController(moveDetail, animated: true)
     }
 }
 
 extension MyProjectVC {
+    
+        func ifEmptyViewLayout() {
+            [emptyTitleLabel,
+             emptySubtitleLabel,
+             emptyButton
+            ].forEach {
+                emptyView.addArrangedSubview($0)
+            }
+            emptyView.snp.makeConstraints {
+                $0.edges.equalTo(view.safeAreaLayoutGuide)
+            }
+        }
+        
+        @objc func emptyButtonTapped() {
+            let newProject = NewPageViewController()
+            newProject.modalPresentationStyle = .fullScreen
+            self.present(newProject, animated: true)
+        }
+        
+        func navigationbarTitle() {
+            let barTitleItem = UIBarButtonItem(customView: barTitle)
+            navigationItem.leftBarButtonItem = barTitleItem
+        }
+    }
 
-    func ifEmpty() {
-        if projectDataArray.isEmpty {
-            tableView.backgroundView = emptyTitleLabel
-            tableView.backgroundView = emptySubtitleLabel
-            tableView.backgroundView = emptyButton
-        } else {
-            tableView.backgroundView = nil
-        }
-    }
-    
-    func ifEmptyViewLayout() {
-        view.addSubview(emptyTitleLabel)
-        view.addSubview(emptySubtitleLabel)
-        view.addSubview(emptyButton)
-
-        emptyTitleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(200)
-        }
-        emptySubtitleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(emptyTitleLabel.snp.bottom).offset(20)
-        }
-        emptyButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(emptySubtitleLabel.snp.bottom).offset(20)
-            $0.width.equalTo(200)
-        }
-    }
-    
-    @objc func emptyButtonTapped() {
-        let newProject = NewPageViewController()
-        newProject.modalPresentationStyle = .fullScreen
-        self.present(newProject, animated: true)
-    }
-    
-    func navigationbarTitle() {
-        let barTitleItem = UIBarButtonItem(customView: barTitle)
-        navigationItem.leftBarButtonItem = barTitleItem
-    }
-}
