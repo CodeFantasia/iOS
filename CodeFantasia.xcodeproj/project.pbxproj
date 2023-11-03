@@ -301,6 +301,18 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
+		AB41CB962AF4FC1C00B43C63 /* CustomUI */ = {
+			isa = PBXGroup;
+			children = (
+				AB14BEB82AE2504700ACE79F /* TextField.swift */,
+				AB41CB932AF37A9400B43C63 /* TextView.swift */,
+				ABD01AE32AEADD2200C3C08A /* Utilities.swift */,
+				AB14BEB42AE2503B00ACE79F /* Button.swift */,
+				F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */,
+			);
+			path = CustomUI;
+			sourceTree = "<group>";
+		};
 		ABA2296C2AEB028D00EDE1D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +342,7 @@
 		ABC3DF202AD45E8B008CEF1A /* CodeFantasia */ = {
 			isa = PBXGroup;
 			children = (
+				AB41CB962AF4FC1C00B43C63 /* CustomUI */,
 				ABD01AE12AEADC5C00C3C08A /* Controller */,
 				F17108A62AE220300076C575 /* Repository */,
 				F1E18B472AE0F99A0041638B /* Feature */,
@@ -455,12 +468,7 @@
 				F1E653E32AD8E0F200274A34 /* Fonts.swift */,
 				F1E653E52AD8E3A900274A34 /* Palette.swift */,
 				F1E653E92AD8F63D00274A34 /* Images.swift */,
-				AB14BEB42AE2503B00ACE79F /* Button.swift */,
 				F1E653EB2ADD539D00274A34 /* Metrics.swift */,
-				AB14BEB82AE2504700ACE79F /* TextField.swift */,
-				F01AD1BB2ADF8A1800F0E0B1 /* CustomAlert.swift */,
-				ABD01AE32AEADD2200C3C08A /* Utilities.swift */,
-				AB41CB932AF37A9400B43C63 /* TextView.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";

@@ -4,6 +4,27 @@ import SnapKit
 
 class Utilities {
     
+    // MARK: - Authentication
+    
+    func textField(withPlaceholder placeholder: String) -> UITextField {
+        let textfield = UITextField()
+        textfield.font = UIFont.systemFont(ofSize: 16)
+        textfield.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        return textfield
+    }
+    
+    func attributedButton(_ firstPart: String, _ secondPart: String) -> UIButton {
+        let button = UIButton(type: .system)
+        
+        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white])
+
+        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white]))
+        
+        button.setAttributedTitle(attributedTitle, for: .normal)
+        
+        return button
+    }
+    
     func inputContainerView(withImage image: UIImage, textField: UITextField) -> UIView {
         let view = UIView()
         let imageview = UIImageView()
@@ -41,6 +62,8 @@ class Utilities {
         return view
     }
     
+    // MARK: - New Post
+    
     func createInputContainerView(title: String, textField: UITextField) -> UIView {
         let container = UIView()
         
@@ -66,26 +89,8 @@ class Utilities {
         
         return container
     }
-    
-    func textField(withPlaceholder placeholder: String) -> UITextField {
-        let textfield = UITextField()
-        textfield.font = UIFont.systemFont(ofSize: 16)
-        textfield.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-        // textfield 입력되는 내용도 하얗게 하는 방법 찾아보기
-        return textfield
-    }
-    
-    func attributedButton(_ firstPart: String, _ secondPart: String) -> UIButton {
-        let button = UIButton(type: .system)
-        
-        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white])
 
-        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16), NSAttributedString.Key.foregroundColor: UIColor.white]))
-        
-        button.setAttributedTitle(attributedTitle, for: .normal)
-        
-        return button
-    }
+    // MARK: - Profile
     
     func dropdownInputFormView(withLabel labelStr: String, firstSectionLength: Int, textview: UITextView, textviewHeight: CGFloat?) -> (UIView, UIButton) {
         let view = UIView()
