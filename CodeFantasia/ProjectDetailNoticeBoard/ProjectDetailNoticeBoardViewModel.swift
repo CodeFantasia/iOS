@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import FirebaseAuth
 
 final class ProjectDetailNoticeBoardViewModel {
     
@@ -22,6 +23,7 @@ final class ProjectDetailNoticeBoardViewModel {
         var projectApplyButtonDidTap: Driver<String?>
         var projectLeaderProfileDidTap: Driver<Int?>
         var projectReportButtonDidTap: Driver<Void>
+        var userAuthConfirmed: Driver<Bool>
 //        var projectApplySuccess: Observable<Void>
 //        var projectApplyFail: Observable<Void>
 //        var projectReportSuccess: Observable<Void>
@@ -34,7 +36,7 @@ final class ProjectDetailNoticeBoardViewModel {
     private let disposeBag = DisposeBag()
     private let projectRepository: ProjectRepositoryProtocol
     private let projectId: String
-    private var project: Project?
+    var project: Project?
     
     init(
         projectRepository: ProjectRepositoryProtocol,
@@ -90,7 +92,15 @@ final class ProjectDetailNoticeBoardViewModel {
             projectLeaderProfileDidTap: input.profileImageTapped.map { [weak self] _ in
                 self?.project?.teamMember.first(where: {$0.category == Role(detailRole: "leader")})?.employeeID
             },
-            projectReportButtonDidTap: input.projectReportButtonTapped
+            projectReportButtonDidTap: input.projectReportButtonTapped,
+            
+            userAuthConfirmed: projectData.map { [weak self] project in
+                guard let currentAuthor = Auth.auth().currentUser?.uid else {
+                    return false // Handle the case where currentAuthor is nil
+                }
+                
+                return project.writerID == currentAuthor
+            }.asDriver(onErrorJustReturn: false)
         )
     }
 }
