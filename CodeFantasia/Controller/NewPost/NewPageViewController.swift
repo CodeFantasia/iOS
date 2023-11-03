@@ -11,9 +11,12 @@ import Kingfisher
 import SnapKit
 import Then
 import UIKit
+import FirebaseAuth
 
 class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     // MARK: - 변수선언
+    
+    let writerId = Auth.auth().currentUser?.uid
     
     // firebase 선언
     private let projectRepository: ProjectRepositoryProtocol = ProjectRepository(firebaseBaseManager: FireBaseManager())
@@ -537,7 +540,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             recruitmentField: recruitmentField,
             recruitingStatus: true,
             teamMember: [],
-            contactMethod: contactMethod
+            contactMethod: contactMethod,
+            writerID: writerId
         )
         // 작성폼이 비어있는지 판별한다는 느낌적인 느낌
         if projectTitle?.isEmpty ?? true ||
