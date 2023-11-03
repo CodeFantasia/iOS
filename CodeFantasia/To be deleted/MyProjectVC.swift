@@ -149,7 +149,7 @@ extension MyProjectVC {
     }
     
     @objc func emptyButtonTapped() {
-        let newProject = NewPageViewController()
+        let newProject = NewPageViewController(data: nil)
         newProject.modalPresentationStyle = .fullScreen
         self.present(newProject, animated: true)
     }
