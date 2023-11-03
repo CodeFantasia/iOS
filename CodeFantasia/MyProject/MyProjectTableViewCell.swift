@@ -19,7 +19,7 @@ class MyProjectTableViewCell: UITableViewCell {
         $0.font = UIFont.subTitle
     }
     
-    let projectSubtitle = UILabel().then {
+    let projectDescription = UILabel().then {
         $0.numberOfLines = 2
         $0.font = UIFont.body
     }
@@ -68,7 +68,7 @@ extension MyProjectTableViewCell {
         
         contentView.addSubview(projectImage)
         contentView.addSubview(projectTitle)
-        contentView.addSubview(projectSubtitle)
+        contentView.addSubview(projectDescription)
         contentView.addSubview(dateView)
         dateView.addSubview(dateLabel)
         
@@ -81,7 +81,7 @@ extension MyProjectTableViewCell {
             $0.height.equalTo(20)
             $0.top.equalTo(projectImage.snp.bottom).offset(16)
         }
-        projectSubtitle.snp.makeConstraints {
+        projectDescription.snp.makeConstraints {
             $0.leading.equalTo(projectImage)
             $0.top.equalTo(projectTitle.snp.bottom).offset(16)
             $0.bottom.equalTo(contentView.snp.bottom).inset(16)

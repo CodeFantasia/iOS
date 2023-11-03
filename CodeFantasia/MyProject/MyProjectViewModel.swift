@@ -17,7 +17,6 @@ final class MyProjectViewModel {
     }
     struct Output {
         var projectDataFetched: Observable<Project>
-        var userAuthConfirmed: Driver<Bool>
     }
     private let disposeBag = DisposeBag()
     let projectRepository: ProjectRepositoryProtocol
@@ -48,13 +47,7 @@ final class MyProjectViewModel {
         }
 
         return Output(
-            projectDataFetched: projectData.flatMap { Observable.from($0) },
-            userAuthConfirmed: projectData.map { [weak self] project in
-                guard let self else {
-                    return false // Handle the case where currentAuthor is nil
-                }
-                return true
-            }.asDriver(onErrorJustReturn: false)
+            projectDataFetched: projectData.flatMap { Observable.from($0) }
         )
     }
 }
