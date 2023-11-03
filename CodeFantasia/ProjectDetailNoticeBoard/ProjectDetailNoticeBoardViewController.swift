@@ -134,11 +134,14 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
                 self?.alertViewAlert(title: "수정", message: "프로젝트를 수정하시겠습니까?", cancelText: "아니요", acceptCompletion: {
                     let editView = NewPageViewController()
                     editView.modalPresentationStyle = .fullScreen
-                    self?.present(editView, animated: true)})}),
-            
+                    self?.present(editView, animated: true)
+                })
+            }),
             UIAction(title: "삭제하기", image: .projectDeleteImage, attributes: .destructive, handler: { [weak self] _ in
                 self?.alertViewAlert(title: "삭제", message: "프로젝트를 삭제하시겠습니까?", cancelText: "아니요", acceptCompletion: {
-                    self?.viewModel.projectDeleteComplete.on(.next(())) })})
+                    self?.viewModel.projectDeleteComplete.on(.next(()))
+                })
+            })
         ]
     }
     private lazy var editMenu = UIMenu(title: "",image: nil, identifier: nil, options: [], children: menuItems)
