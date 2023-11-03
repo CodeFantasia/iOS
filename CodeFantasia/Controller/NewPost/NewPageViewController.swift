@@ -13,11 +13,15 @@ import Then
 import UIKit
 import FirebaseAuth
 
-class testController: UIViewController{
+
+
+class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
+    
+    
+    
+    // MARK: - 변수선언
     let data: Project?
-    
-    let label = UILabel()
-    
+        
     init(data: Project?) {
         self.data = data
         super.init(nibName: nil, bundle: nil)
@@ -27,28 +31,39 @@ class testController: UIViewController{
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        setUp()
-    }
     // 데이터가있는지 판별
     func setUp() {
         if data != nil {
-            label.text = "new post"
+            //편집
+            titleTextField.text = data?.projectTitle
+//            platformTextField.text = data?.platform
+//            techLanguageTextField.text = data?.techStack
+            recruitmentFieldTextField.text = data?.recruitmentField
+            projectIntroTextView.text = data?.projectDescription
+            
         } else {
-            label.text = "old post"
+            //새글 작성
         }
     }
     
-}
-
-
-
-
-class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
+//    projectInfo = Project(
+//        projectTitle: projectTitle,
+//        projecSubtitle: nil,
+//        techStack: techStacks, // 여기에 techStacks 배열을 할당합니다.
+//        recruitmentCount: 1,
+//        projectDescription: projectDescription,
+//        projectDuration: "\(projectStartDate) - \(projectEndDate)",
+//        meetingType: meetingType,
+//        imageUrl: thumbnailImageURL,
+//        projectID: UUID(),
+//        platform: selectedPlatforms,
+//        recruitmentField: recruitmentField,
+//        recruitingStatus: true,
+//        teamMember: [],
+//        contactMethod: contactMethod,
+//        writerID: writerId
+//    )
     
-    
-    
-    // MARK: - 변수선언
     
     let writerId = Auth.auth().currentUser?.uid
     
@@ -306,6 +321,9 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUp()
+        print(data)
+
         techLanguageTextField.delegate = self
         
         setupUI()
