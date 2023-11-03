@@ -14,6 +14,7 @@ import Kingfisher
 import FirebaseAuth
 
 final class ProjectDetailNoticeBoardViewController: UIViewController {
+    var writerID: String?
 
     private lazy var scrollView = UIScrollView()
     private lazy var contentStackView = UIStackView().then {
@@ -110,6 +111,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.numberOfLines = 0
     }
     private lazy var projectApplyButton = UIHoverButton().then {
+        $0.setTitle("신청하기", for: .normal)
         $0.titleLabel?.font = .buttonTitle
         $0.setTitleColor(.black, for: .normal)
         $0.backgroundColor = .buttonPrimaryColor
@@ -157,9 +159,10 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
 
 //MARK: - View Life Cycle
 extension ProjectDetailNoticeBoardViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        exchange()
+//        exchange()
         configure()
         activityIndicator.startAnimating()
     }
@@ -259,6 +262,7 @@ extension ProjectDetailNoticeBoardViewController {
                     owner.projectIntroduceContextLabel.text = project.projectDescription ?? ""
                     owner.projectMeetingTypeContextLabel.text = project.meetingType ?? ""
                     owner.projectPeriodContextLabel.text = project.projectDuration ?? ""
+                    owner.writerID = project.writerID ?? ""
                 }
             }, onError: { [weak self] error in
                 DispatchQueue.main.async {
@@ -298,25 +302,23 @@ extension ProjectDetailNoticeBoardViewController {
                 })
             })
             .disposed(by: disposeBag)
-    }
-}
-
-extension ProjectDetailNoticeBoardViewController {
-    func exchange() {
-        let postAuthor = Auth.auth().currentUser?.uid
-        let currentAutor = Auth.auth().currentUser?.uid
         
-        if let currentAutor = currentAutor, let postAuthor = postAuthor {
-            if currentAutor == postAuthor {
-                projectApplyButton.isHidden = true
-                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "",
-                                                                     image: UIImage(systemName: "ellipsis.circle"),
-                                                                     primaryAction: nil,
-                                                                     menu: editMenu)
-            } else {
-                projectApplyButton.setTitle("신청하기", for: .normal)
-                navigationItem.rightBarButtonItem = reportButton
-            }
-        }
+        outputs.userAuthConfirmed
+            .drive(onNext: { [weak self] _ in
+                guard let self = self, let project = viewModel.project, let currentAuthor = Auth.auth().currentUser?.uid else {
+                    return
+                }
+                
+                if project.writerID == currentAuthor {
+                    self.projectApplyButton.isHidden = true
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "",
+                                                                           image: UIImage(systemName: "ellipsis.circle"),
+                                                                           primaryAction: nil,
+                                                                           menu: self.editMenu)
+                } else {
+                    self.navigationItem.rightBarButtonItem = self.reportButton
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
