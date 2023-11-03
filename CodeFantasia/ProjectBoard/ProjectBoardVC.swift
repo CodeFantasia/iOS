@@ -139,7 +139,7 @@ extension ProjectBoardVC {
 //    }
     
     @objc func pencilButtonTapped() {
-        let newPageViewController = NewPageViewController()
+        let newPageViewController = NewPageViewController(data: nil)
         newPageViewController.modalPresentationStyle = .fullScreen
         present(newPageViewController, animated: true, completion: nil)
     }
