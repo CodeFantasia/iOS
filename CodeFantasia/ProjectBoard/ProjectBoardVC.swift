@@ -56,7 +56,6 @@ class ProjectBoardVC: UIViewController {
         tableView.addSubview(refreshControl)
         
         self.fetchDataFromFirebase()
-        self.hideKeyboard()
         
         setupNavigationBar()
         setupTableView()
