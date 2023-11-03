@@ -37,7 +37,7 @@ class ProjectBoardVC: UIViewController {
                         }
                     }
 
-                    return (imageURL, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString, project.projectID)
+                    return (imageURL, project.projectTitle ?? "", project.projectDescription ?? "", icons, statusString, project.projectID)
                 }
                 self?.tableView.reloadData()
                 self?.refreshControl.endRefreshing()
