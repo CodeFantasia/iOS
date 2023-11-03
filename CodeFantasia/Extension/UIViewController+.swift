@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UIViewController {
+extension UIViewController: UIGestureRecognizerDelegate {
     func alertViewActionSheet(
         title: String?,
         message: String?,
@@ -46,6 +46,17 @@ extension UIViewController {
             uiAlertController.addAction(acceptAction)
         }
         present(uiAlertController, animated: true)
+    }
+    
+    // MARK: - Dismiss Keyboard
+    func hideKeyboard() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.view.addGestureRecognizer(tap)
+        tap.delegate = self
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
     // MARK: - Keyboard 눌렀을 때 View 올리기
