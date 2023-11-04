@@ -122,7 +122,7 @@ class UserDataManageController: UIViewController {
         configureNavBar()
         configureUI()
         configureDropdownUI()
-        self.hideKeyboard()
+//        self.hideKeyboard()
     }
     
     // MARK: - Selectors
