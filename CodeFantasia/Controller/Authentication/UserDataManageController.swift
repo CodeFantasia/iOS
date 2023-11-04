@@ -61,16 +61,15 @@ class UserDataManageController: UIViewController {
     
     private let techStackTextView: UITextView = {
         let textview = TextView()
-        textview.isEditable = false  // Disable editing
-        textview.isSelectable = false  // Disable selection
-        textview.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)  // Add some padding
-        textview.placeholder(withPlaceholder: "기술스택을 선택해주세요.")
+        textview.isEditable = false
+        textview.isSelectable = false
         return textview
     }()
     
     private let interestTextView: UITextView = {
         let textview = TextView()
-        textview.placeholder(withPlaceholder: "관심분야를 선택해주세요.")
+        textview.isEditable = false
+        textview.isSelectable = false
         return textview
     }()
     
@@ -113,7 +112,7 @@ class UserDataManageController: UIViewController {
         tableview.createDropdownTableView(withList: allAreasOfInterest)
         return tableview
     }()
-
+    
     
     // MARK: - Lifecycle
     
@@ -123,7 +122,7 @@ class UserDataManageController: UIViewController {
         configureNavBar()
         configureUI()
         configureDropdownUI()
-//        self.hideKeyboard()
+        //        self.hideKeyboard()
     }
     
     // MARK: - Selectors
@@ -137,7 +136,7 @@ class UserDataManageController: UIViewController {
         //        tab.configureUI()
         //
         //        self.dismiss(animated: true)
-
+        
         //        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
         //            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
         //            guard let tab = window.rootViewController as? TabBarController else { return }
@@ -150,7 +149,7 @@ class UserDataManageController: UIViewController {
     
     @objc func backBarButton() {
         navigationController?.popViewController(animated: true)
-        navigationController?.navigationBar.isHidden = true 
+        navigationController?.navigationBar.isHidden = true
     }
     
     @objc func handleAddProfilePhoto() {
@@ -165,10 +164,10 @@ class UserDataManageController: UIViewController {
     
     @objc func handleInterestFieldButton() {
         interestTableview.isHidden = !interestTableview.isHidden
-        techstackTableview.isHidden = true 
+        techstackTableview.isHidden = true
         print("관심 분야")
     }
-
+    
     
     // MARK: - Helpers
     
@@ -185,25 +184,26 @@ class UserDataManageController: UIViewController {
         scrollview.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(CGFloat.spacing)
         }
-
+        
         scrollview.addSubview(addPhotoButton)
         addPhotoButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.height.width.equalTo(130)
         }
-
+        
         let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton])
         stackview.axis = .vertical
         stackview.spacing = 20
         stackview.distribution = .fillProportionally
-
+        
         scrollview.addSubview(stackview)
         stackview.snp.makeConstraints { make in
             make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
             make.left.right.width.equalToSuperview().inset(CGFloat.spacing)
             make.bottom.equalToSuperview().inset(CGFloat.spacing)
         }
-
+        
     }
     
     func configureDropdownUI() {
@@ -262,15 +262,12 @@ extension UserDataManageController: UIImagePickerControllerDelegate, UINavigatio
 extension UserDataManageController: DropDownTableViewDelegate {
     func didSelectItem(_ item: String) {
         if techstackTableview.isHidden == false {
-            // 기술 스택 선택 이벤트 처리
             if !techStackTextView.text.isEmpty {
                 techStackTextView.text.append(", ")
             }
             techStackTextView.text.append(item)
             techStackTextView.layoutIfNeeded()
-            print("techStackTextView 업데이트 시도중! textview: \(techStackTextView.text)")
         } else if interestTableview.isHidden == false {
-            // 관심 분야 선택 이벤트 처리
             if !interestTextView.text.isEmpty {
                 interestTextView.text.append(", ")
             }
@@ -281,17 +278,18 @@ extension UserDataManageController: DropDownTableViewDelegate {
     
     func didDeselectItem(_ item: String) {
         if techstackTableview.isHidden == false {
-              // 기술 스택 선택 해제 이벤트 처리
-              if let range = techStackTextView.text.range(of: item) {
-                  techStackTextView.text.removeSubrange(range)
-              }
-          } else if interestTableview.isHidden == false {
-              // 관심 분야 선택 해제 이벤트 처리
-              if let range = interestTextView.text.range(of: item) {
-                  interestTextView.text.removeSubrange(range)
-              }
-          }
+            if !techStackTextView.text.isEmpty {
+                
+            }
+            if let range = techStackTextView.text.range(of: item) {
+                techStackTextView.text.removeSubrange(range)
+            }
+        } else if interestTableview.isHidden == false {
+            if let range = interestTextView.text.range(of: item) {
+                interestTextView.text.removeSubrange(range)
+            }
+        }
+        
     }
-    
     
 }
