@@ -92,7 +92,7 @@ class UserDataManageController: UIViewController {
     
     private let doneButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Done", for: .normal)
+        button.setTitle("완료", for: .normal)
         button.backgroundColor = UIColor.white
         button.snp.makeConstraints { make in
             make.height.equalTo(50)
@@ -101,6 +101,20 @@ class UserDataManageController: UIViewController {
         button.titleLabel?.font = UIFont.buttonTitle
         button.setTitleColor(.primaryColor, for: .normal)
         button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
+        return button
+    }()
+    
+    private let withdrawButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("회원 탈퇴", for: .normal)
+        button.backgroundColor = UIColor.lightGray
+        button.snp.makeConstraints { make in
+            make.height.equalTo(50)
+        }
+        button.layer.cornerRadius = CGFloat.cornerRadius
+        button.titleLabel?.font = UIFont.buttonTitle
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(handleWithdrawButton), for: .touchUpInside)
         return button
     }()
     
@@ -184,6 +198,20 @@ class UserDataManageController: UIViewController {
 
     }
     
+    @objc func handleWithdrawButton() {
+        if  let user = Auth.auth().currentUser {
+            user.delete { [self] error in
+                if let error = error {
+                    print("Firebase Error : ", error)
+                } else {
+                    print("회원탈퇴 성공!")
+                }
+            }
+        } else {
+            print("로그인 정보가 존재하지 않습니다")
+        }
+    }
+    
     @objc func backBarButton() {
         navigationController?.popViewController(animated: true)
         navigationController?.navigationBar.isHidden = true
@@ -248,7 +276,7 @@ class UserDataManageController: UIViewController {
             make.height.width.equalTo(130)
         }
         
-        let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton])
+        let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton, withdrawButton])
         stackview.axis = .vertical
         stackview.spacing = 20
         stackview.distribution = .fillProportionally
