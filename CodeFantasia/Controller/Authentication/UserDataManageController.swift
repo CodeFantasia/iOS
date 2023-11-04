@@ -60,6 +60,9 @@ class UserDataManageController: UIViewController {
     
     private let techStackTextView: UITextView = {
         let textview = TextView()
+        textview.isEditable = false  // Disable editing
+        textview.isSelectable = false  // Disable selection
+        textview.textContainerInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)  // Add some padding
         textview.placeholder(withPlaceholder: "기술스택을 선택해주세요.")
         return textview
     }()
