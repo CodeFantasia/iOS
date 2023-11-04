@@ -133,10 +133,13 @@ class UserDataManageController: UIViewController {
     // MARK: - Selectors
     
     @objc func handleDoneButton() {
-        print("Done button tapped!")
         
-        let profileImage = profileImage ?? UIImage(named: "default_profile")
         guard let nickname = nicknameTextView.text else { return }
+        if !validateUserProfile(nickname: nickname) {
+            return
+        }
+
+        let profileImage = profileImage ?? UIImage(named: "default_profile")
         guard let portfolioUrl = portfolioTextView.text else { return }
         guard let selfIntroduction = selfIntroductionTextView.text else { return }
         
@@ -179,14 +182,6 @@ class UserDataManageController: UIViewController {
             print("이미지 데이터가 유효하지 않습니당. 흠..")
         }
 
-        
-//        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-//        guard let tab = window.rootViewController as? TabBarController else { return }
-//
-//        tab.configureUI()
-//
-//        self.dismiss(animated: true)
-
     }
     
     @objc func backBarButton() {
@@ -210,6 +205,27 @@ class UserDataManageController: UIViewController {
     
     
     // MARK: - Helpers
+    
+    func validateUserProfile(nickname: String) -> Bool {
+        if !containsOnlyEnglishAndKorean(nickname) {
+            nicknameView.shake()
+        } else if nickname.count < 3 || nickname.count > 12 {
+            nicknameView.shake()
+        } else if selectedTechStack.isEmpty {
+            techStackView.shake()
+        } else if selectedInterestField.isEmpty {
+            interestFieldView.shake()
+        } else {
+            return true
+        }
+
+        return false
+    }
+    
+    func containsOnlyEnglishAndKorean(_ input: String) -> Bool {
+        let pattern = "^[a-zA-Z가-힣]*$"
+        return NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: input)
+    }
     
     func configureUI() {
         view.backgroundColor = UIColor.primaryColor
