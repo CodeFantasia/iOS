@@ -1,12 +1,17 @@
 
 import UIKit
+import RxSwift
 import Firebase
+import FirebaseAuth
 import FirebaseStorage
 
 class UserDataManageController: UIViewController {
     
     
     // MARK: - Properties
+    
+    private var selectedTechStack = [String]()
+    private var selectedInterestField = [String]()
     
     private let scrollview: UIScrollView = {
         let scrollview = UIScrollView()
@@ -130,21 +135,60 @@ class UserDataManageController: UIViewController {
     @objc func handleDoneButton() {
         print("Done button tapped!")
         
-        //        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-        //        guard let tab = window.rootViewController as? TabBarController else { return }
-        //
-        //        tab.configureUI()
-        //
-        //        self.dismiss(animated: true)
+        let profileImage = profileImage ?? UIImage(named: "default_profile")
+        guard let nickname = nicknameTextView.text else { return }
+        guard let portfolioUrl = portfolioTextView.text else { return }
+        guard let selfIntroduction = selfIntroductionTextView.text else { return }
+        var profileImgUrl: String?
         
-        //        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
-        //            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-        //            guard let tab = window.rootViewController as? TabBarController else { return }
-        //
-        //            tab.configureUI()
-        //
-        //            self.dismiss(animated: true)
-        //        }
+        let disposeBag = DisposeBag()
+        let imageStorage = ImageStorageManager()
+        let filename = UUID().uuidString
+        let path = "profile_image/" + filename
+        
+        if let imageData = profileImage?.jpegData(compressionQuality: 0.3) {
+            imageStorage.upload(imageData: imageData, path: path) { imageUrl in
+                if let imageUrl = imageUrl {
+                    profileImgUrl = imageUrl
+                    print("이미지 업로드 성공")
+                } else {
+                    print("이미지 업로드 실패!")
+                }
+            }
+        } else {
+            print("이미지 데이터가 유효하지 않습니당. 흠..")
+        }
+
+
+//        if let imageData = profileImage?.jpegData(compressionQuality: 0.3) {
+//            imageStorage.upload(imageData: imageData, path: path)
+//                .subscribe(onSuccess: { imageUrl in
+//                    print("❤️❤️ 이미지 업로드 성공: \(imageUrl)")
+//                }, onFailure: { error in
+//                    print("❤️❤️ 이미지 업로드 실패: \(error.localizedDescription)")
+//                })
+//                .disposed(by: disposeBag)
+//        } else {
+//            print("❤️❤️ 이미지 데이터가 유효하지 않습니다.")
+//        }
+
+
+        
+//        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+//        guard let tab = window.rootViewController as? TabBarController else { return }
+//
+//        tab.configureUI()
+//
+//        self.dismiss(animated: true)
+        
+//        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
+//            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+//            guard let tab = window.rootViewController as? TabBarController else { return }
+//
+//            tab.configureUI()
+//
+//            self.dismiss(animated: true)
+//        }
     }
     
     @objc func backBarButton() {
@@ -159,13 +203,11 @@ class UserDataManageController: UIViewController {
     @objc func handleTechStackButton() {
         techstackTableview.isHidden = !techstackTableview.isHidden
         interestTableview.isHidden = true
-        print("기술 스택")
     }
     
     @objc func handleInterestFieldButton() {
         interestTableview.isHidden = !interestTableview.isHidden
         techstackTableview.isHidden = true
-        print("관심 분야")
     }
     
     
@@ -266,28 +308,29 @@ extension UserDataManageController: DropDownTableViewDelegate {
                 techStackTextView.text.append(", ")
             }
             techStackTextView.text.append(item)
+            selectedTechStack.append(item)
             techStackTextView.layoutIfNeeded()
         } else if interestTableview.isHidden == false {
             if !interestTextView.text.isEmpty {
                 interestTextView.text.append(", ")
             }
             interestTextView.text.append(item)
+            selectedInterestField.append(item)
             interestTextView.layoutIfNeeded()
         }
     }
     
     func didDeselectItem(_ item: String) {
         if techstackTableview.isHidden == false {
-            if !techStackTextView.text.isEmpty {
-                
-            }
             if let range = techStackTextView.text.range(of: item) {
                 techStackTextView.text.removeSubrange(range)
             }
+            selectedTechStack.removeAll { $0 == item }
         } else if interestTableview.isHidden == false {
             if let range = interestTextView.text.range(of: item) {
                 interestTextView.text.removeSubrange(range)
             }
+            selectedInterestField.removeAll { $0 == item }
         }
         
     }

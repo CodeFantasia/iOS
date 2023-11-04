@@ -17,7 +17,6 @@ class DropDownTableView: UITableView {
     // MARK: - Properties
     
     var list = [String]()
-    var selectedItems: [String] = []
     
     weak var dropDownDelegate: DropDownTableViewDelegate?
     
@@ -73,16 +72,11 @@ extension DropDownTableView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedItems.append(list[indexPath.row])
         dropDownDelegate?.didSelectItem(list[indexPath.row])
-        print("cell 선택했음. selectedItems: \(selectedItems)")
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let valueToRemove = list[indexPath.row]
-        selectedItems.removeAll { $0 == valueToRemove }
         dropDownDelegate?.didDeselectItem(list[indexPath.row])
-        print("deselect! selectedItems: \(selectedItems)")
     }
 }
 
