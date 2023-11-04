@@ -119,18 +119,25 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleNextButton() {
-        navigationController?.pushViewController(UserDataManageController(), animated: true)
-        
 
+        guard let email = emailTextField.text, emailVerify(email: email) else { return }
+        guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
+        guard let name = nameTextField.text, nameVerify(name: name) else { return }
+
+        let newUser = UserAuth(email: email, password: password, name: name)
+        AuthManager.shared.registerUser(crudentials: newUser)
         
+        print("계정 등록 완료!")
         
-//        let profileImage = profileImage ?? UIImage(named: "default_profile")
-//        guard let email = emailTextField.text, emailVerify(email: email) else { return }
-//        guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
-//        guard let name = nameTextField.text, nameVerify(name: name) else { return }
+        navigationController?.pushViewController(UserDataManageController(), animated: true)
+    
+//        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+//        guard let tab = window.rootViewController as? TabBarController else { return }
 //
-//        let newUser = UserAuth(email: email, password: password, name: name, profileImage: profileImage ?? UIImage())
+//        tab.configureUI()
 //
+//        self.dismiss(animated: true)
+
 //        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
 //            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
 //            guard let tab = window.rootViewController as? TabBarController else { return }

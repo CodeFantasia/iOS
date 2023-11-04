@@ -22,12 +22,10 @@ struct UserProfile: Codable {
     let userID: UUID
 }
 
-// 사용자 회원가입 정보
 struct UserAuth {
     let email: String
     let password: String
     let name: String
-    let profileImage: UIImage
 }
 
 struct Project: Codable {
@@ -89,24 +87,46 @@ struct TechStack: Codable {
 //    }
 //}
 
-enum AreasOfInterest: String, Codable {
-    case iOSDevelopment = "iOS 개발"
-    case AndroidDevelopment = "Android 개발"
-    case WebDevelopment = "웹 개발"
-    case BackendDevelopment = "백엔드 개발"
-    case DataScienceAndMachineLearning = "데이터 과학 및 머신 러닝"
-    case GameDevelopment = "게임 개발"
-    case DesktopApplicationDevelopment = "데스크톱 애플리케이션 개발"
-    case CloudApplicationDevelopment = "클라우드 애플리케이션 개발"
-    case NetworkAndSystemAdministration = "네트워크 및 시스템 관리"
-    case SecurityAndCybersecurity = "보안 및 사이버 보안"
-    case ArtificialIntelligenceAndMachineLearning = "인공 지능 및 기계 학습"
-    case MobileApplicationDevelopment = "모바일 애플리케이션 개발"
-    case DatabaseManagementAndAdministration = "데이터베이스 관리 및 관리"
-    case WebDesignAndFrontendDevelopment = "웹 디자인 및 프론트엔드 개발"
-    case RoboticsAndAutomation = "로봇 공학 및 자동화"
-    case BlockchainAndCryptocurrencyDevelopment = "블록체인 및 암호 화폐 개발"
+struct AreasOfInterest: Codable {
+    let areasOfInterest: [String] = [
+        "iOS 개발",
+        "Android 개발",
+        "웹 개발",
+        "백엔드 개발",
+        "데이터 과학 및 머신 러닝",
+        "게임 개발",
+        "데스크톱 애플리케이션 개발",
+        "클라우드 애플리케이션 개발",
+        "네트워크 및 시스템 관리",
+        "보안 및 사이버 보안",
+        "인공 지능 및 기계 학습",
+        "모바일 애플리케이션 개발",
+        "데이터베이스 관리 및 관리",
+        "웹 디자인 및 프론트엔드 개발",
+        "로봇 공학 및 자동화",
+        "블록체인 및 암호 화폐 개발"
+    ]
+
 }
+
+//enum AreasOfInterest: String, Codable {
+//    case iOSDevelopment = "iOS 개발"
+//    case AndroidDevelopment = "Android 개발"
+//    case WebDevelopment = "웹 개발"
+//    case BackendDevelopment = "백엔드 개발"
+//    case DataScienceAndMachineLearning = "데이터 과학 및 머신 러닝"
+//    case GameDevelopment = "게임 개발"
+//    case DesktopApplicationDevelopment = "데스크톱 애플리케이션 개발"
+//    case CloudApplicationDevelopment = "클라우드 애플리케이션 개발"
+//    case NetworkAndSystemAdministration = "네트워크 및 시스템 관리"
+//    case SecurityAndCybersecurity = "보안 및 사이버 보안"
+//    case ArtificialIntelligenceAndMachineLearning = "인공 지능 및 기계 학습"
+//    case MobileApplicationDevelopment = "모바일 애플리케이션 개발"
+//    case DatabaseManagementAndAdministration = "데이터베이스 관리 및 관리"
+//    case WebDesignAndFrontendDevelopment = "웹 디자인 및 프론트엔드 개발"
+//    case RoboticsAndAutomation = "로봇 공학 및 자동화"
+//    case BlockchainAndCryptocurrencyDevelopment = "블록체인 및 암호 화폐 개발"
+//}
 
 // 출시 플랫폼
 enum Platform: String, Codable {

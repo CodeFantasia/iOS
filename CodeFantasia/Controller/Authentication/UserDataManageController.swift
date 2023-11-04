@@ -95,6 +95,20 @@ class UserDataManageController: UIViewController {
         button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
         return button
     }()
+    
+    private let techstackTableview: DropDownTableView = {
+        let tableview = DropDownTableView()
+        let techstack = TechStack().technologies
+        tableview.createDropdownTableView(withList: techstack)
+        return tableview
+    }()
+    
+    private let interestTableview: DropDownTableView = {
+        let tableview = DropDownTableView()
+        let allAreasOfInterest = AreasOfInterest().areasOfInterest
+        tableview.createDropdownTableView(withList: allAreasOfInterest)
+        return tableview
+    }()
 
     
     // MARK: - Lifecycle
@@ -104,6 +118,7 @@ class UserDataManageController: UIViewController {
         
         configureNavBar()
         configureUI()
+        configureDropdownUI()
         self.hideKeyboard()
     }
     
@@ -111,6 +126,22 @@ class UserDataManageController: UIViewController {
     
     @objc func handleDoneButton() {
         print("Done button tapped!")
+        
+        //        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+        //        guard let tab = window.rootViewController as? TabBarController else { return }
+        //
+        //        tab.configureUI()
+        //
+        //        self.dismiss(animated: true)
+
+        //        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
+        //            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+        //            guard let tab = window.rootViewController as? TabBarController else { return }
+        //
+        //            tab.configureUI()
+        //
+        //            self.dismiss(animated: true)
+        //        }
     }
     
     @objc func backBarButton() {
@@ -123,10 +154,14 @@ class UserDataManageController: UIViewController {
     }
     
     @objc func handleTechStackButton() {
+        techstackTableview.isHidden = !techstackTableview.isHidden
+        interestTableview.isHidden = true
         print("기술 스택")
     }
     
     @objc func handleInterestFieldButton() {
+        interestTableview.isHidden = !interestTableview.isHidden
+        techstackTableview.isHidden = true 
         print("관심 분야")
     }
 
@@ -162,6 +197,24 @@ class UserDataManageController: UIViewController {
             make.bottom.equalToSuperview().inset(CGFloat.spacing)
         }
 
+    }
+    
+    func configureDropdownUI() {
+        view.addSubview(techstackTableview)
+        techstackTableview.isHidden = true
+        techstackTableview.snp.makeConstraints { make in
+            make.left.right.equalTo(techStackView)
+            make.top.equalTo(techStackView.snp.bottom).offset(2)
+            make.height.equalTo(250)
+        }
+        
+        view.addSubview(interestTableview)
+        interestTableview.isHidden = true
+        interestTableview.snp.makeConstraints { make in
+            make.left.right.equalTo(interestFieldView)
+            make.top.equalTo(interestFieldView.snp.bottom).offset(2)
+            make.height.equalTo(250)
+        }
     }
     
     func configureNavBar() {
