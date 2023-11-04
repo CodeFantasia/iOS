@@ -5,6 +5,7 @@ import FirebaseStorage
 
 class UserDataManageController: UIViewController {
     
+    
     // MARK: - Properties
     
     private let scrollview: UIScrollView = {
@@ -177,6 +178,9 @@ class UserDataManageController: UIViewController {
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         
+        techstackTableview.dropDownDelegate = self
+        interestTableview.dropDownDelegate = self
+        
         view.addSubview(scrollview)
         scrollview.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(CGFloat.spacing)
@@ -250,5 +254,44 @@ extension UserDataManageController: UIImagePickerControllerDelegate, UINavigatio
         
         dismiss(animated: true, completion: nil)
     }
+    
+}
+
+// MARK: - DropDownTableViewDelegate
+
+extension UserDataManageController: DropDownTableViewDelegate {
+    func didSelectItem(_ item: String) {
+        if techstackTableview.isHidden == false {
+            // 기술 스택 선택 이벤트 처리
+            if !techStackTextView.text.isEmpty {
+                techStackTextView.text.append(", ")
+            }
+            techStackTextView.text.append(item)
+            techStackTextView.layoutIfNeeded()
+            print("techStackTextView 업데이트 시도중! textview: \(techStackTextView.text)")
+        } else if interestTableview.isHidden == false {
+            // 관심 분야 선택 이벤트 처리
+            if !interestTextView.text.isEmpty {
+                interestTextView.text.append(", ")
+            }
+            interestTextView.text.append(item)
+            interestTextView.layoutIfNeeded()
+        }
+    }
+    
+    func didDeselectItem(_ item: String) {
+        if techstackTableview.isHidden == false {
+              // 기술 스택 선택 해제 이벤트 처리
+              if let range = techStackTextView.text.range(of: item) {
+                  techStackTextView.text.removeSubrange(range)
+              }
+          } else if interestTableview.isHidden == false {
+              // 관심 분야 선택 해제 이벤트 처리
+              if let range = interestTextView.text.range(of: item) {
+                  interestTextView.text.removeSubrange(range)
+              }
+          }
+    }
+    
     
 }

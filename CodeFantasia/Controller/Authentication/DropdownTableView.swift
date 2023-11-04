@@ -7,7 +7,19 @@
 
 import UIKit
 
+protocol DropDownTableViewDelegate: AnyObject {
+    func didSelectItem(_ item: String)
+    func didDeselectItem(_ item: String)
+}
+
 class DropDownTableView: UITableView {
+    
+    // MARK: - Properties
+    
+    var list = [String]()
+    var selectedItems: [String] = []
+    
+    weak var dropDownDelegate: DropDownTableViewDelegate?
     
     // MARK: - init
     
@@ -19,11 +31,6 @@ class DropDownTableView: UITableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Properties
-    
-    var list = [String]()
-    var selectedItems: [String] = []
     
     // MARK: - Helpers
     
@@ -67,12 +74,15 @@ extension DropDownTableView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedItems.append(list[indexPath.row])
+        dropDownDelegate?.didSelectItem(list[indexPath.row])
         print("cell 선택했음. selectedItems: \(selectedItems)")
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        //selectedItems.remove(list[indexPath.row])
-        print("deselect!")
+        let valueToRemove = list[indexPath.row]
+        selectedItems.removeAll { $0 == valueToRemove }
+        dropDownDelegate?.didDeselectItem(list[indexPath.row])
+        print("deselect! selectedItems: \(selectedItems)")
     }
 }
 
