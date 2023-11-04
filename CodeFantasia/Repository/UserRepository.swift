@@ -22,7 +22,7 @@ struct UserRepository: UserRepositoryProtocol {
     private enum UserRepositoryError: LocalizedError {
         case dataConvertError
     }
-    
+
     private let firebaseManager: FireBaseManagerProtocol
     private let collectionId: String
 

@@ -10,15 +10,14 @@ import UIKit
 // 사용자 프로필 정보를 나타내는 구조체
 struct UserProfile: Codable {
     let nickname: String
-    let primaryLanguage: [String]
-    let techStack: [TechStack]
-    let areasOfInterest: [AreasOfInterest]
+    let techStack: [String]
+    let areasOfInterest: [String]
     let portfolioURL: String?
     let selfIntroduction: String?
     let githubURL: String?
     let blogURL: String?
     let profileImageURL: String?
-    let userProjects: [String]
+    let userProjects: [String]?
     let userID: UUID
 }
 

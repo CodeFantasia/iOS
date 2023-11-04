@@ -139,7 +139,6 @@ class UserDataManageController: UIViewController {
         guard let nickname = nicknameTextView.text else { return }
         guard let portfolioUrl = portfolioTextView.text else { return }
         guard let selfIntroduction = selfIntroductionTextView.text else { return }
-        var profileImgUrl: String?
         
         let disposeBag = DisposeBag()
         let imageStorage = ImageStorageManager()
@@ -149,8 +148,18 @@ class UserDataManageController: UIViewController {
         if let imageData = profileImage?.jpegData(compressionQuality: 0.3) {
             imageStorage.upload(imageData: imageData, path: path) { imageUrl in
                 if let imageUrl = imageUrl {
-                    profileImgUrl = imageUrl
                     print("이미지 업로드 성공")
+                    let userProfile = UserProfile(nickname: nickname,
+                                                  techStack: self.selectedTechStack,
+                                                  areasOfInterest: self.selectedInterestField,
+                                                  portfolioURL: portfolioUrl,
+                                                  selfIntroduction: selfIntroduction,
+                                                  githubURL: nil,
+                                                  blogURL: nil,
+                                                  profileImageURL: imageUrl,
+                                                  userProjects: nil,
+                                                  userID: UUID())
+                    
                 } else {
                     print("이미지 업로드 실패!")
                 }
