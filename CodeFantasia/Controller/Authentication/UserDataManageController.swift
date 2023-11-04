@@ -160,6 +160,10 @@ class UserDataManageController: UIViewController {
                                                   userProjects: nil,
                                                   userID: UUID())
                     
+                    let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
+                    let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
+                    
+                    userRepository.create(user: userProfile)
                 } else {
                     print("이미지 업로드 실패!")
                 }
