@@ -164,6 +164,13 @@ class UserDataManageController: UIViewController {
                     let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
                     
                     userRepository.create(user: userProfile)
+                    
+                    guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+                    guard let tab = window.rootViewController as? TabBarController else { return }
+                    
+                    tab.configureUI()
+                    
+                    self.dismiss(animated: true)
                 } else {
                     print("이미지 업로드 실패!")
                 }
@@ -172,20 +179,6 @@ class UserDataManageController: UIViewController {
             print("이미지 데이터가 유효하지 않습니당. 흠..")
         }
 
-
-//        if let imageData = profileImage?.jpegData(compressionQuality: 0.3) {
-//            imageStorage.upload(imageData: imageData, path: path)
-//                .subscribe(onSuccess: { imageUrl in
-//                    print("❤️❤️ 이미지 업로드 성공: \(imageUrl)")
-//                }, onFailure: { error in
-//                    print("❤️❤️ 이미지 업로드 실패: \(error.localizedDescription)")
-//                })
-//                .disposed(by: disposeBag)
-//        } else {
-//            print("❤️❤️ 이미지 데이터가 유효하지 않습니다.")
-//        }
-
-
         
 //        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
 //        guard let tab = window.rootViewController as? TabBarController else { return }
@@ -193,15 +186,7 @@ class UserDataManageController: UIViewController {
 //        tab.configureUI()
 //
 //        self.dismiss(animated: true)
-        
-//        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
-//            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-//            guard let tab = window.rootViewController as? TabBarController else { return }
-//
-//            tab.configureUI()
-//
-//            self.dismiss(animated: true)
-//        }
+
     }
     
     @objc func backBarButton() {
