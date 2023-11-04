@@ -33,14 +33,32 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     // 데이터가있는지 판별
     func setUp() {
-        if data != nil {
-            //편집
-            titleTextField.text = data?.projectTitle
-//            platformTextField.text = data?.platform
-//            techLanguageTextField.text = data?.techStack
-            recruitmentFieldTextField.text = data?.recruitmentField
-            projectIntroTextView.text = data?.projectDescription
+        if let project = data {
+            // 기존 프로젝트를 편집하는 경우
+            titleTextField.text = project.projectTitle
+            // 'platformTextField'를 선택된 플랫폼으로 채웁니다.
+            platformTextField.text = project.platform.map { $0.rawValue }.joined(separator: "/")
+
+            // 'techLanguageTextField'을 채우기 위해서는 'TechStack' 배열을 문자열로 변환해야 합니다.
+            // 기존 프로젝트의 'techStack' 배열을 문자열로 변환하는 코드입니다.
+            let techStackText = project.techStack.map { $0.technologies.joined(separator: ", ") }.joined(separator: " / ")
+            techLanguageTextField.text = techStackText
             
+            recruitmentFieldTextField.text = project.recruitmentField
+            projectIntroTextView.text = project.projectDescription
+            
+            // 프로젝트 시작일과 종료일을 날짜 형식으로 변환하여 설정
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            if let startDate = dateFormatter.date(from: String(project.projectDuration?.split(separator: "-").first ?? "")),
+               let endDate = dateFormatter.date(from: String(project.projectDuration?.split(separator: "-").last ?? "")) {
+                projectStartDatePicker.date = startDate
+                projectEndDatePicker.date = endDate
+            }
+            
+            // 모임 유형과 연락 수단을 설정
+            meetingTypeTextField.text = project.meetingType
+            contactMethodTextField.text = project.contactMethod
         } else {
             //새글 작성
         }
