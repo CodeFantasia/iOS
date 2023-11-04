@@ -103,6 +103,91 @@ class RegistrationController: UIViewController {
         return button
     }()
     
+    private var checkBtnChecked = false
+    
+    private let checkBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(UIImage(systemName: "square"), for: .normal)
+        btn.tintColor = .black
+        btn.addTarget(self, action: #selector(handleTermsOfConditionsCheck), for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var termsOfConditionsView: UIScrollView = {
+        let view = UIScrollView()
+        view.showsHorizontalScrollIndicator = false
+        view.backgroundColor = .lightGray
+        view.layer.cornerRadius = .cornerRadius
+        view.layer.masksToBounds = true
+        view.clipsToBounds = true
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderWidth = 0.75
+        
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = UIFont.body
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text = """
+Code Cocoond은(는) \"개인정보 보호법\"에 따라 아래와 같이 수집하는 개인정보의 항목, 수집 및 이용 목적, 보유 및 이용 기간을 안내드리고 동의를 받고자 합니다.
+
+○ 개인정보 수집, 이용 내역
+
+구분(업무명): 회원가입 및 관리
+처리목적:
+    - 본인 식별 인증
+    - 회원자격 유지 관리
+    - 각종 고지, 통지사항 전달
+    - 서비스 부정가입 및 이용 방지
+항목:
+    - 이름, 이메일 주소, 아이디, 비밀번호, 닉네임, 휴대전화번호, 프로필 사진
+보유 및 이용기간:
+    - 회원 탈퇴시까지
+
+구분(업무명): 고객 상담 및 문의
+처리목적:
+    - 고객 문의 접수 및 처리
+    - 고객 불만 사항 처리
+    - 문의 접수 및 처리 이력관리
+항목:
+    - 이름, 휴대전화번호, 이메일주소, 서비스 이용 내역, 문의 내용, 상담 내역, 아이디
+보유 및 이용기간:
+    - 회원 탈퇴시까지
+
+정보주체는 위와 같이 개인정보를 처리하는 것에 대한 동의를 거부할 권리가 있습니다. 그러나 동의를 거부할 경우 [로그인이 필요한 Code Cocoon 서비스 이용]이 제한될 수 있습니다.
+"""
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(10)
+        }
+        
+        let checkLabel = UILabel()
+        checkLabel.text = "본인은 Code Cocoon이(가) 위와 같이 개인정보를 수집 및 이용하는데 동의합니다."
+        checkLabel.textColor = .black
+        checkLabel.font = UIFont.body
+        
+        let stackview = UIStackView(arrangedSubviews: [checkBtn, checkLabel])
+        stackview.axis = .horizontal
+        stackview.spacing = 5
+        stackview.distribution = .fillProportionally
+        
+        view.addSubview(stackview)
+        stackview.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(label.snp.bottom).offset(5)
+            make.height.equalTo(20)
+        }
+
+        return view
+    }()
+    
+    private lazy var termsOfConditionsBtn: UIButton = {
+        let btn = Utilities().attributedButton("Code Cocoon 이용 동의서", " 확인")
+        btn.setTitle("Code Cocoon 서비스를 위한 개인정보 수집 및 이용 동의서", for: .normal)
+        btn.addTarget(self, action: #selector(handleTermsOfConditionsBtn), for: .touchUpInside)
+        return btn
+    }()
+    
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -113,6 +198,26 @@ class RegistrationController: UIViewController {
     }
     
     // MARK: - Selectors
+    
+    @objc func handleTermsOfConditionsCheck() {
+        checkBtnChecked = !checkBtnChecked
+        
+        if checkBtnChecked {
+            checkBtn.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+        }
+    }
+    
+    @objc func handleTermsOfConditionsBtn() {
+        
+        termsOfConditionsView.isHidden = !termsOfConditionsView.isHidden
+        
+        view.addSubview(termsOfConditionsView)
+        termsOfConditionsView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(CGFloat.spacing)
+            make.height.equalTo(250)
+            make.bottom.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
+        }
+    }
     
     @objc func handleShowLogin() {
         navigationController?.popViewController(animated: true)
@@ -130,22 +235,6 @@ class RegistrationController: UIViewController {
         print("계정 등록 완료!")
         
         navigationController?.pushViewController(UserDataManageController(), animated: true)
-    
-//        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-//        guard let tab = window.rootViewController as? TabBarController else { return }
-//
-//        tab.configureUI()
-//
-//        self.dismiss(animated: true)
-
-//        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
-//            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-//            guard let tab = window.rootViewController as? TabBarController else { return }
-//
-//            tab.configureUI()
-//
-//            self.dismiss(animated: true)
-//        }
     }
 
     
@@ -242,11 +331,18 @@ class RegistrationController: UIViewController {
             make.left.equalTo(nameContainerView).offset(5)
         }
         
+        view.addSubview(termsOfConditionsBtn)
+        termsOfConditionsBtn.snp.makeConstraints { make in
+            make.top.equalTo(nameContainerView.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
-            make.top.equalTo(nameContainerView.snp.bottom).offset(45)
+            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(45)
             make.left.right.equalTo(stack)
         }
+        
     }
     
     // MARK: - Email, Password, Name check

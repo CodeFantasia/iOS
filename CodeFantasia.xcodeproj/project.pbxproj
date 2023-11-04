@@ -28,7 +28,6 @@
 		AB14BEB92AE2504700ACE79F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB82AE2504700ACE79F /* TextField.swift */; };
 		AB14BEBC2AE2505900ACE79F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBB2AE2505900ACE79F /* LoginController.swift */; };
 		AB14BEC02AE2506300ACE79F /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
-		AB14BEC12AE2506300ACE79F /* TermsOfConditionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */; };
 		AB41CB892AF224A000B43C63 /* UserDataManageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBDF5362AF0430400D240FD /* UserDataManageController.swift */; };
 		AB41CB942AF37A9400B43C63 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB41CB932AF37A9400B43C63 /* TextView.swift */; };
 		AB41CB952AF37A9400B43C63 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB41CB932AF37A9400B43C63 /* TextView.swift */; };
@@ -169,7 +168,6 @@
 		AB14BEB82AE2504700ACE79F /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		AB14BEBB2AE2505900ACE79F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
-		AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsOfConditionsController.swift; sourceTree = "<group>"; };
 		AB41CB932AF37A9400B43C63 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		AB41CB972AF6543B00B43C63 /* DropdownTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownTableView.swift; sourceTree = "<group>"; };
 		AB5C352C2AF0BD520056E646 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -299,7 +297,6 @@
 			isa = PBXGroup;
 			children = (
 				AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */,
-				AB14BEBF2AE2506300ACE79F /* TermsOfConditionsController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -670,7 +667,6 @@
 				F13AED002AE5F8CB0098C654 /* ProjectDetailNoticeBoardViewModel.swift in Sources */,
 				F1E653E42AD8E0F200274A34 /* Fonts.swift in Sources */,
 				AB5C35302AF14FAC0056E646 /* UIView+.swift in Sources */,
-				AB14BEC12AE2506300ACE79F /* TermsOfConditionsController.swift in Sources */,
 				AB14BEB92AE2504700ACE79F /* TextField.swift in Sources */,
 				ABC3DF262AD45E8B008CEF1A /* ViewController.swift in Sources */,
 				F1F7CE392AEA3BBB00F28E95 /* ProjectSearchViewVC.swift in Sources */,
