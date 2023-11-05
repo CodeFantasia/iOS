@@ -122,6 +122,9 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
         let detailVC = ProjectDetailNoticeBoardViewController(viewModel: viewModel)
         
         navigationController?.pushViewController(detailVC, animated: true)
+        
+        print(projectId)
+        print(selectedProject.projectID)
     }
     
 }

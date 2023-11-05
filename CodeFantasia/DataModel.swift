@@ -21,6 +21,13 @@ struct UserProfile: Codable {
     let userProjects: [String]
     let userID: UUID
 }
+// 신고를 위한 
+struct Report {
+    let reporterID: String
+    let reportedUserID: String
+    let description: String
+    let date: Date
+}
 
 // 사용자 회원가입 정보
 struct UserAuth {
@@ -135,3 +142,5 @@ struct TeamMember: Codable, Equatable {
     // 다른 구성원 속성
         var category: Role
 }
+
+
