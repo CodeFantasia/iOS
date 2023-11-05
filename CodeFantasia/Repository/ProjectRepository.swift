@@ -11,6 +11,7 @@ import RxSwift
 protocol ProjectRepositoryProtocol {
     func read(projectId: String) -> Single<Project>
     func readAll() -> Single<[Project]>
+    func readBlockAll(blockIds: [String]) -> Single<[Project]>
     func create(project: Project)
     func delete(project: Project)
     func `delete`(projectId: String)
@@ -51,6 +52,15 @@ struct ProjectRepository: ProjectRepositoryProtocol {
                 return datas.compactMap { $0.toObject(Project.self) }
             }
     }
+    
+    func readBlockAll(blockIds: [String]) -> Single<[Project]> {
+            return firebaseManager.read(collectionId)
+                .map { datas in
+                    return datas.compactMap { $0.toObject(Project.self) }.filter{!blockIds.contains($0.writerID ?? "")
+                        
+                    }
+                }
+        }
     
     func create(project: Project) {
         firebaseManager.create(collectionId, project.projectID.uuidString, project)

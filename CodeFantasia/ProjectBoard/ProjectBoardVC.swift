@@ -25,7 +25,7 @@ class ProjectBoardVC: UIViewController {
     
     
     private func fetchDataFromFirebase() {
-        projectRepository.readAll()
+        projectRepository.readBlockAll(blockIds: [])//현재 로그인한 유저의 블록아이디 문자열 배열
             .observe(on: MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] projects in
                 self?.projectsData = projects.map { project in
