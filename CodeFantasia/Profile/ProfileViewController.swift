@@ -244,7 +244,8 @@ extension ProfileViewController {
             .subscribe(onNext: { owner, user in
                 DispatchQueue.main.async {
 
-                    self.interestLabel.text = user.areasOfInterest.reduce("", {$0 + $1.rawValue + "\n"})
+                    // 다희 -> Data Model 수정해서 주석처리했습니다! 같이 보면 좋을 것 같습니다.
+//                    self.interestLabel.text = user.areasOfInterest.reduce("", {$0 + $1.rawValue + "\n"})
                     self.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
                         switch result {
                         case .success(_):
