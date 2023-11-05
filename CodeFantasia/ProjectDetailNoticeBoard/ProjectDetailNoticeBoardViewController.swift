@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 import FirebaseAuth
+import Firebase
 
 final class ProjectDetailNoticeBoardViewController: UIViewController {
     var writerID: String?
@@ -304,16 +305,38 @@ extension ProjectDetailNoticeBoardViewController {
                     // 사용자에게 신고 성공 메시지 표시
                     let alert = UIAlertController(title: "신고 완료", message: "해당 게시글을 신고하였습니다.", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                        // 신고한 프로젝트의 writerID 가져오기
-//                        if let writerID = owner.viewModel.project?.writerID,
-//                           var currentUserProfile = self.viewModel.user// 현재 사용자의 UserProfile 모델 가져오기 (여기에 사용자 정보 저장해야 함)
-//                        {
-//                            // 현재 사용자의 blockIDs 배열에 writerID를 추가
-//                            if !currentUserProfile.blockIDs.contains(writerID) {
-//                                currentUserProfile.blockIDs.append(writerID)
-//                            }
-//
-//                        }
+                        let db = Firestore.firestore()
+                        let currentUser = Auth.auth().currentUser?.uid
+                        db.collection("User").document(currentUser!).getDocument { (document, error) in
+                        if let document = document, document.exists {
+                        if var blockIDs = document.data()?["blockIDs"] as? [String] {
+                        // blockIDs 필드가 이미 배열인 경우, selfWriterID를 추가합니다.
+                            if !blockIDs.contains(self.writerID ?? "") {
+                                blockIDs.append(self.writerID ?? "")
+                        db.collection("User").document(currentUser!).setData(["blockIDs": blockIDs], merge: true) { error in
+                        if let error = error {
+                        print("데이터를 업데이트하는 동안 오류가 발생했습니다: \(error)")
+                        } else {
+                        print("데이터가 성공적으로 업데이트되었습니다.")
+                        }
+                        }
+                        } else {
+                        // 이미 추가된 경우에 대한 처리 (예: 이미 포함되어 있음을 알릴 수 있음)
+                        }
+                        } else {
+                        // blockIDs 필드가 없는 경우, 새로운 배열을 만들어서 selfWriterID를 추가합니다.
+                        db.collection("User").document(currentUser!).setData(["blockIDs": [self.writerID]], merge: true) { error in
+                        if let error = error {
+                        print("데이터를 설정하는 동안 오류가 발생했습니다: \(error)")
+                        } else {
+                        print("데이터가 성공적으로 설정되었습니다.")
+                        }
+                        }
+                        }
+                        } else {
+                        print("문서를 찾을 수 없습니다.")
+                        }
+                        }
                     }))
                     owner.present(alert, animated: true, completion: nil)
                 })
