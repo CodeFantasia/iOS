@@ -7,6 +7,7 @@
 
 import Foundation
 import RxSwift
+import FirebaseAuth
 
 protocol UserRepositoryProtocol {
     func read(userId: String) -> Single<UserProfile>
@@ -53,7 +54,12 @@ struct UserRepository: UserRepositoryProtocol {
     }
 
     func create(user: UserProfile) {
-        firebaseManager.create(collectionId, user.userID.uuidString, user)
+        if let currentUserUID = Auth.auth().currentUser?.uid {
+            firebaseManager.create(collectionId, currentUserUID, user)
+        } else {
+            firebaseManager.create(collectionId, user.userID.uuidString, user)
+        }
+        
     }
 
     func delete(user: UserProfile) {

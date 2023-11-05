@@ -179,7 +179,7 @@ class UserDataManageController: UIViewController {
                     
                     let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
                     let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
-                    
+                    userRepository.delete(user: userProfile)
                     userRepository.create(user: userProfile)
                     
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
