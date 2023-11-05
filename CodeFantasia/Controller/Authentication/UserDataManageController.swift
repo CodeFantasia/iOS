@@ -179,8 +179,9 @@ class UserDataManageController: UIViewController {
                     
                     let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
                     let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
-                    
+
                     userRepository.create(user: userProfile)
+                    userRepository.update(user: userProfile)
                     
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
                     guard let tab = window.rootViewController as? TabBarController else { return }

@@ -244,8 +244,6 @@ extension ProfileViewController {
             .subscribe(onNext: { owner, user in
                 DispatchQueue.main.async {
 
-                    // 다희 -> Data Model 수정해서 주석처리했습니다! 같이 보면 좋을 것 같습니다.
-//                    self.interestLabel.text = user.areasOfInterest.reduce("", {$0 + $1.rawValue + "\n"})
                     self.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
                         switch result {
                         case .success(_):
@@ -254,7 +252,8 @@ extension ProfileViewController {
                             self.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
                         }
                     }
-                    
+                    self.techLabel.text = user.techStack.joined(separator: ", ")
+                    self.interestLabel.text = user.areasOfInterest.joined(separator: ", ")
                     self.nicknameLabel.text = user.nickname
                     self.produceContent.text = user.selfIntroduction ?? ""
                     self.urlLabel.text = user.portfolioURL ?? ""
@@ -272,8 +271,9 @@ extension ProfileViewController {
             .disposed(by: disposeBag)
         
         outputs.profileEditDidTap
-            .drive (onNext: { owner in
-                
+            .drive (with: self, onNext: { owner, _ in
+                    let profileViewController = UserDataManageController()
+                    owner.present(profileViewController, animated: true)
             })
             .disposed(by: disposeBag)
         
