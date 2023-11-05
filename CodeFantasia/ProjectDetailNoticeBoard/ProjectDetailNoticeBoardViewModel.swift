@@ -37,6 +37,7 @@ final class ProjectDetailNoticeBoardViewModel {
     private let projectRepository: ProjectRepositoryProtocol
     private let projectId: String
     var project: Project?
+    var user: UserProfile?
     
     init(
         projectRepository: ProjectRepositoryProtocol,
@@ -104,3 +105,4 @@ final class ProjectDetailNoticeBoardViewModel {
         )
     }
 }
+

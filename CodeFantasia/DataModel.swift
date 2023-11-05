@@ -19,6 +19,14 @@ struct UserProfile: Codable {
     let profileImageURL: String?
     let userProjects: [String]?
     let userID: UUID
+    var blockIDs: [String]?
+}
+// 신고를 위한 
+struct Report {
+    let reporterID: String
+    let reportedUserID: String
+    let description: String
+    let date: Date
 }
 
 struct UserAuth {
@@ -154,3 +162,5 @@ struct TeamMember: Codable, Equatable {
     // 다른 구성원 속성
         var category: Role
 }
+
+

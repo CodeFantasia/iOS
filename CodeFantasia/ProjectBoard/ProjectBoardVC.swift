@@ -9,8 +9,12 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import Firebase
 
 class ProjectBoardVC: UIViewController {
+    
+    var blockIds: [String]?
+    var writerID: String?
     
     private let tableView: UITableView = UITableView().then {
         $0.register(ProjectBoardTableviewCell.self, forCellReuseIdentifier: "ProjectBoardCell")
@@ -25,7 +29,38 @@ class ProjectBoardVC: UIViewController {
     
     
     private func fetchDataFromFirebase() {
-        projectRepository.readAll()
+
+
+        ////////////////////
+        if let currentUser = Auth.auth().currentUser?.uid {
+        let db = Firestore.firestore()
+
+        // Firestore에서 현재 사용자의 문서 가져오기
+        let userDocumentReference = db.collection("User").document(currentUser)
+
+        userDocumentReference.getDocument { (snapshot, error) in
+        if let error = error {
+        print("Error fetching document: \(error)")
+        } else if let snapshot = snapshot, snapshot.exists {
+        // 문서가 존재하면 필드 값을 가져올 수 있습니다.
+        if let data = snapshot.data(),
+        let blockIDs = data["blockIDs"] as? [String] {
+        // blockIDs 필드가 배열인 경우, [String]로 타입 캐스트
+        print("blockIDs: \(blockIDs)")
+            self.blockIds = blockIDs
+        // blockIDs 값을 projectRepository.readAll 함수로 전달
+        } else {
+        print("blockIDs field not found or has the wrong type")
+        }
+        } else {
+        print("Document does not exist")
+        }
+        }
+        }
+        ///
+        ///
+        /////////////
+        projectRepository.readBlockAll(blockIDs: blockIds ?? [])//현재 로그인한 유저의 블록아이디 문자열 배열
             .observe(on: MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] projects in
                 self?.projectsData = projects.map { project in
@@ -123,6 +158,9 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
         let detailVC = ProjectDetailNoticeBoardViewController(viewModel: viewModel)
         
         navigationController?.pushViewController(detailVC, animated: true)
+        
+        print(projectId)
+        print(selectedProject.projectID)
     }
     
 }
