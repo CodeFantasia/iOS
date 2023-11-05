@@ -97,7 +97,7 @@ final class ProjectDetailNoticeBoardViewModel {
             
             userAuthConfirmed: projectData.map { [weak self] project in
                 guard let currentAuthor = Auth.auth().currentUser?.uid else {
-                    return false // Handle the case where currentAuthor is nil
+                    return false
                 }
                 
                 return project.writerID == currentAuthor
