@@ -19,14 +19,14 @@ protocol UserRepositoryProtocol {
 }
 
 struct UserRepository: UserRepositoryProtocol {
-
+    
     private enum UserRepositoryError: LocalizedError {
         case dataConvertError
     }
-
+    
     private let firebaseManager: FireBaseManagerProtocol
     private let collectionId: String
-
+    
     init(
         collectionId: String = "User",
         firebaseBaseManager: FireBaseManagerProtocol
@@ -34,7 +34,7 @@ struct UserRepository: UserRepositoryProtocol {
         self.collectionId = collectionId
         self.firebaseManager = firebaseBaseManager
     }
-
+    
     func read(userId: String) -> Single<UserProfile> {
         return firebaseManager.read(collectionId, userId)
             .map {
@@ -45,14 +45,14 @@ struct UserRepository: UserRepositoryProtocol {
                 }
             }
     }
-
+    
     func readAll() -> Single<[UserProfile]> {
         return firebaseManager.read(collectionId)
             .map { datas in
                 return datas.compactMap { $0.toObject(UserProfile.self) }
             }
     }
-
+    
     func create(user: UserProfile) {
         if let currentUserUID = Auth.auth().currentUser?.uid {
             firebaseManager.create(collectionId, currentUserUID, user)
@@ -61,16 +61,20 @@ struct UserRepository: UserRepositoryProtocol {
         }
         
     }
-
+    
     func delete(user: UserProfile) {
         firebaseManager.delete(collectionId, user.userID.uuidString)
     }
-
+    
     func `delete`(userId: String) {
         firebaseManager.delete(collectionId, userId)
     }
-
+    
     func update(user: UserProfile) {
-        firebaseManager.update(collectionId, user.userID.uuidString, user)
+        if let currentUserUID = Auth.auth().currentUser?.uid {
+            firebaseManager.update(collectionId, currentUserUID, user)
+        } else {
+            firebaseManager.update(collectionId, user.userID.uuidString, user)
+        }
     }
 }
