@@ -113,75 +113,8 @@ class RegistrationController: UIViewController {
         return btn
     }()
     
-    private lazy var termsOfConditionsView: UIScrollView = {
-        let view = UIScrollView()
-        view.showsHorizontalScrollIndicator = false
-        view.backgroundColor = .white
-        view.layer.cornerRadius = .cornerRadius
-        view.layer.masksToBounds = true
-        view.clipsToBounds = true
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.borderWidth = 0.75
-        
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.font = UIFont.body
-        label.textColor = .black
-        label.textAlignment = .center
-        label.text = """
-Code Cocoond은(는) \"개인정보 보호법\"에 따라 아래와 같이 수집하는 개인정보의 항목, 수집 및 이용 목적, 보유 및 이용 기간을 안내드리고 동의를 받고자 합니다.
-
-○ 개인정보 수집, 이용 내역
-
-구분(업무명): 회원가입 및 관리
-처리목적:
-    - 본인 식별 인증
-    - 회원자격 유지 관리
-    - 각종 고지, 통지사항 전달
-    - 서비스 부정가입 및 이용 방지
-항목:
-    - 이름, 이메일 주소, 아이디, 비밀번호, 닉네임, 휴대전화번호, 프로필 사진
-보유 및 이용기간:
-    - 회원 탈퇴시까지
-
-구분(업무명): 고객 상담 및 문의
-처리목적:
-    - 고객 문의 접수 및 처리
-    - 고객 불만 사항 처리
-    - 문의 접수 및 처리 이력관리
-항목:
-    - 이름, 휴대전화번호, 이메일주소, 서비스 이용 내역, 문의 내용, 상담 내역, 아이디
-보유 및 이용기간:
-    - 회원 탈퇴시까지
-
-정보주체는 위와 같이 개인정보를 처리하는 것에 대한 동의를 거부할 권리가 있습니다. 그러나 동의를 거부할 경우 [로그인이 필요한 Code Cocoon 서비스 이용]이 제한될 수 있습니다.
-"""
-        view.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.left.right.top.bottom.equalToSuperview().inset(CGFloat.spacing)
-        }
-        
-        let checkLabel = UILabel()
-        checkLabel.text = "본인은 Code Cocoon이(가) 위와 같이 개인정보를 수집 및 이용하는데 동의합니다."
-        checkLabel.textColor = .black
-        checkLabel.font = UIFont.body
-        
-        let stackview = UIStackView(arrangedSubviews: [checkBtn, checkLabel])
-        stackview.axis = .horizontal
-        stackview.spacing = 5
-        stackview.distribution = .fillProportionally
-        
-        view.addSubview(stackview)
-        stackview.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(5)
-            make.top.equalTo(label.snp.bottom).offset(5)
-            make.height.equalTo(20)
-        }
-        
-        let contentSize = CGSize(width: termsOfConditionsView.frame.size.width, height: stackview.frame.maxY + CGFloat.spacing)
-        termsOfConditionsView.contentSize = contentSize
-
-
+    private lazy var termsOfConditionsView: UIView = {
+        let view = TermsOfConditionsView()
         return view
     }()
     
@@ -198,7 +131,8 @@ Code Cocoond은(는) \"개인정보 보호법\"에 따라 아래와 같이 수�
         super.viewDidLoad()
 
         configureUI()
-        // setKeyboardObserver()
+        hideTextView()
+//        setKeyboardObserver()
     }
     
     // MARK: - Selectors
@@ -217,9 +151,9 @@ Code Cocoond은(는) \"개인정보 보호법\"에 따라 아래와 같이 수�
         
         view.addSubview(termsOfConditionsView)
         termsOfConditionsView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(CGFloat.spacing)
-            make.height.equalTo(250)
-            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
+            make.centerX.centerY.equalToSuperview()
+            make.width.equalToSuperview().inset(CGFloat.spacing)
+            make.height.equalTo(500)
         }
     }
     
@@ -240,9 +174,19 @@ Code Cocoond은(는) \"개인정보 보호법\"에 따라 아래와 같이 수�
         
         navigationController?.pushViewController(UserDataManageController(), animated: true)
     }
+    
+    @objc func dismissTextView() {
+        termsOfConditionsView.isHidden = true
+    }
 
     
     // MARK: - Helpers
+    
+    func hideTextView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissTextView))
+        self.view.addGestureRecognizer(tap)
+        tap.delegate = self
+    }
     
     func emailVerify(email: String) -> Bool {
         if !emailCheck(email) {
