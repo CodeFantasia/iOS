@@ -16,7 +16,7 @@ struct IconModel {
 class ProjectBoardTableviewCell: UITableViewCell {
     
     let titleImageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.layer.cornerRadius = 8
     }
