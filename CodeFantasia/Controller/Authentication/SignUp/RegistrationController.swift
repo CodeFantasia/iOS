@@ -103,22 +103,97 @@ class RegistrationController: UIViewController {
         return button
     }()
     
+    private lazy var termsOfConditionsView: UIView = {
+        let view = TermsOfConditionsView()
+        return view
+    }()
+    
+    private lazy var termsOfConditionsBtn: UIButton = {
+        let btn = Utilities().attributedButton("Code Cocoon 이용 동의서", " 확인")
+        btn.setTitle("Code Cocoon 서비스를 위한 개인정보 수집 및 이용 동의서", for: .normal)
+        btn.addTarget(self, action: #selector(handleTermsOfConditionsBtn), for: .touchUpInside)
+        return btn
+    }()
+    
+    private let agreeBtn: UIButton = {
+        let checkBtn = UIButton(type: .system)
+        checkBtn.setImage(UIImage(systemName: "square"), for: .normal)
+        checkBtn.tintColor = .white
+        checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
+        return checkBtn
+    }()
+    
+    private lazy var termsOfConditionsAgree: UIView = {
+        let view = UIView()
+        
+        view.addSubview(agreeBtn)
+        agreeBtn.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.height.equalToSuperview()
+        }
+        
+        let label = UILabel()
+        label.text = "위를 확인했으며 이에 동의합니다."
+        label.textColor = .white
+        label.font = UIFont.body
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.left.equalTo(agreeBtn.snp.right).offset(2)
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalToSuperview()
+        }
+    
+        return view
+    }()
+    
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureUI()
-        // setKeyboardObserver()
+        hideTextView()
+//        setKeyboardObserver()
     }
     
     // MARK: - Selectors
+    
+    @objc func handleTermsOfConditionsAgree() {
+        agreeBtn.isSelected = !agreeBtn.isSelected
+
+        DispatchQueue.main.async {
+            if self.agreeBtn.isSelected {
+                self.agreeBtn.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            } else {
+                self.agreeBtn.setImage(UIImage(systemName: "square"), for: .normal)
+            }
+        }
+    }
+
+    @objc func handleTermsOfConditionsBtn() {
+        
+        termsOfConditionsView.isHidden = !termsOfConditionsView.isHidden
+        
+        view.addSubview(termsOfConditionsView)
+        termsOfConditionsView.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+            make.width.equalToSuperview().inset(CGFloat.spacing)
+            make.height.equalTo(500)
+        }
+    }
     
     @objc func handleShowLogin() {
         navigationController?.popViewController(animated: true)
     }
     
     @objc func handleNextButton() {
+        
+        if agreeBtn.isSelected == false {
+            termsOfConditionsBtn.shake()
+            return
+        }
 
         guard let email = emailTextField.text, emailVerify(email: email) else { return }
         guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
@@ -130,26 +205,20 @@ class RegistrationController: UIViewController {
         print("계정 등록 완료!")
         
         navigationController?.pushViewController(UserDataManageController(), animated: true)
+    }
     
-//        guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-//        guard let tab = window.rootViewController as? TabBarController else { return }
-//
-//        tab.configureUI()
-//
-//        self.dismiss(animated: true)
-
-//        AuthManager.shared.registerUser(crudentials: newUser) { (error, ref) in
-//            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
-//            guard let tab = window.rootViewController as? TabBarController else { return }
-//
-//            tab.configureUI()
-//
-//            self.dismiss(animated: true)
-//        }
+    @objc func dismissTextView() {
+        termsOfConditionsView.isHidden = true
     }
 
     
     // MARK: - Helpers
+    
+    func hideTextView() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissTextView))
+        self.view.addGestureRecognizer(tap)
+        tap.delegate = self
+    }
     
     func emailVerify(email: String) -> Bool {
         if !emailCheck(email) {
@@ -242,11 +311,24 @@ class RegistrationController: UIViewController {
             make.left.equalTo(nameContainerView).offset(5)
         }
         
+        view.addSubview(termsOfConditionsBtn)
+        termsOfConditionsBtn.snp.makeConstraints { make in
+            make.top.equalTo(nameContainerView.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        
+        view.addSubview(termsOfConditionsAgree)
+        termsOfConditionsAgree.snp.makeConstraints { make in
+            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
+            make.centerX.equalToSuperview()
+        }
+        
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
-            make.top.equalTo(nameContainerView.snp.bottom).offset(45)
+            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(45)
             make.left.right.equalTo(stack)
         }
+        
     }
     
     // MARK: - Email, Password, Name check
