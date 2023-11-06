@@ -3,6 +3,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
+
 class RegistrationController: UIViewController {
 
     // MARK: - Properties
@@ -120,8 +121,11 @@ class RegistrationController: UIViewController {
         checkBtn.setImage(UIImage(systemName: "square"), for: .normal)
         checkBtn.tintColor = .white
         checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
+        checkBtn.clipsToBounds = true
         return checkBtn
     }()
+
+
     
     private lazy var termsOfConditionsAgree: UIView = {
         let view = UIView()
@@ -165,8 +169,10 @@ class RegistrationController: UIViewController {
 
         DispatchQueue.main.async {
             if self.agreeBtn.isSelected {
+
                 self.agreeBtn.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             } else {
+
                 self.agreeBtn.setImage(UIImage(systemName: "square"), for: .normal)
             }
         }
