@@ -9,8 +9,12 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import Firebase
 
 class ProjectBoardVC: UIViewController {
+    
+    var blockIds: [String]?
+    var writerID: String?
     
     private let tableView: UITableView = UITableView().then {
         $0.register(ProjectBoardTableviewCell.self, forCellReuseIdentifier: "ProjectBoardCell")
@@ -25,7 +29,38 @@ class ProjectBoardVC: UIViewController {
     
     
     private func fetchDataFromFirebase() {
-        projectRepository.readAll()
+
+
+        ////////////////////
+        if let currentUser = Auth.auth().currentUser?.uid {
+        let db = Firestore.firestore()
+
+        // Firestore에서 현재 사용자의 문서 가져오기
+        let userDocumentReference = db.collection("User").document(currentUser)
+
+        userDocumentReference.getDocument { (snapshot, error) in
+        if let error = error {
+        print("Error fetching document: \(error)")
+        } else if let snapshot = snapshot, snapshot.exists {
+        // 문서가 존재하면 필드 값을 가져올 수 있습니다.
+        if let data = snapshot.data(),
+        let blockIDs = data["blockIDs"] as? [String] {
+        // blockIDs 필드가 배열인 경우, [String]로 타입 캐스트
+        print("blockIDs: \(blockIDs)")
+            self.blockIds = blockIDs
+        // blockIDs 값을 projectRepository.readAll 함수로 전달
+        } else {
+        print("blockIDs field not found or has the wrong type")
+        }
+        } else {
+        print("Document does not exist")
+        }
+        }
+        }
+        ///
+        ///
+        /////////////
+        projectRepository.readBlockAll(blockIDs: blockIds ?? [])//현재 로그인한 유저의 블록아이디 문자열 배열
             .observe(on: MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] projects in
                 self?.projectsData = projects.map { project in
@@ -37,7 +72,7 @@ class ProjectBoardVC: UIViewController {
                         }
                     }
 
-                    return (imageURL, project.projectTitle ?? "", project.projecSubtitle ?? "", icons, statusString, project.projectID)
+                    return (imageURL, project.projectTitle ?? "", project.projectDescription ?? "", icons, statusString, project.projectID)
                 }
                 self?.tableView.reloadData()
                 self?.refreshControl.endRefreshing()
@@ -48,7 +83,7 @@ class ProjectBoardVC: UIViewController {
             .disposed(by: bag)
     }
 
-    
+// MARK: - ViewController Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,6 +94,7 @@ class ProjectBoardVC: UIViewController {
         
         setupNavigationBar()
         setupTableView()
+        setupFloatingActionButton()
         
         view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
         navigationController?.navigationBar.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1.0)
@@ -122,6 +158,9 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
         let detailVC = ProjectDetailNoticeBoardViewController(viewModel: viewModel)
         
         navigationController?.pushViewController(detailVC, animated: true)
+        
+        print(projectId)
+        print(selectedProject.projectID)
     }
     
 }
@@ -138,10 +177,10 @@ extension ProjectBoardVC {
 //        // TODO: Implement bell action
 //    }
     
-    @objc func pencilButtonTapped() {
-        let newPageViewController = NewPageViewController(data: nil)
-        newPageViewController.modalPresentationStyle = .fullScreen
-        present(newPageViewController, animated: true, completion: nil)
+    @objc func plusButtonTapped() {
+        let newPageVC = NewPageViewController(data: nil)
+        newPageVC.modalPresentationStyle = .fullScreen
+        present(newPageVC, animated: true, completion: nil)
     }
 }
 
@@ -167,12 +206,12 @@ private extension ProjectBoardVC {
 //            $0.addTarget(self, action: #selector(bellButtonTapped), for: .touchUpInside)
 //        }
         
-        let pencilButtonView = UIButton(type: .system).then {
-            $0.setImage(UIImage(systemName: "pencil"), for: .normal)
-            $0.addTarget(self, action: #selector(pencilButtonTapped), for: .touchUpInside)
-        }
+//        let pencilButtonView = UIButton(type: .system).then {
+//            $0.setImage(UIImage(systemName: "pencil"), for: .normal)
+//            $0.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+//        }
         
-        let stackView = UIStackView(arrangedSubviews: [searchButtonView/*, bellButtonView*/, pencilButtonView]).then {
+        let stackView = UIStackView(arrangedSubviews: [searchButtonView/*, bellButtonView*//*, pencilButtonView*/]).then {
             $0.axis = .horizontal
             $0.spacing = 10
         }
@@ -180,6 +219,8 @@ private extension ProjectBoardVC {
         let stackBarButton = UIBarButtonItem(customView: stackView)
         navigationItem.rightBarButtonItem = stackBarButton
     }
+    
+    
     
     func setupTableView() {
         view.addSubview(tableView)
@@ -191,4 +232,22 @@ private extension ProjectBoardVC {
             make.left.right.bottom.equalToSuperview()
         }
     }
+    
+    func setupFloatingActionButton() {
+        let plusButtonView = UIButton(type: .custom).then {
+            $0.setImage(UIImage(systemName: "plus"), for: .normal)
+            $0.tintColor = .black
+            $0.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+            $0.primaryColorConfigure(title: "")
+            $0.layer.cornerRadius = 28
+        }
+
+        view.addSubview(plusButtonView)
+        plusButtonView.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            make.right.equalToSuperview().offset(-16)
+            make.width.height.equalTo(56)
+        }
+    }
 }
+

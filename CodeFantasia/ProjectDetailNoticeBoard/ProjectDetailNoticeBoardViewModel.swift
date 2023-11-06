@@ -37,6 +37,7 @@ final class ProjectDetailNoticeBoardViewModel {
     private let projectRepository: ProjectRepositoryProtocol
     private let projectId: String
     var project: Project?
+    var user: UserProfile?
     
     init(
         projectRepository: ProjectRepositoryProtocol,
@@ -96,7 +97,7 @@ final class ProjectDetailNoticeBoardViewModel {
             
             userAuthConfirmed: projectData.map { [weak self] project in
                 guard let currentAuthor = Auth.auth().currentUser?.uid else {
-                    return false // Handle the case where currentAuthor is nil
+                    return false
                 }
                 
                 return project.writerID == currentAuthor
@@ -104,3 +105,4 @@ final class ProjectDetailNoticeBoardViewModel {
         )
     }
 }
+

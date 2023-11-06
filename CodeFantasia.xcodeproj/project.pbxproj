@@ -23,6 +23,7 @@
 		6BBF70892AE7DA3A00F58080 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70882AE7DA3A00F58080 /* UIColor+.swift */; };
 		6BBF708A2AEA642800F58080 /* PlatformSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70822AE62A9C00F58080 /* PlatformSelectionViewController.swift */; };
 		6BBF708B2AEA643900F58080 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70882AE7DA3A00F58080 /* UIColor+.swift */; };
+		6BBF70912AF642AA00F58080 /* NewPageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70902AF642AA00F58080 /* NewPageManager.swift */; };
 		6BC007BE2ADD0BA5005E544F /* NewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC007BD2ADD0BA5005E544F /* NewPageViewController.swift */; };
 		AB14BEB52AE2503B00ACE79F /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB42AE2503B00ACE79F /* Button.swift */; };
 		AB14BEB92AE2504700ACE79F /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB82AE2504700ACE79F /* TextField.swift */; };
@@ -163,6 +164,7 @@
 		6BBF70822AE62A9C00F58080 /* PlatformSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSelectionViewController.swift; sourceTree = "<group>"; };
 		6BBF70842AE692E100F58080 /* UIImageView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		6BBF70882AE7DA3A00F58080 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
+		6BBF70902AF642AA00F58080 /* NewPageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageManager.swift; sourceTree = "<group>"; };
 		6BC007BD2ADD0BA5005E544F /* NewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageViewController.swift; sourceTree = "<group>"; };
 		AB14BEB42AE2503B00ACE79F /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		AB14BEB82AE2504700ACE79F /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 				F1F51AC72AE9F522002E8507 /* ImageStorageManager.swift */,
 				F1F51ACA2AEA0CF0002E8507 /* NetworkManager.swift */,
 				ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */,
+				6BBF70902AF642AA00F58080 /* NewPageManager.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -692,6 +695,7 @@
 				313064E42ADFFA9C00D1CC6C /* DataModel.swift in Sources */,
 				F0BFCB5E2AEA524B00D3BEC2 /* MyProjectViewModel.swift in Sources */,
 				F1F51AC82AE9F523002E8507 /* ImageStorageManager.swift in Sources */,
+				6BBF70912AF642AA00F58080 /* NewPageManager.swift in Sources */,
 				319FAC182AF25CF60083EE40 /* FilterBottomSheetVC.swift in Sources */,
 				F1E653E82AD8E73F00274A34 /* PaddingLabel.swift in Sources */,
 				F076F6FA2ADE80F000AD7435 /* MyProjectTableViewCell.swift in Sources */,
