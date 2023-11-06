@@ -210,7 +210,9 @@ class RegistrationController: UIViewController {
         
         print("계정 등록 완료!")
         
-        navigationController?.pushViewController(UserDataManageController(), animated: true)
+        let vc = UserDataManageController()
+        vc.hideWithdrawButton()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func dismissTextView() {
