@@ -157,7 +157,6 @@ class RegistrationController: UIViewController {
         super.viewDidLoad()
         configureUI()
         hideTextView()
-        hideKeyboard()
         setKeyboardObserver()
       }
       deinit {
