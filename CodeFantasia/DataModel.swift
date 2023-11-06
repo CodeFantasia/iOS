@@ -50,7 +50,9 @@ struct Project: Codable {
     var recruitingStatus: Bool?  // 추가 현재 모집중 모집 완료인지
     var teamMember: [TeamMember]
     var contactMethod: String? // 추가
-    var writerID: String? // 게시자 아이디
+    var writerID: String?
+    var projectStartDate: Date
+    var projectEndDate: Date// 게시자 아이디
 }
 
 //// 기술 스택
