@@ -54,38 +54,43 @@ extension UIViewController: UIGestureRecognizerDelegate {
         self.view.addGestureRecognizer(tap)
         tap.delegate = self
     }
-
+    
     @objc func dismissKeyboard() {
         self.view.endEditing(true)
     }
     
     // MARK: - Keyboard 눌렀을 때 View 올리기
-
-//    func setKeyboardObserver() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        
-//        NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object:nil)
-//    }
-//    
-//    @objc func keyboardWillShow(notification: NSNotification) {
-//          if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//                  let keyboardRectangle = keyboardFrame.cgRectValue
-//                  let keyboardHeight = keyboardRectangle.height
-//              UIView.animate(withDuration: 1) {
-//                  self.view.window?.frame.origin.y -= keyboardHeight
-//              }
-//          }
-//      }
-//    
-//    @objc func keyboardWillHide(notification: NSNotification) {
-//        if self.view.window?.frame.origin.y != 0 {
-//            if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//                    let keyboardRectangle = keyboardFrame.cgRectValue
-//                    let keyboardHeight = keyboardRectangle.height
-//                UIView.animate(withDuration: 1) {
-//                    self.view.window?.frame.origin.y += keyboardHeight
-//                }
-//            }
-//        }
-//    }
+    func setKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        let yOffset: CGFloat = 50 // 원하는 스크롤 양을 설정하세요.
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= min(keyboardSize.height, yOffset)
+        }
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    func removeKeyboardObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
 }
+// 사용할 때 이렇게 사용하면 됨
+//override func viewDidLoad() {
+//  super.viewDidLoad()
+//
+//  setKeyboardObserver()
+//}
+//
+//deinit {
+//
+//  removeKeyboardObserver()
+//}
