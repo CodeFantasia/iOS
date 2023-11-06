@@ -103,16 +103,6 @@ class RegistrationController: UIViewController {
         return button
     }()
     
-    private var checkBtnChecked = false
-    
-    private let checkBtn: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setImage(UIImage(systemName: "square"), for: .normal)
-        btn.tintColor = .black
-        btn.addTarget(self, action: #selector(handleTermsOfConditionsCheck), for: .touchUpInside)
-        return btn
-    }()
-    
     private lazy var termsOfConditionsView: UIView = {
         let view = TermsOfConditionsView()
         return view
@@ -123,6 +113,39 @@ class RegistrationController: UIViewController {
         btn.setTitle("Code Cocoon 서비스를 위한 개인정보 수집 및 이용 동의서", for: .normal)
         btn.addTarget(self, action: #selector(handleTermsOfConditionsBtn), for: .touchUpInside)
         return btn
+    }()
+    
+    private let agreeBtn: UIButton = {
+        let checkBtn = UIButton(type: .system)
+        checkBtn.setImage(UIImage(systemName: "square"), for: .normal)
+        checkBtn.tintColor = .white
+        checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
+        return checkBtn
+    }()
+    
+    private lazy var termsOfConditionsAgree: UIView = {
+        let view = UIView()
+        
+        view.addSubview(agreeBtn)
+        agreeBtn.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.height.equalToSuperview()
+        }
+        
+        let label = UILabel()
+        label.text = "위를 확인했으며 이에 동의합니다."
+        label.textColor = .white
+        label.font = UIFont.body
+        view.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.left.equalTo(agreeBtn.snp.right).offset(2)
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalToSuperview()
+        }
+    
+        return view
     }()
     
     // MARK: - Life Cycle
@@ -137,14 +160,18 @@ class RegistrationController: UIViewController {
     
     // MARK: - Selectors
     
-    @objc func handleTermsOfConditionsCheck() {
-        checkBtnChecked = !checkBtnChecked
-        
-        if checkBtnChecked {
-            checkBtn.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+    @objc func handleTermsOfConditionsAgree() {
+        agreeBtn.isSelected = !agreeBtn.isSelected
+
+        DispatchQueue.main.async {
+            if self.agreeBtn.isSelected {
+                self.agreeBtn.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            } else {
+                self.agreeBtn.setImage(UIImage(systemName: "square"), for: .normal)
+            }
         }
     }
-    
+
     @objc func handleTermsOfConditionsBtn() {
         
         termsOfConditionsView.isHidden = !termsOfConditionsView.isHidden
@@ -162,6 +189,11 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleNextButton() {
+        
+        if agreeBtn.isSelected == false {
+            termsOfConditionsBtn.shake()
+            return
+        }
 
         guard let email = emailTextField.text, emailVerify(email: email) else { return }
         guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
@@ -282,6 +314,12 @@ class RegistrationController: UIViewController {
         view.addSubview(termsOfConditionsBtn)
         termsOfConditionsBtn.snp.makeConstraints { make in
             make.top.equalTo(nameContainerView.snp.bottom).offset(5)
+            make.centerX.equalToSuperview()
+        }
+        
+        view.addSubview(termsOfConditionsAgree)
+        termsOfConditionsAgree.snp.makeConstraints { make in
+            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
             make.centerX.equalToSuperview()
         }
         
