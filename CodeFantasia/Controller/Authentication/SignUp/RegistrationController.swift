@@ -149,14 +149,16 @@ class RegistrationController: UIViewController {
     }()
     
     // MARK: - Life Cycle
-
-    override func viewDidLoad() {
+      override func viewDidLoad() {
         super.viewDidLoad()
-
         configureUI()
         hideTextView()
-//        setKeyboardObserver()
-    }
+        hideKeyboard()
+        setKeyboardObserver()
+      }
+      deinit {
+        removeKeyboardObserver()
+      }
     
     // MARK: - Selectors
     
