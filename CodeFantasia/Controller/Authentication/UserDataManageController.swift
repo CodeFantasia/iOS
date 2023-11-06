@@ -235,6 +235,10 @@ class UserDataManageController: UIViewController {
     
     // MARK: - Helpers
     
+    func hideWithdrawButton() {
+        withdrawButton.isHidden = true 
+    }
+    
     func validateUserProfile(nickname: String) -> Bool {
         if !containsOnlyEnglishAndKorean(nickname) {
             nicknameView.shake()
