@@ -116,7 +116,7 @@ class RegistrationController: UIViewController {
     private lazy var termsOfConditionsView: UIScrollView = {
         let view = UIScrollView()
         view.showsHorizontalScrollIndicator = false
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         view.layer.cornerRadius = .cornerRadius
         view.layer.masksToBounds = true
         view.clipsToBounds = true
@@ -158,7 +158,7 @@ Code Cocoond은(는) \"개인정보 보호법\"에 따라 아래와 같이 수�
 """
         view.addSubview(label)
         label.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(10)
+            make.left.right.top.bottom.equalToSuperview().inset(CGFloat.spacing)
         }
         
         let checkLabel = UILabel()
@@ -173,10 +173,14 @@ Code Cocoond은(는) \"개인정보 보호법\"에 따라 아래와 같이 수�
         
         view.addSubview(stackview)
         stackview.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
+            make.left.equalToSuperview().offset(5)
             make.top.equalTo(label.snp.bottom).offset(5)
             make.height.equalTo(20)
         }
+        
+        let contentSize = CGSize(width: termsOfConditionsView.frame.size.width, height: stackview.frame.maxY + CGFloat.spacing)
+        termsOfConditionsView.contentSize = contentSize
+
 
         return view
     }()
@@ -215,7 +219,7 @@ Code Cocoond은(는) \"개인정보 보호법\"에 따라 아래와 같이 수�
         termsOfConditionsView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(CGFloat.spacing)
             make.height.equalTo(250)
-            make.bottom.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
+            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
         }
     }
     
