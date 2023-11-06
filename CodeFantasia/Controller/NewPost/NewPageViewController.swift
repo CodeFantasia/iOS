@@ -47,7 +47,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             projectStartDatePicker.date = data!.projectStartDate
             projectEndDatePicker.date = data!.projectEndDate
             
-//            thumbnailImageView.image =
+            thumbnailImageView.kf.setImage(with: URL(string: project.imageUrl ?? ""))
             
             // 모임 유형과 연락 수단을 설정
             meetingTypeTextField.text = project.meetingType
