@@ -4,7 +4,7 @@ import RxSwift
 import Firebase
 import FirebaseAuth
 import FirebaseStorage
-import Kingfisher
+//import Kingfisher
 
 class UserDataManageController: UIViewController {
     
