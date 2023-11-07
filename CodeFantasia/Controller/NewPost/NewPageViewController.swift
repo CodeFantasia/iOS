@@ -15,7 +15,6 @@ import UIKit
 
 class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     // MARK: - 변수선언
-
     let data: Project?
     
     init(data: Project?) {
@@ -55,7 +54,6 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             
             // 작성완료 버튼을 수정완료버튼으로 변경한다
             completeButton.setTitle("수정 완료", for: .normal)
-            completeButton.addTarget(self, action: #selector(EditcompleteButtonTapped), for: .touchUpInside)
         } else {
             // 새 프로젝트를 생성하는 경우
         }
@@ -600,7 +598,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         let path = "images/" + filename
         
         if let imageData = thumbnailImageView.image?.jpegData(compressionQuality: 0.3) {
-            imageStorage.upload(imageData: imageData, path: path) { imageUrl in
+            imageStorage.upload(imageData: imageData, path: path) { [self] imageUrl in
                 if let imageUrl = imageUrl {
                     print("이미지 업로드 성공")
                     
@@ -613,7 +611,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
                         projectDuration: "\(projectStartDate) - \(projectEndDate)",
                         meetingType: meetingType,
                         imageUrl: imageUrl,
-                        projectID: UUID(),
+                        projectID: self.data?.projectID ?? UUID(),
                         platform: selectedPlatforms,
                         recruitmentField: recruitmentField,
                         recruitingStatus: true,
@@ -624,11 +622,10 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
                         projectEndDate: self.projectEndDatePicker.date
                     )
                     self.dismissNewPageViewController()
+
                     if self.data?.projectID.uuidString == nil {
-                        print("ok")
                         self.projectRepository.create(project: projectInfo)
                     } else {
-                        print("cancle")
                         self.projectRepository.update(project: projectInfo, projectId: self.data?.projectID.uuidString ?? "")
                     }
                 } else {
@@ -643,101 +640,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     func convertToEnum(rawValue: String) -> Platform? {
         return Platform(rawValue: rawValue)
     }
-    //MARK: -  수정완료 함수
-    @objc func EditcompleteButtonTapped() {
-        //    let projectInfo = Project(projectTitle: "", projecSubtitle: "",techStack: [], recruitmentCount: 1,projectDescription: "", projectID: UUID(), platform: [], teamMember: [])
-        //    projectRepository.create(project: projectInfo)
-        //    print("aaa")
-        let projectTitle = titleTextField.text
-        let techLanguage = techLanguageTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        let recruitmentField = recruitmentFieldTextField.text
-        let projectDescription = projectIntroTextView.text
-        let meetingType = meetingTypeTextField.text
-        let contactMethod = contactMethodTextField.text
-        
-        // TechStack 배열을 생성합니다.
-        let techStacks = techLanguage?.components(separatedBy: CharacterSet(charactersIn: "[]"))
-            .filter { !$0.isEmpty && $0 != "," }
-            .map { TechStack(technologies: [$0]) } ?? []
-        
-        // 생성된 TechStack 배열을 출력합니다.
-        print("TechStacks: \(techStacks)")
-        
-        // 출시 플랫폼 텍스트 필드에서 사용자 입력을 가져옵니다.
-        let platformInput = platformTextField.text
-        
-        // 사용자 입력을 쉼표로 분할하여 문자열 배열로 만듭니다.
-        let platformsArray = platformInput?.components(separatedBy: "/").map { $0.trimmingCharacters(in: .whitespaces) } ?? []
-        
-        // 각 텍스트를 enum 값으로 변환하여 배열에 추가합니다.
-        var selectedPlatforms: [Platform] = []
-        for platformText in platformsArray {
-            if let platform = Platform(rawValue: platformText) {
-                selectedPlatforms.append(platform)
-            }
-        }
-        
-        // DateFormatter를 사용하여 문자열로 변환
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let projectStartDate = dateFormatter.string(from: projectStartDatePicker.date)
-        let projectEndDate = dateFormatter.string(from: projectEndDatePicker.date)
-        
-        if projectTitle?.isEmpty ?? true ||
-            techLanguage?.isEmpty ?? true ||
-            recruitmentField?.isEmpty ?? true ||
-            projectDescription?.isEmpty ?? true ||
-            meetingType?.isEmpty ?? true ||
-            contactMethod?.isEmpty ?? true ||
-            platformInput?.isEmpty ?? true
-        {
-            // 어떤 필드라도 비어 있다면 경고를 표시합니다.
-            let alertController = UIAlertController(title: "Warning!", message: "Complete your mission", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "Copy that.", style: .default, handler: nil)
-            alertController.addAction(okAction)
-            present(alertController, animated: true, completion: nil)
-            return
-        }
-        // Firebase에 데이터 업로드
-        
-        let imageStorage = ImageStorageManager()
-        let filename = UUID().uuidString
-        let path = "images/" + filename
-        
-        if let imageData = thumbnailImageView.image?.jpegData(compressionQuality: 0.3) {
-            imageStorage.upload(imageData: imageData, path: path) { imageUrl in
-                if let imageUrl = imageUrl {
-                    print("이미지 업로드 성공")
-                    
-                    let projectInfo = Project(
-                        projectTitle: projectTitle,
-                        projecSubtitle: nil,
-                        techStack: techStacks, // 여기에 techStacks 배열을 할당합니다.
-                        recruitmentCount: 1,
-                        projectDescription: projectDescription,
-                        projectDuration: "\(projectStartDate) - \(projectEndDate)",
-                        meetingType: meetingType,
-                        imageUrl: imageUrl,
-                        projectID: UUID(),
-                        platform: selectedPlatforms,
-                        recruitmentField: recruitmentField,
-                        recruitingStatus: true,
-                        teamMember: [],
-                        contactMethod: contactMethod,
-                        writerID: self.writerId,
-                        projectStartDate: self.projectStartDatePicker.date,
-                        projectEndDate: self.projectEndDatePicker.date
-                    )
-                    self.dismissNewPageViewController()
-                    self.projectRepository.create(project: projectInfo)
-                } else {
-                    print("이미지 업로드 실패!")
-                }
-            }
-        } else {
-            print("이미지 데이터가 유효하지 않습니당. 흠..")
-        }
-    }
+
     // MARK: - 모달페이지함수
    
     @objc func platformTextFieldTapped() {

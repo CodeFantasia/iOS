@@ -26,21 +26,21 @@ class UserDataManageController: UIViewController {
             portfolioTextView.text = userProfile.portfolioURL
             techStackTextView.text = userProfile.techStack.joined(separator: ", ")
             interestTextView.text = userProfile.areasOfInterest.joined(separator: ", ")
-//            if let profileImageURL = URL(string: userProfile.profileImageURL ?? "") {
-//                // 백그라운드 스레드에서 이미지 다운로드
-//                DispatchQueue.global().async {
-//                    if let data = try? Data(contentsOf: profileImageURL) {
-//                        if let image = UIImage(data: data) {
-//                            // 메인 스레드에서 UI 업데이트
-//                            DispatchQueue.main.async {
-//                                self.profileImage = image
-//                            }
-//                        }
-//                    }
+            let profileImageURL = (URL(string: userProfile.profileImageURL ?? "") ?? URL(string: ""))
+
+//            // Kingfisher를 사용하여 이미지를 다운로드
+//            KingfisherManager.shared.retrieveImage(with: profileImageURL!) { result in
+//                switch result {
+//                case .success(let imageResult):
+//                    // 이미지 다운로드 및 처리가 성공한 경우
+//                    let image = imageResult.image
+//                    self.profileImage = image
+//                    // 이제 'self.profileImage'에 이미지가 할당되었습니다.
+//                case .failure(let error):
+//                    // 이미지 다운로드 중 오류 발생한 경우
+//                    print("이미지 다운로드 오류: \(error)")
 //                }
-//            } else {
-//                // URL이 nil일 때의 처리
-//            }
+
         } else {
         }
     }

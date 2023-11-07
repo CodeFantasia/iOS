@@ -80,7 +80,7 @@ struct ProjectRepository: ProjectRepositoryProtocol {
     }
     
     func `update`(project: Project, projectId: String) {
-        firebaseManager.delete(collectionId, projectId)
+        firebaseManager.update(collectionId, projectId, project)
     }
     
 }
