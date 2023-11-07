@@ -4,10 +4,46 @@ import RxSwift
 import Firebase
 import FirebaseAuth
 import FirebaseStorage
+import Kingfisher
 
 class UserDataManageController: UIViewController {
     
+    let data: UserProfile?
     
+    init(data: UserProfile?) {
+        self.data = data
+        super.init(nibName: nil, bundle: nil)
+    }
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    // 데이터가있는지 판별
+    func setUp() {
+        if let userProfile = data {
+            nicknameTextView.text = userProfile.nickname
+            selfIntroductionTextView.text = userProfile.selfIntroduction
+            portfolioTextView.text = userProfile.portfolioURL
+            techStackTextView.text = userProfile.techStack.joined(separator: ", ")
+            interestTextView.text = userProfile.areasOfInterest.joined(separator: ", ")
+//            if let profileImageURL = URL(string: userProfile.profileImageURL ?? "") {
+//                // 백그라운드 스레드에서 이미지 다운로드
+//                DispatchQueue.global().async {
+//                    if let data = try? Data(contentsOf: profileImageURL) {
+//                        if let image = UIImage(data: data) {
+//                            // 메인 스레드에서 UI 업데이트
+//                            DispatchQueue.main.async {
+//                                self.profileImage = image
+//                            }
+//                        }
+//                    }
+//                }
+//            } else {
+//                // URL이 nil일 때의 처리
+//            }
+        } else {
+        }
+    }
     // MARK: - Properties
     
     private var selectedTechStack = [String]()
@@ -137,7 +173,7 @@ class UserDataManageController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setUp()
         configureNavBar()
         configureUI()
         configureDropdownUI()
@@ -248,10 +284,17 @@ class UserDataManageController: UIViewController {
             techStackView.shake()
         } else if selectedInterestField.isEmpty {
             interestFieldView.shake()
+        } else if portfolioTextView.text.isEmpty || portfolioTextView.text == "포트폴리오 링크를 입력해주세요." {
+            portfolioUrlView.shake()
+        } else if selfIntroductionTextView.text.isEmpty || selfIntroductionTextView.text == "자기 소개를 입력해주세요." {
+            selfIntroductionView.shake()
         } else {
             return true
         }
-
+        let alertController = UIAlertController(title: "프로필 등록 실패", message: "입력 사항을 모두 입력해주세요", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
         return false
     }
     

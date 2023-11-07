@@ -25,10 +25,12 @@ final class ProfileViewModel {
         var profileEditDidTap: Driver<Void>
         var logoutDidTap: Driver<Void>
     }
+    let editMove = PublishSubject<Void>()
     let logoutComplete = PublishSubject<Void>()
     private let disposeBag = DisposeBag()
     private let userRepository: UserRepositoryProtocol
     private let userId: String
+    var userProfile: UserProfile?
     
     init(
         userRepository: UserRepositoryProtocol,
@@ -39,24 +41,20 @@ final class ProfileViewModel {
     }
     
     func transform(input: Input) -> Output {
-        
-        let userData = Observable<UserProfile>.create { [weak self] observer in
-            guard let self else { return Disposables.create() }
-            input.viewDidLoad
-                .withUnretained(self)
-                .subscribe { userId in
-                self.userRepository.read(userId: self.userId)
-                    .subscribe(onSuccess: { user in
-                        observer.onNext(user)
-                    }, onFailure: { error in
-                        observer.onError(error)
-                    })
-                    .disposed(by: self.disposeBag)
+        let userData = input.viewDidLoad
+            .flatMapLatest { [weak self] _ in
+                return self?.userRepository.read(userId: self?.userId ?? "") ?? .error( Error.self as! Error)
             }
-            .disposed(by: self.disposeBag)
-            return Disposables.create()
-        }
-        
+            .share()
+
+        userData
+            .subscribe(onNext: { [weak self] user in
+                self?.userProfile = user
+            }, onError: { error in
+                // Handle the error as needed
+            })
+            .disposed(by: disposeBag)
+
         logoutComplete.subscribe { [weak self] _ in
             guard let self = self else { return }
             do {

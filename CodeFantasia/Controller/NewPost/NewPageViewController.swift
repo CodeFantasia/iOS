@@ -44,8 +44,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             recruitmentFieldTextField.text = project.recruitmentField
             projectIntroTextView.text = project.projectDescription
             
-            projectStartDatePicker.date = data!.projectStartDate
-            projectEndDatePicker.date = data!.projectEndDate
+            projectStartDatePicker.date = project.projectStartDate
+            projectEndDatePicker.date = project.projectEndDate
             
             thumbnailImageView.kf.setImage(with: URL(string: project.imageUrl ?? ""))
             
@@ -624,7 +624,13 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
                         projectEndDate: self.projectEndDatePicker.date
                     )
                     self.dismissNewPageViewController()
-                    self.projectRepository.create(project: projectInfo)
+                    if self.data?.projectID.uuidString == nil {
+                        print("ok")
+                        self.projectRepository.create(project: projectInfo)
+                    } else {
+                        print("cancle")
+                        self.projectRepository.update(project: projectInfo, projectId: self.data?.projectID.uuidString ?? "")
+                    }
                 } else {
                     print("이미지 업로드 실패!")
                 }

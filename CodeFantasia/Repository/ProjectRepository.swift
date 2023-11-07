@@ -16,10 +16,11 @@ protocol ProjectRepositoryProtocol {
     func delete(project: Project)
     func `delete`(projectId: String)
     func update(project: Project)
+    func `update`(project: Project, projectId: String)
 }
 
 struct ProjectRepository: ProjectRepositoryProtocol {
-    
+
     private enum ProjectRepositoryError: LocalizedError {
         case dataConvertError
     }
@@ -77,5 +78,9 @@ struct ProjectRepository: ProjectRepositoryProtocol {
     func update(project: Project) {
         firebaseManager.update(collectionId, project.projectID.uuidString, project)
     }
-
+    
+    func `update`(project: Project, projectId: String) {
+        firebaseManager.delete(collectionId, projectId)
+    }
+    
 }
