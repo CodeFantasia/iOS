@@ -81,7 +81,6 @@ final class ProjectDetailNoticeBoardViewModel {
         .disposed(by: disposeBag)
         
         projectEditComplete.subscribe { _ in
-            self.projectRepository.update(project: self.project!)
         }
         .disposed(by: disposeBag)
         
@@ -99,7 +98,6 @@ final class ProjectDetailNoticeBoardViewModel {
                 guard let currentAuthor = Auth.auth().currentUser?.uid else {
                     return false
                 }
-                
                 return project.writerID == currentAuthor
             }.asDriver(onErrorJustReturn: false)
         )
