@@ -6,14 +6,33 @@
 //
 
 import UIKit
+import SnapKit
 
 class TextView: UITextView {
     
     var placeholder: String?
+    
+    private let accessoryView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private let confirmButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("확인", for: .normal)
+        btn.backgroundColor = .lightGray
+        btn.setTitleColor(.black, for: .normal)
+        btn.addTarget(self, action: #selector(handleConfirmButton), for: .touchUpInside)
+        btn.snp.makeConstraints { make in
+            make.height.equalTo(50)
+        }
+        return btn
+    }()
 
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         self.delegate = self
+        accessory()
     }
     
     required init?(coder: NSCoder) {
@@ -27,6 +46,20 @@ class TextView: UITextView {
             self.font = UIFont.body
             self.placeholder = placeholder
         }
+    }
+    
+    func accessory() {
+        accessoryView.addSubview(confirmButton)
+        confirmButton.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(accessoryView.snp.top)
+        }
+        self.inputAccessoryView = accessoryView
+    }
+    
+    @objc func handleConfirmButton() {
+        print("confirmbutton 눌림")
+        self.resignFirstResponder()
     }
 }
 
