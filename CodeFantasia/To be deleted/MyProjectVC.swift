@@ -63,6 +63,12 @@ class MyProjectVC: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchData() // 데이터를 새로 고치는 메서드를 호출합니다.
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationbarTitle()
@@ -76,28 +82,36 @@ class MyProjectVC: UITableViewController {
 }
 
 extension MyProjectVC {
-
+    
     private func bind() {
+        // 이 부분은 그대로 유지
         let inputs = MyProjectViewModel.Input(
             viewDidLoad: rx.viewDidLoad.asObservable()
         )
         let outputs = viewModel.transform(input: inputs)
-        
-        outputs.projectDataFetched
+
+        // outputs에서 projectDataFetched를 구독합니다.
+        // Observable 배열을 받기 때문에 각 프로젝트를 배열에 추가하는 대신,
+        // projectDataArray에 할당합니다.
+        viewModel.projectDataFetched
             .withUnretained(self)
-            .subscribe(onNext: { owner, project in
-                DispatchQueue.main.async { [self] in
-                    owner.projectDataArray.append(project)
-                    owner.tableView.reloadData()
-                    if projectDataArray.isEmpty {
-                        showEmptyView()
+            .subscribe(onNext: { owner, projects in
+                DispatchQueue.main.async {
+                    owner.projectDataArray = projects // 배열 전체를 할당합니다.
+                    owner.tableView.reloadData() // 테이블 뷰를 새로 고칩니다.
+                    if owner.projectDataArray.isEmpty {
+                        owner.showEmptyView()
                     } else {
-                        hideEmptyView()
+                        owner.hideEmptyView()
                     }
                 }
             })
             .disposed(by: disposeBag)
-    }}
+    }
+
+}
+
+
 
 extension MyProjectVC {
     
