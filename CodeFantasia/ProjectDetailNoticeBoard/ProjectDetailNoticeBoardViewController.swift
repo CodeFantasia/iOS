@@ -131,7 +131,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
     private lazy var reportButton = UIBarButtonItem(image: .reportImage, style: .plain, target: self, action: nil)
     private var menuItems: [UIAction] {
         return [
-            UIAction(title: "수정하기", image: UIImage(systemName: "pencil"), handler: { [weak self] _ in
+            UIAction(title: "수정하기", image: .editImage, handler: { [weak self] _ in
                 self?.alertViewAlert(title: "수정", message: "프로젝트를 수정하시겠습니까?", cancelText: "아니요", acceptCompletion: {
                     let editView = NewPageViewController(data: self?.viewModel.project)
                     editView.modalPresentationStyle = .fullScreen
@@ -351,14 +351,57 @@ extension ProjectDetailNoticeBoardViewController {
                 
                 if project.writerID == currentAuthor {
                     self.projectApplyButton.isHidden = true
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "",
-                                                                           image: UIImage(systemName: "ellipsis.circle"),
-                                                                           primaryAction: nil,
-                                                                           menu: self.editMenu)
+                    self.navigationController?.navigationBar.tintColor = UIColor.black
+                    if #available(iOS 13.0, *) {
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "",
+                                                                                 image: .menuImage,
+                                                                               primaryAction: nil,
+                                                                               menu: self.editMenu)
+                          } else {
+                              self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: .menuImage,
+                                                                                       style: .plain,
+                                                                                       target: self,
+                                                                                       action: #selector(showActionSheet))
+                          }
                 } else {
                     self.navigationItem.rightBarButtonItem = self.reportButton
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    @objc func showActionSheet(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: nil,
+                                      message: "액션시트",
+                                      preferredStyle: .actionSheet)
+        let editAction = UIAlertAction(title: "수정하기",
+                                         style: .default,
+                                         handler: { [weak self] _ in
+            self?.alertViewAlert(title: "수정",
+                                 message: "프로젝트를 수정하시겠습니까?",
+                                 cancelText: "아니요",
+                                 acceptCompletion: {
+                let editView = NewPageViewController(data: self?.viewModel.project)
+                editView.modalPresentationStyle = .fullScreen
+                self?.present(editView, animated: true)
+            })
+        })
+        let deleteAction = UIAlertAction(title: "삭제하기",
+                                       style: .default,
+                                       handler: { [weak self] _ in
+                                       self?.alertViewAlert(
+                                 title: "삭제",
+                                 message: "프로젝트를 삭제하시겠습니까?",
+                                 cancelText: "아니요",
+                                 acceptCompletion: {self?.viewModel.projectDeleteComplete.on(.next(()))
+            })
+        })
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: { _ in
+            self.dismiss(animated: true)
+        })
+
+        [editAction, deleteAction, cancelAction].forEach { alert.addAction($0) }
+
+        self.present(alert, animated: true, completion: nil)
     }
 }
