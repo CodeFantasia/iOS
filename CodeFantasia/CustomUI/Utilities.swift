@@ -8,6 +8,7 @@ class Utilities {
     
     func textField(withPlaceholder placeholder: String) -> UITextField {
         let textfield = UITextField()
+        textfield.createToolBar()
         textfield.font = UIFont.systemFont(ofSize: 16)
         textfield.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
         return textfield
