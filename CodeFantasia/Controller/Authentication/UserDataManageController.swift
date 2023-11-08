@@ -26,8 +26,7 @@ class UserDataManageController: UIViewController {
             portfolioTextView.text = userProfile.portfolioURL
             techStackTextView.text = userProfile.techStack.joined(separator: ", ")
             interestTextView.text = userProfile.areasOfInterest.joined(separator: ", ")
-            let profileImageURL = (URL(string: userProfile.profileImageURL ?? "") ?? URL(string: ""))
-
+//            let profileImageURL = (URL(string: userProfile.profileImageURL ?? "") ?? URL(string: ""))
 //            // Kingfisher를 사용하여 이미지를 다운로드
 //            KingfisherManager.shared.retrieveImage(with: profileImageURL!) { result in
 //                switch result {

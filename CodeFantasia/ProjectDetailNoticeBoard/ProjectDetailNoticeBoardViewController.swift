@@ -166,7 +166,6 @@ extension ProjectDetailNoticeBoardViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        exchange()
         configure()
         activityIndicator.startAnimating()
     }
@@ -291,7 +290,6 @@ extension ProjectDetailNoticeBoardViewController {
         
         outputs.projectLeaderProfileDidTap
             .drive(with: self, onNext: { owner, leaderUserId in
-                // 프로필 뷰로
                 if let leaderUserId {
                     let profileViewController = ProfileViewController(viewModel: ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: String(leaderUserId)))
                     owner.present(profileViewController, animated: true)
@@ -350,6 +348,7 @@ extension ProjectDetailNoticeBoardViewController {
                 }
                 
                 if project.writerID == currentAuthor {
+                    self.projectTeamLeaderProfileImageButton.isHidden = true
                     self.projectApplyButton.isHidden = true
                     self.navigationController?.navigationBar.tintColor = UIColor.black
                     if #available(iOS 13.0, *) {

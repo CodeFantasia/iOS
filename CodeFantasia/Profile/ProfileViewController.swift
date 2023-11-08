@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 import FirebaseAuth
+import FirebaseFirestore
 
 class ProfileViewController: UIViewController {
 
@@ -148,6 +149,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        ifShowWriter()
         
         view.backgroundColor = UIColor.backgroundColor
         navigationbarTitle()
@@ -227,6 +229,24 @@ extension ProfileViewController {
             $0.height.equalTo(infoUnderline)
         }
     }
+    private func ifShowWriter() {
+        let db = Firestore.firestore()
+        let currentUser = Auth.auth().currentUser?.uid
+        db.collection("User").document(currentUser!).getDocument { (document, error) in
+            if let document = document, document.exists {
+                if var userid = document.data()?["userID"] as? String {
+                    if let currentUser = self.viewModel.userProfile?.userID.uuidString {
+                        if currentUser == userid {
+                        } else {
+                            self.logoutButton.isHidden = true
+                            self.editButton.isHidden = true
+                            self.barTitle.text = "작성자 프로필"
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 //MARK: - binding
@@ -243,19 +263,19 @@ extension ProfileViewController {
             .withUnretained(self)
             .subscribe(onNext: { owner, user in
                 DispatchQueue.main.async {
-                    self.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
+                    owner.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
                         switch result {
                         case .success(_):
-                            self.profileImage.roundCornersForAspectFit(radius: 50)
+                            owner.profileImage.roundCornersForAspectFit(radius: 50)
                         case .failure(_):
-                            self.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
+                            owner.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
                         }
                     }
-                    self.techLabel.text = user.techStack.joined(separator: ", ")
-                    self.interestLabel.text = user.areasOfInterest.joined(separator: ", ")
-                    self.nicknameLabel.text = user.nickname
-                    self.produceContent.text = user.selfIntroduction ?? ""
-                    self.urlLabel.text = user.portfolioURL ?? ""
+                    owner.techLabel.text = user.techStack.joined(separator: ", ")
+                    owner.interestLabel.text = user.areasOfInterest.joined(separator: ", ")
+                    owner.nicknameLabel.text = user.nickname
+                    owner.produceContent.text = user.selfIntroduction ?? ""
+                    owner.urlLabel.text = user.portfolioURL ?? ""
                 }
             }, onError: { [weak self] error in
                 DispatchQueue.main.async {
