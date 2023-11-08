@@ -243,7 +243,6 @@ extension ProfileViewController {
             .withUnretained(self)
             .subscribe(onNext: { owner, user in
                 DispatchQueue.main.async {
-
                     self.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
                         switch result {
                         case .success(_):
@@ -261,8 +260,8 @@ extension ProfileViewController {
             }, onError: { [weak self] error in
                 DispatchQueue.main.async {
                     self?.alertViewActionSheet(
-                        title: "오류 발생",
-                        message: error.localizedDescription,
+                        title: "작성된 프로필이 없습니다",
+                        message: "프로필 수정 버튼을 클릭하여 프로필을 등록해주세요.",
                         acceptText: "확인",
                         cancelText: nil
                     )
@@ -271,9 +270,9 @@ extension ProfileViewController {
             .disposed(by: disposeBag)
         
         outputs.profileEditDidTap
-            .drive (with: self, onNext: { owner, _ in
-                    let profileViewController = UserDataManageController()
-                    owner.present(profileViewController, animated: true)
+            .drive (with: self, onNext: { owner, user in
+                let profileViewController = UserDataManageController(data: owner.viewModel.userProfile)
+                        owner.present(profileViewController, animated: true)
             })
             .disposed(by: disposeBag)
         
