@@ -21,7 +21,7 @@ final class ProjectDetailNoticeBoardViewModel {
     struct Output {
         var projectDataFetched: Observable<Project>
         var projectApplyButtonDidTap: Driver<String?>
-        var projectLeaderProfileDidTap: Driver<Int?>
+        var projectLeaderProfileDidTap: Driver<String?>
         var projectReportButtonDidTap: Driver<Void>
         var userAuthConfirmed: Driver<Bool>
 //        var projectApplySuccess: Observable<Void>
@@ -90,7 +90,7 @@ final class ProjectDetailNoticeBoardViewModel {
                 self?.project?.contactMethod
             },
             projectLeaderProfileDidTap: input.profileImageTapped.map { [weak self] _ in
-                self?.project?.teamMember.first(where: {$0.category == Role(detailRole: "leader")})?.employeeID
+                self?.project?.writerID
             },
             projectReportButtonDidTap: input.projectReportButtonTapped,
             
