@@ -9,27 +9,42 @@ import UIKit
 import SnapKit
 
 extension UITextField {
-    func accessoryView() {
-        lazy var accessoryView: UIView = {
-            return UIView(frame: CGRect(x: 0.0, y: 0.0, width: UIScreen.main.bounds.width, height: 72.0))
+    
+    func customConfigure(placeholder: String) {
+        self.placeholder = placeholder
+        self.layer.cornerRadius = CGFloat.cornerRadius
+        self.layer.borderWidth = 1.5
+        self.layer.borderColor = UIColor.gray.cgColor
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
+        self.leftView = paddingView
+        self.leftViewMode = ViewMode.always
+    }
+    
+    func createToolBar() {
+        let toolbar: UIToolbar = {
+            let toolbar = UIToolbar()
+            toolbar.barStyle = .default
+            toolbar.items = [
+                UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelBtn)),
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(handleDoneBtn))
+            ]
+            toolbar.sizeToFit()
+            return toolbar
         }()
         
-        let confirmButton: UIButton = {
-            let btn = UIButton(type: .system)
-            btn.setTitle("확인", for: .normal)
-            btn.backgroundColor = .lightGray
-            btn.setTitleColor(.black, for: .normal)
-            btn.snp.makeConstraints { make in
-                make.height.equalTo(20)
-            }
-            return btn
-        }()
-        
-        accessoryView.addSubview(confirmButton)
-        confirmButton.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(accessoryView.snp.top)
-        }
-        self.inputAccessoryView = accessoryView
+        self.inputAccessoryView = toolbar
+    }
+    
+    @objc func handleCancelBtn() {
+        print("Cancel 버튼 누름")
+        self.resignFirstResponder()
+        self.text = placeholder
+    }
+    
+    @objc func handleDoneBtn() {
+        print("Done 버튼 누름")
+        self.resignFirstResponder()
     }
 }

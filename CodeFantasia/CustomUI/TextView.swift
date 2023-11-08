@@ -14,11 +14,6 @@ class TextView: UITextView {
     
     var placeholder: String?
     
-    private let accessoryView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
     private let toolbar: UIToolbar = {
         let toolbar = UIToolbar()
         toolbar.barStyle = .default
