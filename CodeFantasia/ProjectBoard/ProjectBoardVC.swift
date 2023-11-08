@@ -10,6 +10,7 @@ import SnapKit
 import Then
 import RxSwift
 import Firebase
+import FirebaseAuth
 
 class ProjectBoardVC: UIViewController {
     
