@@ -10,6 +10,8 @@ import SnapKit
 
 class TextView: UITextView {
     
+    // MARK: - Properties
+    
     var placeholder: String?
     
     private let accessoryView: UIView = {
@@ -17,26 +19,35 @@ class TextView: UITextView {
         return view
     }()
     
-    private let confirmButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setTitle("확인", for: .normal)
-        btn.backgroundColor = .lightGray
-        btn.setTitleColor(.black, for: .normal)
-        btn.addTarget(self, action: #selector(handleConfirmButton), for: .touchUpInside)
-        btn.snp.makeConstraints { make in
-            make.height.equalTo(50)
-        }
-        return btn
+    private let toolbar: UIToolbar = {
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.items = [
+            UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancelBtn)),
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(handleDoneBtn))
+        ]
+        toolbar.sizeToFit()
+        return toolbar
     }()
-
+    
+    // MARK: - Init
+    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         self.delegate = self
-        accessory()
+        createToolBar()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Helpers
+    
+    func createToolBar() {
+        print("Toolbar 소환됨")
+        self.inputAccessoryView = toolbar
     }
     
     func placeholder(withPlaceholder placeholder: String?) {
@@ -48,19 +59,19 @@ class TextView: UITextView {
         }
     }
     
-    func accessory() {
-        accessoryView.addSubview(confirmButton)
-        confirmButton.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(accessoryView.snp.top)
-        }
-        self.inputAccessoryView = accessoryView
+    // MARK: - Selectors
+    
+    @objc func handleCancelBtn() {
+        print("Cancel 버튼 누름")
+        self.resignFirstResponder()
+        self.text = placeholder
     }
     
-    @objc func handleConfirmButton() {
-        print("confirmbutton 눌림")
+    @objc func handleDoneBtn() {
+        print("Done 버튼 누름")
         self.resignFirstResponder()
     }
+
 }
 
 extension TextView: UITextViewDelegate {
