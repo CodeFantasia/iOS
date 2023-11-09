@@ -9,18 +9,33 @@ import UIKit
 import SnapKit
 import Then
 
+// MARK: - FilterBottomSheetDelegate
+// 필터 적용에 대한 델리게이트 프로토콜입니다.
+
 protocol FilterBottomSheetDelegate: AnyObject {
     func didApplyFilter(showOngoingProjectsOnly: Bool)
 }
 
+// MARK: - FilterBottomSheetVC
+// 사용자가 프로젝트를 필터링 할 수 있는 바텀 시트 뷰 컨트롤러입니다.
+
 class FilterBottomSheetVC: UIViewController {
 
+    // MARK: - Properties
+    // 바텀 시트의 상태 및 델리게이트를 정의합니다.
+    
     var isRecruiting: Bool = false
     weak var delegate: FilterBottomSheetDelegate?
 
+    // MARK: - UI Components
+    // 바텀 시트의 UI 컴포넌트를 정의합니다.
+    
     private let recruitingSwitch = UISwitch()
     private let applyButton = UIButton()
 
+    // MARK: - Lifecycle Methods
+    // 뷰 컨트롤러의 생명주기 관련 메소드입니다.
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -31,7 +46,11 @@ class FilterBottomSheetVC: UIViewController {
         setupUI()
     }
 
+    // MARK: - Setup
+    // UI 구성 및 레이아웃 설정 메소드입니다.
+    
     func setupUI() {
+        // 레이블 및 스위치 설정
         let label = UILabel()
         label.text = "모집 중만 보기"
         view.addSubview(label)
@@ -40,12 +59,14 @@ class FilterBottomSheetVC: UIViewController {
             make.left.equalTo(view.snp.left).offset(20)
         }
 
+        // 모집 중 스위치 설정
         view.addSubview(recruitingSwitch)
         recruitingSwitch.snp.makeConstraints { make in
             make.centerY.equalTo(label)
             make.right.equalTo(view.snp.right).offset(-20)
         }
 
+        // 적용 버튼 설정
         applyButton.primaryColorConfigure(title: "적용")
         applyButton.addTarget(self, action: #selector(applyButtonTapped), for: .touchUpInside)
         view.addSubview(applyButton)
@@ -56,9 +77,13 @@ class FilterBottomSheetVC: UIViewController {
         }
     }
 
+    // MARK: - Actions
+    // 사용자 인터랙션에 대한 액션 메소드입니다.
+    
     @objc func applyButtonTapped() {
         isRecruiting = recruitingSwitch.isOn
         delegate?.didApplyFilter(showOngoingProjectsOnly: isRecruiting)
         dismiss(animated: true, completion: nil)
     }
 }
+
