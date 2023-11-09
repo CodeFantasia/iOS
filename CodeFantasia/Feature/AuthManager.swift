@@ -14,6 +14,12 @@ struct AuthManager {
 
     static let shared = AuthManager()
     
+    func checkDuplicateUser(email: String, completion: @escaping (Bool) -> Void) {
+        Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
+            print("SignInMethods: \(signInMethods)")
+        }
+    }
+    
     func registerUser(crudentials: UserAuth) {
         let email = crudentials.email
         let password = crudentials.password

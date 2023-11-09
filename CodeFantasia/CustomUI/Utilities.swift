@@ -88,7 +88,7 @@ class Utilities {
         view.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.left.equalTo(imageview.snp.right).offset(8)
-            make.right.equalToSuperview()
+            make.bottom.equalTo(imageview)
             make.right.equalToSuperview().inset(70)
         }
         
