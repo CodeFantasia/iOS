@@ -120,6 +120,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.backgroundColor = .white
+        imageView.image = UIImage(named: "default@2x")
+
         return imageView
     }()
     
@@ -625,6 +627,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
 
                     if self.data?.projectID.uuidString == nil {
                         self.projectRepository.create(project: projectInfo)
+                        
                     } else {
                         self.projectRepository.update(project: projectInfo, projectId: self.data?.projectID.uuidString ?? "")
                     }
