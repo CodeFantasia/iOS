@@ -140,7 +140,6 @@ class ProfileViewController: UIViewController {
         $0.layer.masksToBounds = false
     }
     
-    
     private lazy var stackView: UIStackView = UIStackView().then {
         $0.layoutMargins = UIEdgeInsets(top: .spacing, left: 20, bottom: 20, right: 20)
         $0.isLayoutMarginsRelativeArrangement = true
@@ -297,17 +296,18 @@ extension ProfileViewController {
                     return
                 }
                 if user.userID == currentAuthor {
+                    
                     self.followButton.isHidden = true
                 } else {
+                    self.followButton.isHidden = true
                     self.editButton.isHidden = true
                     self.logoutButton.isHidden = true
                 }
             })
             .disposed(by: disposeBag)
     
-        
         outputs.profileEditDidTap
-            .drive (with: self, onNext: { owner, user in
+            .drive(with: self, onNext: { owner, user in
                 let profileViewController = UserDataManageController(data: owner.viewModel.userProfile)
                         owner.present(profileViewController, animated: true)
             })
