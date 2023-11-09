@@ -111,7 +111,7 @@ class LoginController: UIViewController {
         view.addSubview(stack)
         stack.snp.makeConstraints { make in
             make.top.equalTo(logoImageView.snp.bottom)
-            make.left.right.equalToSuperview().inset(CGFloat.spacing)
+            make.left.right.equalToSuperview().inset(CGFloat.authSpacing)
         }
         
         view.addSubview(dontHaveAccountButton)

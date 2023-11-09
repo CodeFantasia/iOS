@@ -298,7 +298,7 @@ class RegistrationController: UIViewController {
         view.addSubview(stack)
         stack.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.left.right.equalToSuperview().inset(8)
+            make.left.right.equalToSuperview().inset(CGFloat.authSpacing)
         }
         
         emailCheckFailed.isHidden = true
@@ -331,7 +331,7 @@ class RegistrationController: UIViewController {
         
         view.addSubview(termsOfConditionsBtn)
         termsOfConditionsBtn.snp.makeConstraints { make in
-            make.top.equalTo(nameContainerView.snp.bottom).offset(5)
+            make.top.equalTo(nameContainerView.snp.bottom).offset(15)
             make.centerX.equalToSuperview()
         }
         
@@ -349,7 +349,7 @@ class RegistrationController: UIViewController {
         
         view.addSubview(alreadyHaveAccountButton)
         alreadyHaveAccountButton.snp.makeConstraints { make in
-            make.top.equalTo(nextButton.snp.bottom).offset(10)
+            make.top.equalTo(nextButton.snp.bottom).offset(CGFloat.authSpacing)
             make.centerX.equalToSuperview()
         }
         

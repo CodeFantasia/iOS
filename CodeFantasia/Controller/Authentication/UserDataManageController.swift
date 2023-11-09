@@ -181,7 +181,6 @@ class UserDataManageController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
-        configureNavBar()
         configureUI()
         configureDropdownUI()
         //        self.hideKeyboard()
@@ -370,16 +369,6 @@ class UserDataManageController: UIViewController {
             make.top.equalTo(interestFieldView.snp.bottom).offset(2)
             make.height.equalTo(250)
         }
-    }
-    
-    func configureNavBar() {
-        navigationController?.navigationBar.isHidden = false
-        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(backBarButton))
-        backButton.tintColor = .white
-        navigationItem.leftBarButtonItem = backButton
-        
-        navigationItem.title = "회원 정보 입력"
-        navigationItem.titleView?.tintColor = .white
     }
     
 }
