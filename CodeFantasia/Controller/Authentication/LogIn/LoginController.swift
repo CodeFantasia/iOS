@@ -19,7 +19,7 @@ class LoginController: UIViewController {
     }()
     
     private lazy var passwordContainerView: UIView = {
-        let view = Utilities().inputContainerView(withImage: UIImage(named: "ic_lock_outline_white_2x")!, textField: passwordTextField)
+        let view = Utilities().inputContainerView(withImage: UIImage(systemName: "lock")!, textField: passwordTextField)
         return view
     }()
     
@@ -37,8 +37,8 @@ class LoginController: UIViewController {
     private let loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Login", for: .normal)
-        button.setTitleColor(.primaryColor, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .black
         button.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
@@ -93,8 +93,7 @@ class LoginController: UIViewController {
     // MARK: - Helpers
     
     func configureUI() {
-        view.backgroundColor = .primaryColor
-        navigationController?.navigationBar.barStyle = .black // 시간 등 안 내용의 tintColor가 흰색으로 바뀐다
+        view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
         
         view.addSubview(logoImageView)
@@ -112,13 +111,13 @@ class LoginController: UIViewController {
         view.addSubview(stack)
         stack.snp.makeConstraints { make in
             make.top.equalTo(logoImageView.snp.bottom)
-            make.left.right.equalToSuperview().inset(CGFloat.spacing)
+            make.left.right.equalToSuperview().inset(CGFloat.authSpacing)
         }
         
         view.addSubview(dontHaveAccountButton)
         dontHaveAccountButton.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(40)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
+            make.top.equalTo(stack.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
         }
 
     }
