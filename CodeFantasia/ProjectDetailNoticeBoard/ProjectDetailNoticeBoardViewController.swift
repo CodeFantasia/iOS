@@ -15,8 +15,21 @@ import FirebaseAuth
 import Firebase
 
 final class ProjectDetailNoticeBoardViewController: UIViewController {
+    
     var writerID: String?
-
+    private let viewModel: ProjectDetailNoticeBoardViewModel
+    private let disposeBag = DisposeBag()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
+    init(viewModel: ProjectDetailNoticeBoardViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private lazy var scrollView = UIScrollView()
     private lazy var contentStackView = UIStackView().then {
         $0.axis = .vertical
@@ -147,19 +160,6 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         ]
     }
     private lazy var editMenu = UIMenu(title: "",image: nil, identifier: nil, options: [], children: menuItems)
-    
-    private let viewModel: ProjectDetailNoticeBoardViewModel
-    private let disposeBag = DisposeBag()
-    private let activityIndicator = UIActivityIndicatorView(style: .large)
-    
-    init(viewModel: ProjectDetailNoticeBoardViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        bind()
-    }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 //MARK: - View Life Cycle
