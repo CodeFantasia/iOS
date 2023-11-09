@@ -23,8 +23,16 @@ class MyProjectVC: UITableViewController {
         $0.spacing = .spacing
     }
 
-    let emptyButton = UIButton().then {
+    let emptyButton = UIHoverButton().then {
         $0.primaryColorConfigure(title: "새글작성")
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = UIFont.buttonTitle
+        $0.layer.cornerRadius = .cornerRadius
+        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
+        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowRadius = 4 / UIScreen.main.scale
+        $0.layer.masksToBounds = false
         $0.addTarget(self, action: #selector(emptyButtonTapped), for: .touchUpInside)
     }
     
