@@ -12,6 +12,8 @@ class MyProjectTableViewCell: UITableViewCell {
     static let identifier = "CustomCell"
     
     let projectImage = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
         $0.layer.cornerRadius = .cornerRadius
     }
     

@@ -133,7 +133,9 @@ extension MyProjectVC {
         cell.backgroundColor = UIColor.backgroundColor
         cell.projectTitle.text = project.projectTitle
         cell.projectDescription.text = project.projectDescription
-        cell.projectImage.kf.setImage(with: URL(string: project.imageUrl ?? ""))
+        DispatchQueue.main.async {
+            cell.projectImage.kf.setImage(with: URL(string: project.imageUrl ?? ""))
+        }
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

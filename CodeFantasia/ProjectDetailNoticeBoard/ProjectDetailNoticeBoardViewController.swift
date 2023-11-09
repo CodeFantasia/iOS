@@ -141,6 +141,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
             UIAction(title: "삭제하기", image: .projectDeleteImage, attributes: .destructive, handler: { [weak self] _ in
                 self?.alertViewAlert(title: "삭제", message: "프로젝트를 삭제하시겠습니까?", cancelText: "아니요", acceptCompletion: {
                     self?.viewModel.projectDeleteComplete.on(.next(()))
+                    self?.navigationController?.popViewController(animated: true)
                 })
             })
         ]
@@ -393,6 +394,7 @@ extension ProjectDetailNoticeBoardViewController {
                                  message: "프로젝트를 삭제하시겠습니까?",
                                  cancelText: "아니요",
                                  acceptCompletion: {self?.viewModel.projectDeleteComplete.on(.next(()))
+                                     self?.navigationController?.popViewController(animated: true)
             })
         })
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: { _ in
