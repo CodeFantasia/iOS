@@ -45,6 +45,14 @@ class UserDataManageController: UIViewController {
     }
     // MARK: - Properties
     
+    private let titlelabel: UILabel = {
+        let label = UILabel()
+        label.text = "PROFILE"
+        label.font = UIFont.title
+        label.textColor = .black
+        return label
+    }()
+    
     private var selectedTechStack = [String]()
     private var selectedInterestField = [String]()
     
@@ -61,7 +69,7 @@ class UserDataManageController: UIViewController {
     private let addPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "plus_photo"), for: .normal)
-        button.tintColor = .white
+        button.tintColor = .black
         button.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
         return button
     }()
@@ -128,13 +136,13 @@ class UserDataManageController: UIViewController {
     private let doneButton: UIButton = {
         let button = UIButton()
         button.setTitle("완료", for: .normal)
-        button.backgroundColor = UIColor.white
+        button.backgroundColor = UIColor.black
         button.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
         button.layer.cornerRadius = CGFloat.cornerRadius
         button.titleLabel?.font = UIFont.buttonTitle
-        button.setTitleColor(.primaryColor, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
         return button
     }()
@@ -303,7 +311,7 @@ class UserDataManageController: UIViewController {
     }
     
     func configureUI() {
-        view.backgroundColor = UIColor.primaryColor
+        view.backgroundColor = UIColor.white
         
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
@@ -311,15 +319,22 @@ class UserDataManageController: UIViewController {
         techstackTableview.dropDownDelegate = self
         interestTableview.dropDownDelegate = self
         
+        view.addSubview(titlelabel)
+        titlelabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.centerX.equalToSuperview()
+        }
+        
         view.addSubview(scrollview)
         scrollview.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(CGFloat.spacing)
+            make.top.equalTo(titlelabel.snp.bottom).offset(20)
+            make.left.right.bottom.equalToSuperview().inset(CGFloat.spacing)
         }
         
         scrollview.addSubview(addPhotoButton)
         addPhotoButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            make.top.equalToSuperview()
             make.height.width.equalTo(130)
         }
         
@@ -334,6 +349,8 @@ class UserDataManageController: UIViewController {
             make.left.right.width.equalToSuperview().inset(CGFloat.spacing)
             make.bottom.equalToSuperview().inset(CGFloat.spacing)
         }
+        
+        scrollview.contentSize = CGSize(width: view.frame.width, height: stackview.frame.maxY + 20)
         
     }
     
