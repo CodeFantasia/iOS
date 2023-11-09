@@ -12,6 +12,10 @@ import RxSwift
 import Firebase
 import FirebaseAuth
 
+
+// MARK: - ProjectBoardVC
+// 프로젝트 목록을 보여주는 메인 뷰 컨트롤러입니다.
+
 class ProjectBoardVC: UIViewController {
     var blockIds: [String]?
     var writerID: String?
@@ -27,6 +31,10 @@ class ProjectBoardVC: UIViewController {
     private let projectRepository: ProjectRepositoryProtocol = ProjectRepository(firebaseBaseManager: FireBaseManager())
     private var projectsData: [(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)] = []
     private var bag = DisposeBag()
+    
+    
+// MARK: - Firebase Fetch
+// 파이어베이스로부터 프로젝트 데이터를 가져오는 메소드입니다.
     
     private func fetchDataFromFirebase() {
         ////////////////////
@@ -78,7 +86,8 @@ class ProjectBoardVC: UIViewController {
             .disposed(by: bag)
     }
     
-    // MARK: - ViewController Lifecycle
+// MARK: - ViewController Lifecycle
+// 뷰 컨트롤러의 생명주기와 관련된 메소드를 관리합니다.
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,6 +101,10 @@ class ProjectBoardVC: UIViewController {
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
     }
+    
+// MARK: - RefreshControl
+// 뷰를 새로 고칠 때 호출되는 메소드
+    
     @objc private func handleRefresh() {
         fetchDataFromFirebase()
         refreshControl.endRefreshing()
@@ -99,6 +112,7 @@ class ProjectBoardVC: UIViewController {
 }
 
 // MARK: - TableView DataSource & Delegate
+// 테이블 뷰의 데이터 소스와 델리게이트 메소드들입니다.
 
 extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -143,7 +157,8 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-// MARK: - Actions & Event Handlers (추후에 분리)
+// MARK: - Actions & Event Handlers
+// 버튼 액션과 이벤트 핸들러 메소드들입니다.
 
 extension ProjectBoardVC {
     @objc func searchButtonTapped() {
@@ -162,14 +177,15 @@ extension ProjectBoardVC {
 }
 
 // MARK: - UI Setup
+// 뷰 컨트롤러의 UI 요소들을 설정하는 메소드들입니다.
 
 private extension ProjectBoardVC {
     func setupNavigationBar() {
         let logoImageView = UIImageView().then {
             $0.contentMode = .scaleAspectFit
-            $0.image = UIImage(named: "AppIcon_long") // 에셋에서 "AppIcon" 이름의 이미지를 사용합니다.
-            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true // 로고 이미지의 너비를 설정합니다.
-            $0.heightAnchor.constraint(equalToConstant: 50).isActive = true // 로고 이미지의 높이를 설정합니다.
+            $0.image = UIImage(named: "AppIcon_long")
+            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
         }
         
         let logoBarItem = UIBarButtonItem(customView: logoImageView)
