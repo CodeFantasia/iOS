@@ -54,6 +54,13 @@ class LoginController: UIViewController {
         return button
     }()
     
+    private let loginFailAlert: UIAlertController = {
+        let alert = UIAlertController(title: "로그인 실패", message: "아이디 및 패스워드를 다시 \n한 번 확인해주세요.", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인", style: .cancel, handler: nil)
+        alert.addAction(confirm)
+        return alert
+    }()
+    
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
@@ -71,6 +78,7 @@ class LoginController: UIViewController {
         
         AuthManager.shared.logUserIn(withEmail: email, password: password) { (result, error) in
             if let error = error {
+                self.present(self.loginFailAlert, animated: true)
                 print("🤍 로그인 실패 \(error.localizedDescription) 🤍")
                 return
             }
