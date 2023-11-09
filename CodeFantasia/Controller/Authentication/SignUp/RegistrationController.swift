@@ -8,6 +8,14 @@ class RegistrationController: UIViewController {
 
     // MARK: - Properties
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "REGISTER"
+        label.font = UIFont.title
+        label.textColor = .black
+        return label
+    }()
+    
     private let alreadyHaveAccountButton: UIButton = {
         let button = Utilities().attributedButton("Already have an account?", " Log in")
         button.addTarget(self, action: #selector(handleShowLogin), for: .touchUpInside)
@@ -28,7 +36,7 @@ class RegistrationController: UIViewController {
     }()
     
     private lazy var passwordContainerView: UIView = {
-        let view = Utilities().inputContainerView(withImage: UIImage(named: "ic_lock_outline_white_2x")!, textField: passwordTextField)
+        let view = Utilities().inputContainerView(withImage: UIImage(systemName: "lock")!, textField: passwordTextField)
         return view
     }()
     
@@ -41,7 +49,7 @@ class RegistrationController: UIViewController {
     }()
 
     private lazy var passwordCheckContainerView: UIView = {
-        let view = Utilities().inputContainerView(withImage: UIImage(named: "ic_lock_outline_white_2x")!, textField: passwordCheckTextField)
+        let view = Utilities().inputContainerView(withImage: UIImage(systemName: "lock")!, textField: passwordCheckTextField)
         return view
     }()
     
@@ -54,7 +62,7 @@ class RegistrationController: UIViewController {
     }()
     
     private lazy var nameContainerView: UIView = {
-        let view = Utilities().inputContainerView(withImage: UIImage(named: "ic_person_outline_white_2x")!, textField: nameTextField)
+        let view = Utilities().inputContainerView(withImage: UIImage(systemName: "person")!, textField: nameTextField)
         return view
     }()
     
@@ -93,8 +101,8 @@ class RegistrationController: UIViewController {
     private let nextButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Next", for: .normal)
-        button.setTitleColor(.primaryColor, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .black
         button.snp.makeConstraints { make in
             make.height.equalTo(50)
         }
@@ -110,7 +118,7 @@ class RegistrationController: UIViewController {
     }()
     
     private lazy var termsOfConditionsBtn: UIButton = {
-        let btn = Utilities().attributedButton("Code Cocoon 이용 동의서", " 확인")
+        let btn = Utilities().attributedButton("Code Cocoon 이용 동의서", " 확인하기")
         btn.setTitle("Code Cocoon 서비스를 위한 개인정보 수집 및 이용 동의서", for: .normal)
         btn.addTarget(self, action: #selector(handleTermsOfConditionsBtn), for: .touchUpInside)
         return btn
@@ -119,7 +127,7 @@ class RegistrationController: UIViewController {
     private let agreeBtn: UIButton = {
         let checkBtn = UIButton(type: .system)
         checkBtn.setImage(UIImage(systemName: "square"), for: .normal)
-        checkBtn.tintColor = .white
+        checkBtn.tintColor = .black
         checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
         checkBtn.clipsToBounds = true
         return checkBtn
@@ -139,7 +147,7 @@ class RegistrationController: UIViewController {
         
         let label = UILabel()
         label.text = "위를 확인했으며 이에 동의합니다."
-        label.textColor = .white
+        label.textColor = .black
         label.font = UIFont.body
         view.addSubview(label)
         label.snp.makeConstraints { make in
@@ -274,12 +282,12 @@ class RegistrationController: UIViewController {
     }
     
     func configureUI() {
-        view.backgroundColor = .primaryColor
+        view.backgroundColor = .white
         
-        view.addSubview(alreadyHaveAccountButton)
-        alreadyHaveAccountButton.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(40)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-16)
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+            make.centerX.equalToSuperview()
         }
 
         let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, passwordCheckContainerView, nameContainerView])
@@ -289,8 +297,8 @@ class RegistrationController: UIViewController {
 
         view.addSubview(stack)
         stack.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(10)
-            make.left.right.equalToSuperview().inset(8)
+            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.left.right.equalToSuperview().inset(CGFloat.authSpacing)
         }
         
         emailCheckFailed.isHidden = true
@@ -323,7 +331,7 @@ class RegistrationController: UIViewController {
         
         view.addSubview(termsOfConditionsBtn)
         termsOfConditionsBtn.snp.makeConstraints { make in
-            make.top.equalTo(nameContainerView.snp.bottom).offset(5)
+            make.top.equalTo(nameContainerView.snp.bottom).offset(15)
             make.centerX.equalToSuperview()
         }
         
@@ -337,6 +345,12 @@ class RegistrationController: UIViewController {
         nextButton.snp.makeConstraints { make in
             make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(45)
             make.left.right.equalTo(stack)
+        }
+        
+        view.addSubview(alreadyHaveAccountButton)
+        alreadyHaveAccountButton.snp.makeConstraints { make in
+            make.top.equalTo(nextButton.snp.bottom).offset(CGFloat.authSpacing)
+            make.centerX.equalToSuperview()
         }
         
     }
