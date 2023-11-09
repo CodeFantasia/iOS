@@ -50,15 +50,8 @@ class MyProjectTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
- 
-        contentView.layer.cornerRadius = .cornerRadius
-        contentView.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
-        contentView.layer.shadowOpacity = 0.25
-        contentView.layer.shadowRadius = 4 / UIScreen.main.scale
-        contentView.layer.masksToBounds = false
+        contentView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
         contentView.backgroundColor = .white
-        contentView.frame = CGRect(x: .spacing, y: .spacing, width: bounds.width - (2 * .spacing), height: bounds.height - (2 * .spacing))
     }
 }
 

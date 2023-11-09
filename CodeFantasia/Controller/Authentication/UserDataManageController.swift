@@ -196,6 +196,7 @@ class UserDataManageController: UIViewController {
         let imageStorage = ImageStorageManager()
         let filename = UUID().uuidString
         let path = "profile_image/" + filename
+        let currentUser = Auth.auth().currentUser?.uid
         
         if let imageData = profileImage?.jpegData(compressionQuality: 0.3) {
             imageStorage.upload(imageData: imageData, path: path) { imageUrl in
@@ -210,7 +211,7 @@ class UserDataManageController: UIViewController {
                                                   blogURL: nil,
                                                   profileImageURL: imageUrl,
                                                   userProjects: nil,
-                                                  userID: UUID())
+                                                  userID: currentUser)
                     
                     let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
                     let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)

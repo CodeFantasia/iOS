@@ -235,7 +235,7 @@ extension ProfileViewController {
         db.collection("User").document(currentUser!).getDocument { (document, error) in
             if let document = document, document.exists {
                 if var userid = document.data()?["userID"] as? String {
-                    if let currentUser = self.viewModel.userProfile?.userID.uuidString {
+                    if let currentUser = self.viewModel.userProfile?.userID {
                         if currentUser == userid {
                         } else {
                             self.logoutButton.isHidden = true

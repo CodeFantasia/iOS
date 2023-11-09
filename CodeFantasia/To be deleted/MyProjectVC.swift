@@ -73,8 +73,10 @@ class MyProjectVC: UITableViewController {
         super.viewDidLoad()
         navigationbarTitle()
         ifEmptyViewLayout()
-        tableView.backgroundColor = UIColor.backgroundColor
-        tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor.white
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: .spacing)
+        tableView.separatorInsetReference = .fromAutomaticInsets
+        tableView.separatorColor = .black
         tableView.register(MyProjectTableViewCell.self, forCellReuseIdentifier: MyProjectTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
@@ -111,8 +113,6 @@ extension MyProjectVC {
 
 }
 
-
-
 extension MyProjectVC {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,19 +133,33 @@ extension MyProjectVC {
         cell.backgroundColor = UIColor.backgroundColor
         cell.projectTitle.text = project.projectTitle
         cell.projectDescription.text = project.projectDescription
-        cell.dateLabel.text = "D-\(String(describing: project.projectDuration))"
         cell.projectImage.kf.setImage(with: URL(string: project.imageUrl ?? ""))
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let enddate = project.projectEndDate
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: currentDate, to: enddate)
+        if let days = components.day {
+            if days > 0 {
+                cell.dateLabel.text = "D-\(days)"
+            } else if days == 0 {
+                cell.dateLabel.text = "D-day"
+            } else {
+                cell.dateLabel.text = "종료"
+            }
+        } else {
+    }
         cell.dateView.backgroundColor = UIColor.buttonPrimaryColor
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let project = projectDataArray[indexPath.row]
         let projectId = project.projectID.uuidString
         let moveDetail = ProjectDetailNoticeBoardViewController(viewModel: ProjectDetailNoticeBoardViewModel(projectRepository: ProjectRepository(firebaseBaseManager: FireBaseManager()), projectId: projectId))
         self.navigationController?.pushViewController(moveDetail, animated: true)
     }
-    
 }
 
 extension MyProjectVC {

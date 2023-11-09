@@ -57,13 +57,13 @@ struct UserRepository: UserRepositoryProtocol {
         if let currentUserUID = Auth.auth().currentUser?.uid {
             firebaseManager.create(collectionId, currentUserUID, user)
         } else {
-            firebaseManager.create(collectionId, user.userID.uuidString, user)
+            firebaseManager.create(collectionId, user.userID ?? "", user)
         }
         
     }
     
     func delete(user: UserProfile) {
-        firebaseManager.delete(collectionId, user.userID.uuidString)
+        firebaseManager.delete(collectionId, user.userID ?? "")
     }
     
     func `delete`(userId: String) {
@@ -74,7 +74,7 @@ struct UserRepository: UserRepositoryProtocol {
         if let currentUserUID = Auth.auth().currentUser?.uid {
             firebaseManager.update(collectionId, currentUserUID, user)
         } else {
-            firebaseManager.update(collectionId, user.userID.uuidString, user)
+            firebaseManager.update(collectionId, user.userID ?? "", user)
         }
     }
 }
