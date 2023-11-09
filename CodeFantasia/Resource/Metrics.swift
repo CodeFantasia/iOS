@@ -9,6 +9,7 @@ import Foundation
 
 extension CGFloat {
     static let cornerRadius: CGFloat = 8
+    static let authSpacing: CGFloat = 25
     static let spacing: CGFloat = 10
     static let content: CGFloat = 13
     static let smallTitle: CGFloat = 13
