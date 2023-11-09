@@ -59,7 +59,6 @@ struct UserRepository: UserRepositoryProtocol {
         } else {
             firebaseManager.create(collectionId, user.userID ?? "", user)
         }
-        
     }
     
     func delete(user: UserProfile) {

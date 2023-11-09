@@ -128,6 +128,18 @@ class ProfileViewController: UIViewController {
         $0.layer.shadowRadius = 4 / UIScreen.main.scale
         $0.layer.masksToBounds = false
     }
+    private lazy var followButton = UIHoverButton().then {
+        $0.backgroundColor = UIColor.buttonPrimaryColor
+        $0.setTitle("팔로우 하기", for: .normal)
+        $0.titleLabel?.font = UIFont.buttonTitle
+        $0.layer.cornerRadius = .cornerRadius
+        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
+        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowRadius = 4 / UIScreen.main.scale
+        $0.layer.masksToBounds = false
+    }
+    
     
     private lazy var stackView: UIStackView = UIStackView().then {
         $0.layoutMargins = UIEdgeInsets(top: .spacing, left: 20, bottom: 20, right: 20)
@@ -149,7 +161,6 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        ifShowWriter()
         
         view.backgroundColor = UIColor.white
         navigationbarTitle()
@@ -158,7 +169,7 @@ extension ProfileViewController {
 }
 
 extension ProfileViewController {
-
+    
     private func navigationbarTitle() {
         let logoImageView = UIImageView().then {
             $0.contentMode = .scaleAspectFit
@@ -169,8 +180,6 @@ extension ProfileViewController {
         
         let logoBarItem = UIBarButtonItem(customView: logoImageView)
         navigationItem.leftBarButtonItem = logoBarItem
-//        let barTitleItem = UIBarButtonItem(customView: barTitle)
-//        navigationItem.leftBarButtonItem = barTitleItem
     }
     
     private func setupLayout() {
@@ -193,11 +202,13 @@ extension ProfileViewController {
           interestTitleLabel,
           interestLabel,
           interestUnderline,
+          followButton,
           editButton,
-          logoutButton].forEach {
+          logoutButton
+        ].forEach {
             stackView.addArrangedSubview($0)
         }
-
+        
         scrollView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
@@ -236,24 +247,6 @@ extension ProfileViewController {
         }
         interestUnderline.snp.makeConstraints {
             $0.height.equalTo(infoUnderline)
-        }
-    }
-    private func ifShowWriter() {
-        let db = Firestore.firestore()
-        let currentUser = Auth.auth().currentUser?.uid
-        db.collection("User").document(currentUser!).getDocument { (document, error) in
-            if let document = document, document.exists {
-                if var userid = document.data()?["userID"] as? String {
-                    if let currentUser = self.viewModel.userProfile?.userID {
-                        if currentUser == userid {
-                        } else {
-                            self.logoutButton.isHidden = true
-                            self.editButton.isHidden = true
-                            self.barTitle.text = "작성자 프로필"
-                        }
-                    }
-                }
-            }
         }
     }
 }
@@ -297,6 +290,21 @@ extension ProfileViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        outputs.userAuthConfirmed
+            .drive (onNext: { [weak self] _ in
+                guard let self = self, let user = viewModel.userProfile, let currentAuthor = Auth.auth().currentUser?.uid else {
+                    return
+                }
+                if user.userID == currentAuthor {
+                    self.followButton.isHidden = true
+                } else {
+                    self.editButton.isHidden = true
+                    self.logoutButton.isHidden = true
+                }
+            })
+            .disposed(by: disposeBag)
+    
         
         outputs.profileEditDidTap
             .drive (with: self, onNext: { owner, user in
