@@ -28,10 +28,6 @@ class MyProjectTableViewCell: UITableViewCell {
     
     let dateView = UIView().then {
         $0.layer.cornerRadius = .cornerRadius
-        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
-        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
-        $0.layer.shadowOpacity = 0.25
-        $0.layer.shadowRadius = 4 / UIScreen.main.scale
         $0.layer.masksToBounds = false
     }
     

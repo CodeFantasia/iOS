@@ -67,7 +67,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.text = "기술 및 언어"
         $0.font = .subTitle
     }
-    private lazy var techStackContextView = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var techStackContextView = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = """
         """
         $0.font = .body
@@ -81,7 +81,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.text = "모집 현황"
         $0.font = .subTitle
     }
-    private lazy var recruitmentStatusContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var recruitmentStatusContextLabel = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = """
         """
         $0.numberOfLines = 0
@@ -94,7 +94,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.text = "프로젝트 소개"
         $0.font = .subTitle
     }
-    private lazy var projectIntroduceContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var projectIntroduceContextLabel = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = """
         """
         $0.numberOfLines = 0
@@ -107,7 +107,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.text = "프로젝트 기간"
         $0.font = .subTitle
     }
-    private lazy var projectPeriodContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var projectPeriodContextLabel = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = "\(Date().yearMonthDate) ~ \(Date().yearMonthDate)"
         $0.numberOfLines = 0
     }
@@ -120,14 +120,14 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.font = .subTitle
     }
 
-    private lazy var projectMeetingTypeContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var projectMeetingTypeContextLabel = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = ""
         $0.numberOfLines = 0
     }
     private lazy var projectApplyButton = UIHoverButton().then {
         $0.setTitle("신청하기", for: .normal)
         $0.titleLabel?.font = .buttonTitle
-        $0.setTitleColor(.black, for: .normal)
+        $0.setTitleColor(.white, for: .normal)
         $0.backgroundColor = .buttonPrimaryColor
         $0.layer.cornerRadius = .cornerRadius
         // color
@@ -175,7 +175,7 @@ extension ProjectDetailNoticeBoardViewController {
 //MARK: - UI Setting
 extension ProjectDetailNoticeBoardViewController {
     private func configure() {
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(contentStackView)
         activityIndicator.center = view.center

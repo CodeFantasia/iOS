@@ -23,7 +23,7 @@ class MyProjectVC: UITableViewController {
         $0.spacing = .spacing
     }
 
-    let emptyButton = UIHoverButton().then {
+    private lazy var emptyButton = UIHoverButton().then {
         $0.primaryColorConfigure(title: "새글작성")
         $0.setTitleColor(.white, for: .normal)
         $0.titleLabel?.font = UIFont.buttonTitle
@@ -36,13 +36,13 @@ class MyProjectVC: UITableViewController {
         $0.addTarget(self, action: #selector(emptyButtonTapped), for: .touchUpInside)
     }
     
-    let emptyTitleLabel = UILabel().then {
+    private lazy var emptyTitleLabel = UILabel().then {
         $0.text = "작성된 글이 없습니다."
         $0.textAlignment = .center
         $0.font = .title
     }
     
-    let emptySubtitleLabel = UILabel().then {
+    private lazy var emptySubtitleLabel = UILabel().then {
         $0.text = """
                   아래의 버튼을 눌러 글을 작성하고
                   팀원을 모집하세요!
@@ -52,10 +52,9 @@ class MyProjectVC: UITableViewController {
         $0.textAlignment = .center
     }
     
-    let barTitle = UILabel().then {
+    private lazy var barTitle = UILabel().then {
         $0.text = "내 프로젝트"
         $0.font = UIFont.title
-        $0.textColor = .black
     }
     
     private let viewModel: MyProjectViewModel
@@ -82,9 +81,9 @@ class MyProjectVC: UITableViewController {
         navigationbarTitle()
         ifEmptyViewLayout()
         tableView.backgroundColor = UIColor.white
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: .spacing)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 15)
         tableView.separatorInsetReference = .fromAutomaticInsets
-        tableView.separatorColor = .black
+        tableView.separatorColor = .gray
         tableView.register(MyProjectTableViewCell.self, forCellReuseIdentifier: MyProjectTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
@@ -194,8 +193,18 @@ extension MyProjectVC {
     }
     
     func navigationbarTitle() {
-        let barTitleItem = UIBarButtonItem(customView: barTitle)
-        navigationItem.leftBarButtonItem = barTitleItem
+        let logoImageView = UIImageView().then {
+            $0.contentMode = .scaleAspectFit
+            $0.image = UIImage(named: "AppIcon_long")
+            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        }
+        
+        let logoBarItem = UIBarButtonItem(customView: logoImageView)
+        navigationItem.leftBarButtonItem = logoBarItem
+//        
+//        let barTitleItem = UIBarButtonItem(customView: barTitle)
+//        navigationItem.leftBarButtonItem = barTitleItem
     }
     
     func showEmptyView() {

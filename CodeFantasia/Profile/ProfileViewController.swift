@@ -31,7 +31,7 @@ class ProfileViewController: UIViewController {
         $0.layer.shadowOpacity = 0.25
         $0.layer.shadowRadius = 4 / UIScreen.main.scale
         $0.layer.masksToBounds = false
-        $0.backgroundColor = .white
+        $0.backgroundColor = .backgroundColor
     }
 
     private lazy var profileImage = UIImageView().then {
@@ -151,7 +151,7 @@ extension ProfileViewController {
         super.viewDidLoad()
         ifShowWriter()
         
-        view.backgroundColor = UIColor.backgroundColor
+        view.backgroundColor = UIColor.white
         navigationbarTitle()
         setupLayout()
     }
@@ -160,8 +160,17 @@ extension ProfileViewController {
 extension ProfileViewController {
 
     private func navigationbarTitle() {
-        let barTitleItem = UIBarButtonItem(customView: barTitle)
-        navigationItem.leftBarButtonItem = barTitleItem
+        let logoImageView = UIImageView().then {
+            $0.contentMode = .scaleAspectFit
+            $0.image = UIImage(named: "AppIcon_long")
+            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        }
+        
+        let logoBarItem = UIBarButtonItem(customView: logoImageView)
+        navigationItem.leftBarButtonItem = logoBarItem
+//        let barTitleItem = UIBarButtonItem(customView: barTitle)
+//        navigationItem.leftBarButtonItem = barTitleItem
     }
     
     private func setupLayout() {
