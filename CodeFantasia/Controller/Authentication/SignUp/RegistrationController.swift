@@ -15,7 +15,8 @@ class RegistrationController: UIViewController {
     }()
     
     private lazy var emailContainerView: UIView = {
-        let view = Utilities().inputContainerView(withImage: UIImage(named: "mail")!, textField: emailTextField)
+        let (view, btn) = Utilities().duplicateCheckView(withImage: UIImage(named: "mail")!, textField: emailTextField)
+        btn.addTarget(self, action: #selector(handleEmailDuplicateCheck), for: .touchUpInside)
         return view
     }()
     
@@ -110,7 +111,7 @@ class RegistrationController: UIViewController {
     }()
     
     private lazy var termsOfConditionsBtn: UIButton = {
-        let btn = Utilities().attributedButton("Code Cocoon 이용 동의서", " 확인")
+        let btn = Utilities().attributedButton("Code Cocoon 이용 동의서", " 확인하기")
         btn.setTitle("Code Cocoon 서비스를 위한 개인정보 수집 및 이용 동의서", for: .normal)
         btn.addTarget(self, action: #selector(handleTermsOfConditionsBtn), for: .touchUpInside)
         return btn
@@ -124,8 +125,6 @@ class RegistrationController: UIViewController {
         checkBtn.clipsToBounds = true
         return checkBtn
     }()
-
-
     
     private lazy var termsOfConditionsAgree: UIView = {
         let view = UIView()
@@ -155,6 +154,7 @@ class RegistrationController: UIViewController {
     // MARK: - Life Cycle
       override func viewDidLoad() {
         super.viewDidLoad()
+
         configureUI()
         hideTextView()
         setKeyboardObserver()
@@ -164,6 +164,10 @@ class RegistrationController: UIViewController {
       }
     
     // MARK: - Selectors
+    
+    @objc func handleEmailDuplicateCheck() {
+        print("중복!중복!")
+    }
     
     @objc func handleTermsOfConditionsAgree() {
         agreeBtn.isSelected = !agreeBtn.isSelected
@@ -196,7 +200,6 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleNextButton() {
-        
         if agreeBtn.isSelected == false {
             termsOfConditionsBtn.shake()
             return
@@ -205,9 +208,6 @@ class RegistrationController: UIViewController {
         guard let email = emailTextField.text, emailVerify(email: email) else { return }
         guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
         guard let name = nameTextField.text, nameVerify(name: name) else { return }
-
-        let newUser = UserAuth(email: email, password: password, name: name)
-        AuthManager.shared.registerUser(crudentials: newUser)
         
         print("계정 등록 완료!")
         let userId = Auth.auth().currentUser?.uid

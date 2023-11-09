@@ -218,6 +218,8 @@ class UserDataManageController: UIViewController {
                     userRepository.create(user: userProfile)
                     userRepository.update(user: userProfile)
                     
+                    NotificationCenter.default.post(name: NSNotification.Name("Register"), object: nil)
+                    
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
                     guard let tab = window.rootViewController as? TabBarController else { return }
                     
