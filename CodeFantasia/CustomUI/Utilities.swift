@@ -63,6 +63,55 @@ class Utilities {
         return view
     }
     
+    func duplicateCheckView(withImage image: UIImage, textField: UITextField) -> (UIView, UIButton) {
+        let view = UIView()
+        let imageview = UIImageView()
+        let duplicateBtn = UIButton(type: .system)
+        duplicateBtn.setTitle("중복확인", for: .normal)
+        duplicateBtn.setTitleColor(.white, for: .normal)
+        duplicateBtn.backgroundColor = .blue
+        duplicateBtn.layer.cornerRadius = .cornerRadius
+        
+        imageview.image = image
+        imageview.tintColor = .black
+
+        view.snp.makeConstraints { make in
+            make.height.equalTo(50)
+        }
+        
+        view.addSubview(imageview)
+        imageview.snp.makeConstraints { make in
+            make.left.bottom.equalToSuperview().inset(8)
+            make.height.width.equalTo(24)
+        }
+        
+        view.addSubview(textField)
+        textField.snp.makeConstraints { make in
+            make.left.equalTo(imageview.snp.right).offset(8)
+            make.bottom.equalTo(imageview)
+            make.right.equalToSuperview().inset(70)
+        }
+        
+        view.addSubview(duplicateBtn)
+        duplicateBtn.snp.makeConstraints { make in
+            make.left.equalTo(textField.snp.right).offset(2)
+            make.right.bottom.equalToSuperview().inset(5)
+        }
+        
+        let dividerView = UIView()
+        dividerView.backgroundColor = .black
+        view.addSubview(dividerView)
+        
+        dividerView.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(8)
+            make.bottom.equalToSuperview()
+            make.right.equalToSuperview().inset(8)
+            make.height.equalTo(0.75)
+        }
+        
+        return (view, duplicateBtn)
+    }
+    
     // MARK: - New Post
     
     func createInputContainerView(title: String, textField: UITextField) -> UIView {
