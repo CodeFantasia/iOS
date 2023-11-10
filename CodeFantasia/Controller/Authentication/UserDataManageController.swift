@@ -247,11 +247,11 @@ class UserDataManageController: UIViewController {
     
     
     @objc func handleWithdrawButton() {
-        self.alertViewAlert(title: "회원 탈퇴", message: """
-                                                       정말 탈퇴 하시겠습니까?
-                                                       기존의 정보들이 모두 삭제됩니다.
-                                                       """, cancelText: "아니요", acceptCompletion:  {
-            if let user = Auth.auth().currentUser {
+        if let user = Auth.auth().currentUser {
+            self.alertViewAlert(title: "회원 탈퇴", message: """
+                                                               정말 탈퇴 하시겠습니까?
+                                                               기존의 정보들이 모두 삭제됩니다.
+                                                               """, cancelText: "아니요", acceptCompletion:  {
                 self.deleteEmail()
                 user.delete { [self] error in
                     if let error = error {
@@ -286,8 +286,12 @@ class UserDataManageController: UIViewController {
                         }
                     }
                 }
-            }
-        })
+            })
+        } else {
+            self.alertViewAlert(title: "로그인 정보가 일치하지 않습니다", message: """
+                                                           다시 로그인 후 탈퇴해주세요.
+                                                           """, cancelText: nil, acceptCompletion:  {})
+                }
     }
     
     @objc func backBarButton() {
@@ -445,7 +449,6 @@ extension UserDataManageController: UIImagePickerControllerDelegate, UINavigatio
         
         dismiss(animated: true, completion: nil)
     }
-    
 }
 
 // MARK: - DropDownTableViewDelegate
