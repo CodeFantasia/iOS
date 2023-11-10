@@ -234,6 +234,7 @@ extension ProfileViewController {
         produceContent.snp.makeConstraints {
             $0.top.equalTo(produceLabel.snp.bottom).offset(16)
             $0.leading.equalTo(produceLabel)
+            $0.trailing.equalTo(produceView.snp.trailing).inset(16)
         }
         infoUnderline.snp.makeConstraints {
             $0.height.equalTo(1)
