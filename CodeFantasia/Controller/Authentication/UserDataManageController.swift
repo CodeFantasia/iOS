@@ -251,7 +251,7 @@ class UserDataManageController: UIViewController {
                                                        정말 탈퇴 하시겠습니까?
                                                        기존의 정보들이 모두 삭제됩니다.
                                                        """, cancelText: "아니요", acceptCompletion:  {
-            if  let user = Auth.auth().currentUser {
+            if let user = Auth.auth().currentUser {
                 self.deleteEmail()
                 user.delete { [self] error in
                     if let error = error {
