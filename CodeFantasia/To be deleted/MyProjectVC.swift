@@ -23,18 +23,26 @@ class MyProjectVC: UITableViewController {
         $0.spacing = .spacing
     }
 
-    let emptyButton = UIButton().then {
+    private lazy var emptyButton = UIHoverButton().then {
         $0.primaryColorConfigure(title: "새글작성")
+        $0.setTitleColor(.white, for: .normal)
+        $0.titleLabel?.font = UIFont.buttonTitle
+        $0.layer.cornerRadius = .cornerRadius
+        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
+        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
+        $0.layer.shadowOpacity = 0.25
+        $0.layer.shadowRadius = 4 / UIScreen.main.scale
+        $0.layer.masksToBounds = false
         $0.addTarget(self, action: #selector(emptyButtonTapped), for: .touchUpInside)
     }
     
-    let emptyTitleLabel = UILabel().then {
+    private lazy var emptyTitleLabel = UILabel().then {
         $0.text = "작성된 글이 없습니다."
         $0.textAlignment = .center
         $0.font = .title
     }
     
-    let emptySubtitleLabel = UILabel().then {
+    private lazy var emptySubtitleLabel = UILabel().then {
         $0.text = """
                   아래의 버튼을 눌러 글을 작성하고
                   팀원을 모집하세요!
@@ -44,10 +52,9 @@ class MyProjectVC: UITableViewController {
         $0.textAlignment = .center
     }
     
-    let barTitle = UILabel().then {
+    private lazy var barTitle = UILabel().then {
         $0.text = "내 프로젝트"
         $0.font = UIFont.title
-        $0.textColor = .black
     }
     
     private let viewModel: MyProjectViewModel
@@ -73,8 +80,10 @@ class MyProjectVC: UITableViewController {
         super.viewDidLoad()
         navigationbarTitle()
         ifEmptyViewLayout()
-        tableView.backgroundColor = UIColor.backgroundColor
-        tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor.white
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 15)
+        tableView.separatorInsetReference = .fromAutomaticInsets
+        tableView.separatorColor = .gray
         tableView.register(MyProjectTableViewCell.self, forCellReuseIdentifier: MyProjectTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
@@ -111,8 +120,6 @@ extension MyProjectVC {
 
 }
 
-
-
 extension MyProjectVC {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -133,19 +140,35 @@ extension MyProjectVC {
         cell.backgroundColor = UIColor.backgroundColor
         cell.projectTitle.text = project.projectTitle
         cell.projectDescription.text = project.projectDescription
-        cell.dateLabel.text = "D-\(String(describing: project.projectDuration))"
-        cell.projectImage.kf.setImage(with: URL(string: project.imageUrl ?? ""))
+        DispatchQueue.main.async {
+            cell.projectImage.kf.setImage(with: URL(string: project.imageUrl ?? ""))
+        }
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let enddate = project.projectEndDate
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: currentDate, to: enddate)
+        if let days = components.day {
+            if days > 0 {
+                cell.dateLabel.text = "D-\(days)"
+            } else if days == 0 {
+                cell.dateLabel.text = "D-day"
+            } else {
+                cell.dateLabel.text = "종료"
+            }
+        } else {
+    }
         cell.dateView.backgroundColor = UIColor.buttonPrimaryColor
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let project = projectDataArray[indexPath.row]
         let projectId = project.projectID.uuidString
         let moveDetail = ProjectDetailNoticeBoardViewController(viewModel: ProjectDetailNoticeBoardViewModel(projectRepository: ProjectRepository(firebaseBaseManager: FireBaseManager()), projectId: projectId))
         self.navigationController?.pushViewController(moveDetail, animated: true)
     }
-    
 }
 
 extension MyProjectVC {
@@ -170,8 +193,18 @@ extension MyProjectVC {
     }
     
     func navigationbarTitle() {
-        let barTitleItem = UIBarButtonItem(customView: barTitle)
-        navigationItem.leftBarButtonItem = barTitleItem
+        let logoImageView = UIImageView().then {
+            $0.contentMode = .scaleAspectFit
+            $0.image = UIImage(named: "AppIcon_long")
+            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        }
+        
+        let logoBarItem = UIBarButtonItem(customView: logoImageView)
+        navigationItem.leftBarButtonItem = logoBarItem
+//        
+//        let barTitleItem = UIBarButtonItem(customView: barTitle)
+//        navigationItem.leftBarButtonItem = barTitleItem
     }
     
     func showEmptyView() {

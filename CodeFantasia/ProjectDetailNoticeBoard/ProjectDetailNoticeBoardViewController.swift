@@ -15,8 +15,21 @@ import FirebaseAuth
 import Firebase
 
 final class ProjectDetailNoticeBoardViewController: UIViewController {
+    
     var writerID: String?
-
+    private let viewModel: ProjectDetailNoticeBoardViewModel
+    private let disposeBag = DisposeBag()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
+    
+    init(viewModel: ProjectDetailNoticeBoardViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private lazy var scrollView = UIScrollView()
     private lazy var contentStackView = UIStackView().then {
         $0.axis = .vertical
@@ -54,7 +67,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.text = "기술 및 언어"
         $0.font = .subTitle
     }
-    private lazy var techStackContextView = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var techStackContextView = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = """
         """
         $0.font = .body
@@ -68,7 +81,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.text = "모집 현황"
         $0.font = .subTitle
     }
-    private lazy var recruitmentStatusContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var recruitmentStatusContextLabel = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = """
         """
         $0.numberOfLines = 0
@@ -81,7 +94,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.text = "프로젝트 소개"
         $0.font = .subTitle
     }
-    private lazy var projectIntroduceContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var projectIntroduceContextLabel = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = """
         """
         $0.numberOfLines = 0
@@ -94,7 +107,7 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.text = "프로젝트 기간"
         $0.font = .subTitle
     }
-    private lazy var projectPeriodContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var projectPeriodContextLabel = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = "\(Date().yearMonthDate) ~ \(Date().yearMonthDate)"
         $0.numberOfLines = 0
     }
@@ -107,14 +120,14 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
         $0.font = .subTitle
     }
 
-    private lazy var projectMeetingTypeContextLabel = PaddingLabel(inset: .init(top: 10, left: 10, bottom: 10, right: 10)).then {
+    private lazy var projectMeetingTypeContextLabel = PaddingLabel(/*inset: .init(top: 10, left: 10, bottom: 10, right: 10)*/).then {
         $0.text = ""
         $0.numberOfLines = 0
     }
     private lazy var projectApplyButton = UIHoverButton().then {
         $0.setTitle("신청하기", for: .normal)
         $0.titleLabel?.font = .buttonTitle
-        $0.setTitleColor(.black, for: .normal)
+        $0.setTitleColor(.white, for: .normal)
         $0.backgroundColor = .buttonPrimaryColor
         $0.layer.cornerRadius = .cornerRadius
         // color
@@ -141,24 +154,12 @@ final class ProjectDetailNoticeBoardViewController: UIViewController {
             UIAction(title: "삭제하기", image: .projectDeleteImage, attributes: .destructive, handler: { [weak self] _ in
                 self?.alertViewAlert(title: "삭제", message: "프로젝트를 삭제하시겠습니까?", cancelText: "아니요", acceptCompletion: {
                     self?.viewModel.projectDeleteComplete.on(.next(()))
+                    self?.navigationController?.popViewController(animated: true)
                 })
             })
         ]
     }
     private lazy var editMenu = UIMenu(title: "",image: nil, identifier: nil, options: [], children: menuItems)
-    
-    private let viewModel: ProjectDetailNoticeBoardViewModel
-    private let disposeBag = DisposeBag()
-    private let activityIndicator = UIActivityIndicatorView(style: .large)
-    
-    init(viewModel: ProjectDetailNoticeBoardViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        bind()
-    }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
 
 //MARK: - View Life Cycle
@@ -174,7 +175,7 @@ extension ProjectDetailNoticeBoardViewController {
 //MARK: - UI Setting
 extension ProjectDetailNoticeBoardViewController {
     private func configure() {
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .white
         view.addSubview(scrollView)
         scrollView.addSubview(contentStackView)
         activityIndicator.center = view.center
@@ -393,6 +394,7 @@ extension ProjectDetailNoticeBoardViewController {
                                  message: "프로젝트를 삭제하시겠습니까?",
                                  cancelText: "아니요",
                                  acceptCompletion: {self?.viewModel.projectDeleteComplete.on(.next(()))
+                                     self?.navigationController?.popViewController(animated: true)
             })
         })
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: { _ in

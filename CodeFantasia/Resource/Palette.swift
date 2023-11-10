@@ -24,7 +24,7 @@ extension UIColor {
     static let backgroundColor = UIColor(hexCode: "#F5F5F5")
     static let formBackgroundColor = UIColor(hexCode: "#FFFFFF")
     static let primaryColor = UIColor(hexCode: "#67C99D")
-    static let buttonPrimaryColor = UIColor(hexCode: "#F0C437")
+    static let buttonPrimaryColor = UIColor.black
     static let buttonSecondaryColor = UIColor(hexCode: "#B4B4B4")
 
 }
