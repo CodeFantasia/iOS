@@ -5,15 +5,15 @@
 // Created by 서영덕 on 10/13/23.
 //
 
-import UIKit
-import SnapKit
-import Then
-import RxSwift
 import Firebase
 import FirebaseAuth
-
+import RxSwift
+import SnapKit
+import Then
+import UIKit
 
 // MARK: - ProjectBoardVC
+
 // 프로젝트 목록을 보여주는 메인 뷰 컨트롤러입니다.
 
 class ProjectBoardVC: UIViewController {
@@ -32,9 +32,9 @@ class ProjectBoardVC: UIViewController {
     private var projectsData: [(imageURL: URL?, title: String, detail: String, icons: [IconModel], status: String, projectID: UUID)] = []
     private var bag = DisposeBag()
     
-    
-// MARK: - Firebase Fetch
-// 파이어베이스로부터 프로젝트 데이터를 가져오는 메소드입니다.
+    // MARK: - Firebase Fetch
+
+    // 파이어베이스로부터 프로젝트 데이터를 가져오는 메소드입니다.
     
     private func fetchDataFromFirebase() {
         ////////////////////
@@ -42,13 +42,14 @@ class ProjectBoardVC: UIViewController {
             let db = Firestore.firestore()
             // Firestore에서 현재 사용자의 문서 가져오기
             let userDocumentReference = db.collection("User").document(currentUser)
-            userDocumentReference.getDocument { (snapshot, error) in
+            userDocumentReference.getDocument { snapshot, error in
                 if let error = error {
                     print("Error fetching document: \(error)")
                 } else if let snapshot = snapshot, snapshot.exists {
                     // 문서가 존재하면 필드 값을 가져올 수 있습니다.
                     if let data = snapshot.data(),
-                       let blockIDs = data["blockIDs"] as? [String] {
+                       let blockIDs = data["blockIDs"] as? [String]
+                    {
                         // blockIDs 필드가 배열인 경우, [String]로 타입 캐스트
                         print("blockIDs: \(blockIDs)")
                         self.blockIds = blockIDs
@@ -64,7 +65,7 @@ class ProjectBoardVC: UIViewController {
         ///
         ///
         /////////////
-        projectRepository.readBlockAll(blockIDs: blockIds ?? [])//현재 로그인한 유저의 블록아이디 문자열 배열
+        projectRepository.readBlockAll(blockIDs: blockIds ?? []) // 현재 로그인한 유저의 블록아이디 문자열 배열
             .observe(on: MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] projects in
                 self?.projectsData = projects.map { project in
@@ -72,7 +73,7 @@ class ProjectBoardVC: UIViewController {
                     let statusString = project.recruitingStatus ?? false ? "모집 중" : "모집 완료"
                     let icons: [IconModel] = project.techStack.flatMap { techStack in
                         techStack.technologies.map { techName in
-                            return IconModel(image: UIImage(named: techName) ?? UIImage())
+                            IconModel(image: UIImage(named: techName) ?? UIImage())
                         }
                     }
                     return (imageURL, project.projectTitle ?? "", project.projectDescription ?? "", icons, statusString, project.projectID)
@@ -86,24 +87,28 @@ class ProjectBoardVC: UIViewController {
             .disposed(by: bag)
     }
     
-// MARK: - ViewController Lifecycle
-// 뷰 컨트롤러의 생명주기와 관련된 메소드를 관리합니다.
+    // MARK: - ViewController Lifecycle
+
+    // 뷰 컨트롤러의 생명주기와 관련된 메소드를 관리합니다.
     
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
-        self.fetchDataFromFirebase()
+        fetchDataFromFirebase()
         setupNavigationBar()
         setupTableView()
         setupFloatingActionButton()
         view.backgroundColor = .white
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .black
+        NotificationCenter.default.addObserver(self, selector: #selector(handleRefreshData(_:)), name: NSNotification.Name("RefreshDataNotification"), object: nil)
+
     }
     
-// MARK: - RefreshControl
-// 뷰를 새로 고칠 때 호출되는 메소드
+    // MARK: - RefreshControl
+
+    // 뷰를 새로 고칠 때 호출되는 메소드
     
     @objc private func handleRefresh() {
         fetchDataFromFirebase()
@@ -112,6 +117,7 @@ class ProjectBoardVC: UIViewController {
 }
 
 // MARK: - TableView DataSource & Delegate
+
 // 테이블 뷰의 데이터 소스와 델리게이트 메소드들입니다.
 
 extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
@@ -123,7 +129,7 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ProjectBoardCell", for: indexPath) as! ProjectBoardTableviewCell
         let dataItem = projectsData[indexPath.row]
         if let imageURL = dataItem.imageURL {
-            URLSession.shared.dataTask(with: imageURL) { (data, response, error) in
+            URLSession.shared.dataTask(with: imageURL) { data, _, _ in
                 if let data = data, let image = UIImage(data: data) {
                     DispatchQueue.main.async {
                         cell.titleImageView.image = image
@@ -158,6 +164,7 @@ extension ProjectBoardVC: UITableViewDataSource, UITableViewDelegate {
 }
 
 // MARK: - Actions & Event Handlers
+
 // 버튼 액션과 이벤트 핸들러 메소드들입니다.
 
 extension ProjectBoardVC {
@@ -166,6 +173,7 @@ extension ProjectBoardVC {
         let searchVC = ProjectSearchViewVC(mockData: projectsData)
         navigationController?.pushViewController(searchVC, animated: true)
     }
+
     //  @objc func bellButtonTapped() {
     //    // TODO: Implement bell action
     //  }
@@ -177,6 +185,7 @@ extension ProjectBoardVC {
 }
 
 // MARK: - UI Setup
+
 // 뷰 컨트롤러의 UI 요소들을 설정하는 메소드들입니다.
 
 private extension ProjectBoardVC {
@@ -202,7 +211,7 @@ private extension ProjectBoardVC {
         //      $0.setImage(UIImage(systemName: "pencil"), for: .normal)
         //      $0.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
         //    }
-        let stackView = UIStackView(arrangedSubviews: [searchButtonView/*, bellButtonView, pencilButtonView*/]).then {
+        let stackView = UIStackView(arrangedSubviews: [searchButtonView /* , bellButtonView, pencilButtonView */ ]).then {
             $0.axis = .horizontal
             $0.spacing = 10
         }
@@ -238,4 +247,7 @@ private extension ProjectBoardVC {
             make.width.height.equalTo(60)
         }
     }
+    @objc private func handleRefreshData(_ notification: Notification) {
+            fetchDataFromFirebase()
+        }
 }
