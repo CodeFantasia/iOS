@@ -40,6 +40,25 @@ struct AuthManager {
             }
         }
     }
+
+    func deleteAccountWithEmail(_ email: String, completion: @escaping (Error?) -> Void) {
+        let emailsRef = DB_REF.child("emails")
+        emailsRef.observeSingleEvent(of: .value) { (snapshot) in
+            guard snapshot.exists(), var emails = snapshot.value as? [String: Any] else {
+                completion(nil)
+                return
+            }
+
+            if let storedEmail = emails["email"] as? String, storedEmail == email {
+                emailsRef.removeValue { (error, _) in
+                    completion(error)
+                }
+            } else {
+                completion(nil)
+            }
+        }
+    }
+
     
     func logUserIn(withEmail email: String, password: String, completion: @escaping(AuthDataResult?, Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password, completion: completion)
