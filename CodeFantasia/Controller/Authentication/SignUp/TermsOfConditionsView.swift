@@ -19,7 +19,7 @@ class TermsOfConditionsView: UIView {
     // MARK: - Properties
     
     private let termsOfConditions = """
-Code Cocoond은(는) \"개인정보 보호법\"에 따라 아래와 같이 수집하는 개인정보의 항목, 수집 및 이용 목적, 보유 및 이용 기간을 안내드리고 동의를 받고자 합니다.
+Code Cocoon은(는) \"개인정보 보호법\"에 따라 아래와 같이 수집하는 개인정보의 항목, 수집 및 이용 목적, 보유 및 이용 기간을 안내드리고 동의를 받고자 합니다.
 
 ○ 개인정보 수집, 이용 내역
 
