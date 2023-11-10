@@ -62,19 +62,6 @@ class RegistrationController: UIViewController {
         return label
     }()
     
-    private lazy var nameContainerView: UIView = {
-        let view = Utilities().inputContainerView(withImage: UIImage(systemName: "person")!, textField: nameTextField)
-        return view
-    }()
-    
-    private let nameCheckFailed: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.smallTitle
-        label.text = "영어와 한국어로 이름을 작성해 주세요."
-        label.textColor = .systemRed
-        return label
-    }()
-    
     private let emailTextField: UITextField = {
         let textfield = Utilities().textField(withPlaceholder: "Email")
         return textfield
@@ -86,12 +73,7 @@ class RegistrationController: UIViewController {
         textfield.isSecureTextEntry = true
         return textfield
     }()
-    
-    private let nameTextField: UITextField = {
-        let textfield = Utilities().textField(withPlaceholder: "Name")
-        return textfield
-    }()
-    
+
     private let passwordCheckTextField: UITextField = {
         let textfield = Utilities().textField(withPlaceholder: "Re-enter your password")
         textfield.isSecureTextEntry = true
@@ -174,14 +156,7 @@ class RegistrationController: UIViewController {
     // MARK: - Selectors
     
     @objc func handleEmailDuplicateCheck() {
-        guard let email = emailTextField.text else { return }
-        AuthManager.shared.checkDuplicateUser(email: email) { result in
-            if result {
-                print("가입 불가!")
-            } else {
-                print("가입 가능!")
-            }
-        }
+
     }
     
     @objc func handleTermsOfConditionsAgree() {
@@ -222,9 +197,17 @@ class RegistrationController: UIViewController {
 
         guard let email = emailTextField.text, emailVerify(email: email) else { return }
         guard let password = passwordTextField.text, let passwordCheck = passwordCheckTextField.text, passwordVerify(password: password, passwordMatch: passwordCheck) else { return }
-        guard let name = nameTextField.text, nameVerify(name: name) else { return }
         
-        print("계정 등록 완료!")
+        let newUser = UserAuth(email: email, password: password)
+        
+        AuthManager().registerUser(crudentials: newUser) { error, data in
+            if let error = error {
+                print("회원가입 실패! error: \(error)")
+            } else {
+                print("회원가입 성공!")
+            }
+        }
+
         let userId = Auth.auth().currentUser?.uid
         let data = ProfileViewModel(userRepository:UserRepository(firebaseBaseManager: FireBaseManager()), userId: userId ?? "").userProfile
         let vc = UserDataManageController(data: data)
@@ -272,17 +255,7 @@ class RegistrationController: UIViewController {
 
         return true
     }
-    
-    func nameVerify(name: String) -> Bool {
-        if !containsOnlyEnglishAndKorean(name) || name.count < 1 {
-            checkFailed(shakeView: nameContainerView, alertLabel: nameCheckFailed)
-            return false
-        } else {
-            nameCheckFailed.isHidden = true
-            return true
-        }
-    }
-    
+
     func checkFailed(shakeView: UIView, alertLabel: UILabel) {
         shakeView.shake()
         alertLabel.isHidden = false
@@ -297,7 +270,7 @@ class RegistrationController: UIViewController {
             make.centerX.equalToSuperview()
         }
 
-        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, passwordCheckContainerView, nameContainerView])
+        let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, passwordCheckContainerView])
         stack.axis = .vertical
         stack.spacing = 20
         stack.distribution = .fillEqually
@@ -329,16 +302,9 @@ class RegistrationController: UIViewController {
             make.left.equalTo(passwordCheckContainerView).offset(5)
         }
         
-        nameCheckFailed.isHidden = true
-        view.addSubview(nameCheckFailed)
-        nameCheckFailed.snp.makeConstraints { make in
-            make.top.equalTo(nameContainerView.snp.bottom).offset(5)
-            make.left.equalTo(nameContainerView).offset(5)
-        }
-        
         view.addSubview(termsOfConditionsBtn)
         termsOfConditionsBtn.snp.makeConstraints { make in
-            make.top.equalTo(nameContainerView.snp.bottom).offset(15)
+            make.top.equalTo(stack.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
         }
         

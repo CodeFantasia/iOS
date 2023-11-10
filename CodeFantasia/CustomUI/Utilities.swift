@@ -73,7 +73,7 @@ class Utilities {
         duplicateBtn.layer.cornerRadius = .cornerRadius
         
         imageview.image = image
-        imageview.tintColor = .white
+        imageview.tintColor = .black
 
         view.snp.makeConstraints { make in
             make.height.equalTo(50)
@@ -99,7 +99,7 @@ class Utilities {
         }
         
         let dividerView = UIView()
-        dividerView.backgroundColor = .white
+        dividerView.backgroundColor = .black
         view.addSubview(dividerView)
         
         dividerView.snp.makeConstraints { make in
