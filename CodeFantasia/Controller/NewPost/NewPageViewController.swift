@@ -120,7 +120,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.backgroundColor = .white
-        imageView.image = UIImage(named: "default@2x")
+        imageView.image = UIImage(named: "default")
 
         return imageView
     }()
@@ -206,12 +206,13 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     }()
     
     // 프로젝트 소개 텍스트뷰
-    private let projectIntroTextView: UITextView = {
-        let textView = UITextView()
+    let projectIntroTextView: TextView = {
+        let textView = TextView()
         textView.layer.cornerRadius = 8
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.black.cgColor
         textView.backgroundColor = .white
+        textView.placeholder = "소개글을 입력해주세용" // 플레이스홀더 텍스트 설정
         return textView
     }()
     
