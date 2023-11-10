@@ -156,7 +156,15 @@ class RegistrationController: UIViewController {
     // MARK: - Selectors
     
     @objc func handleEmailDuplicateCheck() {
+        guard let email = emailTextField.text, emailVerify(email: email) else { return }
 
+        AuthManager().checkDuplicate(email: email) { result in
+            if result {
+                print("중복 아님!")
+            } else {
+                print("중복임!")
+            }
+        }
     }
     
     @objc func handleTermsOfConditionsAgree() {
