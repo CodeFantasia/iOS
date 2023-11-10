@@ -12,6 +12,8 @@ class MyProjectTableViewCell: UITableViewCell {
     static let identifier = "CustomCell"
     
     let projectImage = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
         $0.layer.cornerRadius = .cornerRadius
     }
     
@@ -26,10 +28,6 @@ class MyProjectTableViewCell: UITableViewCell {
     
     let dateView = UIView().then {
         $0.layer.cornerRadius = .cornerRadius
-        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
-        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
-        $0.layer.shadowOpacity = 0.25
-        $0.layer.shadowRadius = 4 / UIScreen.main.scale
         $0.layer.masksToBounds = false
     }
     
@@ -50,15 +48,8 @@ class MyProjectTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
- 
-        contentView.layer.cornerRadius = .cornerRadius
-        contentView.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
-        contentView.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
-        contentView.layer.shadowOpacity = 0.25
-        contentView.layer.shadowRadius = 4 / UIScreen.main.scale
-        contentView.layer.masksToBounds = false
+        contentView.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height)
         contentView.backgroundColor = .white
-        contentView.frame = CGRect(x: .spacing, y: .spacing, width: bounds.width - (2 * .spacing), height: bounds.height - (2 * .spacing))
     }
 }
 

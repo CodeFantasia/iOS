@@ -24,6 +24,7 @@ final class ProfileViewModel {
         var userDataFetched: Observable<UserProfile>
         var profileEditDidTap: Driver<Void>
         var logoutDidTap: Driver<Void>
+        var userAuthConfirmed: Driver<Bool>
     }
     let editMove = PublishSubject<Void>()
     let logoutComplete = PublishSubject<Void>()
@@ -46,7 +47,6 @@ final class ProfileViewModel {
                 return self?.userRepository.read(userId: self?.userId ?? "") ?? .error( Error.self as! Error)
             }
             .share()
-
         userData
             .subscribe(onNext: { [weak self] user in
                 self?.userProfile = user
@@ -76,7 +76,13 @@ final class ProfileViewModel {
         return Output(
             userDataFetched: userData,
             profileEditDidTap: input.profileEditTapped,
-            logoutDidTap: input.logoutTapped
+            logoutDidTap: input.logoutTapped,
+            userAuthConfirmed: userData.map { [weak self] user in
+                guard let currentAuthor = Auth.auth().currentUser?.uid else {
+                    return false
+                }
+                return user.userID == currentAuthor
+            }.asDriver(onErrorJustReturn: false)
         )
     }
 }

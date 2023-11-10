@@ -18,7 +18,7 @@ struct UserProfile: Codable {
     let blogURL: String?
     let profileImageURL: String?
     let userProjects: [String]?
-    let userID: UUID
+    let userID: String?
     var blockIDs: [String]?
 }
 // 신고를 위한 
