@@ -9,6 +9,7 @@ class RegistrationController: UIViewController {
     // MARK: - Properties
     
     private var isDuplicate = false
+    private var isTermsOfConditionsViewHidden = true
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -112,8 +113,11 @@ class RegistrationController: UIViewController {
     private let agreeBtn: UIButton = {
         let checkBtn = UIButton(type: .system)
         checkBtn.setImage(UIImage(systemName: "square"), for: .normal)
+        checkBtn.setImage(UIImage(systemName: "checkmark.square"), for: .selected)
+        checkBtn.imageView?.contentMode = .scaleAspectFit
+        checkBtn.layer.masksToBounds = true
+        checkBtn.tintColor = .black
         checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
-        checkBtn.clipsToBounds = true
         checkBtn.adjustsImageWhenHighlighted = false
         return checkBtn
     }()
@@ -125,7 +129,7 @@ class RegistrationController: UIViewController {
         agreeBtn.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.height.equalToSuperview()
+            make.width.height.equalTo(25)
         }
         
         let label = UILabel()
@@ -180,10 +184,8 @@ class RegistrationController: UIViewController {
     @objc func handleTermsOfConditionsAgree() {
         agreeBtn.isSelected = !agreeBtn.isSelected
     }
-
+    
     @objc func handleTermsOfConditionsBtn() {
-        
-        termsOfConditionsView.isHidden = !termsOfConditionsView.isHidden
         
         view.addSubview(termsOfConditionsView)
         termsOfConditionsView.snp.makeConstraints { make in
@@ -191,6 +193,8 @@ class RegistrationController: UIViewController {
             make.width.equalToSuperview().inset(CGFloat.spacing)
             make.height.equalTo(500)
         }
+        
+        termsOfConditionsView.isHidden = !isTermsOfConditionsViewHidden
     }
     
     @objc func handleShowLogin() {
