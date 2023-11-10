@@ -112,9 +112,9 @@ class RegistrationController: UIViewController {
     private let agreeBtn: UIButton = {
         let checkBtn = UIButton(type: .system)
         checkBtn.setImage(UIImage(systemName: "square"), for: .normal)
-        checkBtn.tintColor = .black
         checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
         checkBtn.clipsToBounds = true
+        checkBtn.adjustsImageWhenHighlighted = false
         return checkBtn
     }()
     
@@ -179,16 +179,6 @@ class RegistrationController: UIViewController {
     
     @objc func handleTermsOfConditionsAgree() {
         agreeBtn.isSelected = !agreeBtn.isSelected
-
-        DispatchQueue.main.async {
-            if self.agreeBtn.isSelected {
-
-                self.agreeBtn.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-            } else {
-
-                self.agreeBtn.setImage(UIImage(systemName: "square"), for: .normal)
-            }
-        }
     }
 
     @objc func handleTermsOfConditionsBtn() {
