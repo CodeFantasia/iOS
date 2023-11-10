@@ -120,6 +120,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.backgroundColor = .white
+        imageView.image = UIImage(named: "default@2x")
+
         return imageView
     }()
     
@@ -625,8 +627,14 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
 
                     if self.data?.projectID.uuidString == nil {
                         self.projectRepository.create(project: projectInfo)
+                        //프로젝트게시판테이블뷰페이지 최신화 코드
+                        NotificationCenter.default.post(name: NSNotification.Name("RefreshDataNotification"), object: nil)
+
+                        
                     } else {
                         self.projectRepository.update(project: projectInfo, projectId: self.data?.projectID.uuidString ?? "")
+                        NotificationCenter.default.post(name: NSNotification.Name("RefreshDataNotification"), object: nil)
+
                     }
                 } else {
                     print("이미지 업로드 실패!")
