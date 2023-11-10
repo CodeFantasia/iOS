@@ -8,6 +8,8 @@ class RegistrationController: UIViewController {
 
     // MARK: - Properties
     
+    private var isDuplicate = false
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "REGISTER"
@@ -160,9 +162,17 @@ class RegistrationController: UIViewController {
 
         AuthManager().checkDuplicate(email: email) { result in
             if result {
-                print("중복 아님!")
+                let alert = UIAlertController(title: "Yes!", message: "사용 가능한 아이디입니다.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .cancel)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+                self.isDuplicate = false
             } else {
-                print("중복임!")
+                let alert = UIAlertController(title: "No!", message: "다른 이메일을 입력해주세요.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "확인", style: .cancel)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+                self.isDuplicate = true
             }
         }
     }
@@ -198,6 +208,12 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleNextButton() {
+        
+        if isDuplicate == true {
+            emailContainerView.shake()
+            return
+        }
+        
         if agreeBtn.isSelected == false {
             termsOfConditionsBtn.shake()
             return
