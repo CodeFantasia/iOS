@@ -213,7 +213,7 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleNextButton() {
-        
+
         if isDuplicate == true {
             emailContainerView.shake()
             return
