@@ -252,6 +252,7 @@ class UserDataManageController: UIViewController {
                                                        기존의 정보들이 모두 삭제됩니다.
                                                        """, cancelText: "아니요", acceptCompletion:  {
             if  let user = Auth.auth().currentUser {
+                self.deleteEmail()
                 user.delete { [self] error in
                     if let error = error {
                         print("Firebase Error : ", error)
@@ -279,21 +280,14 @@ class UserDataManageController: UIViewController {
                                             fatalError("could not get scene delegate ")
                                         }
                                         sceneDelegate.window?.rootViewController = TabBarController()
-                                    } })
+                                    }
+                                })
                             }
                         }
                     }
-        
-        if let user = Auth.auth().currentUser {
-            deleteEmail()
-            user.delete { [self] error in
-                if let error = error {
-                    print("Firebase Error : ", error)
-                } else {
-                    print("회원탈퇴 성공!")
                 }
             }
-                            })
+        })
     }
     
     @objc func backBarButton() {
