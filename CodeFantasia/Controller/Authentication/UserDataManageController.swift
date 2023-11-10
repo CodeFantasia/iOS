@@ -244,8 +244,12 @@ class UserDataManageController: UIViewController {
 
     }
     
+    
+    
     @objc func handleWithdrawButton() {
-        if  let user = Auth.auth().currentUser {
+        
+        if let user = Auth.auth().currentUser {
+            deleteEmail()
             user.delete { [self] error in
                 if let error = error {
                     print("Firebase Error : ", error)
@@ -279,6 +283,25 @@ class UserDataManageController: UIViewController {
     
     
     // MARK: - Helpers
+    
+    func deleteEmail() {
+        guard let email = getCurrentUserEmail() else { return }
+        AuthManager().deleteAccountWithEmail(email) { error in
+            if error == nil {
+                print("이메일 지우기 성공!")
+            } else {
+                print("이메일 지우기 실패!")
+            }
+        }
+    }
+    
+    func getCurrentUserEmail() -> String? {
+        if let currentUser = Auth.auth().currentUser {
+            return currentUser.email
+        } else {
+            return nil
+        }
+    }
     
     func hideWithdrawButton() {
         withdrawButton.isHidden = true 
