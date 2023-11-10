@@ -9,6 +9,7 @@ class RegistrationController: UIViewController {
     // MARK: - Properties
     
     private var isDuplicate = false
+    private var isEmailCheckPerformed = false
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -174,6 +175,7 @@ class RegistrationController: UIViewController {
                 self.present(alert, animated: true)
                 self.isDuplicate = true
             }
+            self.isEmailCheckPerformed = true
         }
     }
     
@@ -209,6 +211,11 @@ class RegistrationController: UIViewController {
     
     @objc func handleNextButton() {
         
+        if isEmailCheckPerformed == false {
+            emailContainerView.shake()
+            return
+        }
+    
         if isDuplicate == true {
             emailContainerView.shake()
             return

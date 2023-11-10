@@ -26,20 +26,20 @@ class UserDataManageController: UIViewController {
             portfolioTextView.text = userProfile.portfolioURL
             techStackTextView.text = userProfile.techStack.joined(separator: ", ")
             interestTextView.text = userProfile.areasOfInterest.joined(separator: ", ")
-//            let profileImageURL = (URL(string: userProfile.profileImageURL ?? "") ?? URL(string: ""))
-//            // Kingfisher를 사용하여 이미지를 다운로드
-//            KingfisherManager.shared.retrieveImage(with: profileImageURL!) { result in
-//                switch result {
-//                case .success(let imageResult):
-//                    // 이미지 다운로드 및 처리가 성공한 경우
-//                    let image = imageResult.image
-//                    self.profileImage = image
-//                    // 이제 'self.profileImage'에 이미지가 할당되었습니다.
-//                case .failure(let error):
-//                    // 이미지 다운로드 중 오류 발생한 경우
-//                    print("이미지 다운로드 오류: \(error)")
-//                }
-
+            //            let profileImageURL = (URL(string: userProfile.profileImageURL ?? "") ?? URL(string: ""))
+            //            // Kingfisher를 사용하여 이미지를 다운로드
+            //            KingfisherManager.shared.retrieveImage(with: profileImageURL!) { result in
+            //                switch result {
+            //                case .success(let imageResult):
+            //                    // 이미지 다운로드 및 처리가 성공한 경우
+            //                    let image = imageResult.image
+            //                    self.profileImage = image
+            //                    // 이제 'self.profileImage'에 이미지가 할당되었습니다.
+            //                case .failure(let error):
+            //                    // 이미지 다운로드 중 오류 발생한 경우
+            //                    print("이미지 다운로드 오류: \(error)")
+            //                }
+            
         } else {
         }
     }
@@ -194,7 +194,7 @@ class UserDataManageController: UIViewController {
         if !validateUserProfile(nickname: nickname) {
             return
         }
-
+        
         let profileImage = profileImage ?? UIImage(named: "default_profile")
         guard let portfolioUrl = portfolioTextView.text else { return }
         guard let selfIntroduction = selfIntroductionTextView.text else { return }
@@ -222,7 +222,7 @@ class UserDataManageController: UIViewController {
                     
                     let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
                     let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
-
+                    
                     userRepository.create(user: userProfile)
                     userRepository.update(user: userProfile)
                     
@@ -241,21 +241,49 @@ class UserDataManageController: UIViewController {
         } else {
             print("이미지 데이터가 유효하지 않습니당. 흠..")
         }
-
+        
     }
     
     @objc func handleWithdrawButton() {
-        if  let user = Auth.auth().currentUser {
-            user.delete { [self] error in
-                if let error = error {
-                    print("Firebase Error : ", error)
-                } else {
-                    print("회원탈퇴 성공!")
+        self.alertViewAlert(title: "회원 탈퇴", message: """
+                                                       정말 탈퇴 하시겠습니까?
+                                                       기존의 정보들이 모두 삭제됩니다.
+                                                       """, cancelText: "아니요", acceptCompletion:  {
+            if  let user = Auth.auth().currentUser {
+                user.delete { [self] error in
+                    if let error = error {
+                        print("Firebase Error : ", error)
+                    } else {
+                        let currentAuthor = self.data?.userID
+                        let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
+                        let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
+                        userRepository.delete(userId: currentAuthor ?? "")
+                        let db = Firestore.firestore()
+                        db.collection("Project").whereField("writerID", isEqualTo: currentAuthor ?? "").getDocuments { (querySnapshot, error) in
+                            if let error = error {
+                                print("Error getting documents: \(error)")
+                            } else {
+                                for document in querySnapshot!.documents {
+                                    document.reference.delete()
+                                    print("Document successfully deleted.")
+                                }
+                                self.alertViewAlert(title: "탈퇴 완료", message: """
+                                                                               탈퇴가 완료 되었습니다.
+                                                                               서비스를 이용하려면 다시 가입해주세요.
+                                                                               로그인 화면으로 돌아갑니다.
+                                                                               """, cancelText: nil, acceptCompletion:  {
+                                    DispatchQueue.main.async {
+                                        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
+                                            fatalError("could not get scene delegate ")
+                                        }
+                                        sceneDelegate.window?.rootViewController = TabBarController()
+                                    } })
+                            }
+                        }
+                    }
                 }
             }
-        } else {
-            print("로그인 정보가 존재하지 않습니다")
-        }
+                            })
     }
     
     @objc func backBarButton() {
