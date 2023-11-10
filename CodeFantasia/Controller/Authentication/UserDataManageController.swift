@@ -26,20 +26,20 @@ class UserDataManageController: UIViewController {
             portfolioTextView.text = userProfile.portfolioURL
             techStackTextView.text = userProfile.techStack.joined(separator: ", ")
             interestTextView.text = userProfile.areasOfInterest.joined(separator: ", ")
-            //            let profileImageURL = (URL(string: userProfile.profileImageURL ?? "") ?? URL(string: ""))
-            //            // Kingfisher를 사용하여 이미지를 다운로드
-            //            KingfisherManager.shared.retrieveImage(with: profileImageURL!) { result in
-            //                switch result {
-            //                case .success(let imageResult):
-            //                    // 이미지 다운로드 및 처리가 성공한 경우
-            //                    let image = imageResult.image
-            //                    self.profileImage = image
-            //                    // 이제 'self.profileImage'에 이미지가 할당되었습니다.
-            //                case .failure(let error):
-            //                    // 이미지 다운로드 중 오류 발생한 경우
-            //                    print("이미지 다운로드 오류: \(error)")
-            //                }
-            
+//            let profileImageURL = (URL(string: userProfile.profileImageURL ?? "") ?? URL(string: ""))
+//            // Kingfisher를 사용하여 이미지를 다운로드
+//            KingfisherManager.shared.retrieveImage(with: profileImageURL!) { result in
+//                switch result {
+//                case .success(let imageResult):
+//                    // 이미지 다운로드 및 처리가 성공한 경우
+//                    let image = imageResult.image
+//                    self.profileImage = image
+//                    // 이제 'self.profileImage'에 이미지가 할당되었습니다.
+//                case .failure(let error):
+//                    // 이미지 다운로드 중 오류 발생한 경우
+//                    print("이미지 다운로드 오류: \(error)")
+//                }
+
         } else {
         }
     }
@@ -244,6 +244,8 @@ class UserDataManageController: UIViewController {
         
     }
     
+    
+    
     @objc func handleWithdrawButton() {
         self.alertViewAlert(title: "회원 탈퇴", message: """
                                                        정말 탈퇴 하시겠습니까?
@@ -281,6 +283,14 @@ class UserDataManageController: UIViewController {
                             }
                         }
                     }
+        
+        if let user = Auth.auth().currentUser {
+            deleteEmail()
+            user.delete { [self] error in
+                if let error = error {
+                    print("Firebase Error : ", error)
+                } else {
+                    print("회원탈퇴 성공!")
                 }
             }
                             })
@@ -307,6 +317,25 @@ class UserDataManageController: UIViewController {
     
     
     // MARK: - Helpers
+    
+    func deleteEmail() {
+        guard let email = getCurrentUserEmail() else { return }
+        AuthManager().deleteAccountWithEmail(email) { error in
+            if error == nil {
+                print("이메일 지우기 성공!")
+            } else {
+                print("이메일 지우기 실패!")
+            }
+        }
+    }
+    
+    func getCurrentUserEmail() -> String? {
+        if let currentUser = Auth.auth().currentUser {
+            return currentUser.email
+        } else {
+            return nil
+        }
+    }
     
     func hideWithdrawButton() {
         withdrawButton.isHidden = true 
