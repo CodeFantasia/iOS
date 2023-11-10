@@ -321,6 +321,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         setUp()
         print(data)
         
+        saveButton.isHidden = true
+        
         techLanguageTextField.delegate = self
         
         setupUI()
@@ -458,12 +460,12 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         contentView.addSubview(projectEndDateLabel)
         projectEndDateLabel.snp.makeConstraints {
             $0.top.equalTo(projectIntroTextView.snp.bottom).offset(20)
-            $0.left.equalTo(projectStartDatePicker.snp.right).offset(150)
+            $0.right.equalToSuperview().offset(-20)
         }
         contentView.addSubview(projectEndDatePicker)
         projectEndDatePicker.snp.makeConstraints {
             $0.top.equalTo(projectEndDateLabel.snp.bottom).offset(10)
-            $0.left.equalTo(projectStartDatePicker.snp.right).offset(150)
+            $0.right.equalToSuperview().offset(-20)
             $0.height.equalTo(100)
         }
         
@@ -794,4 +796,5 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         // 이미 'technologies'는 모든 기술을 포함하는 배열이므로, 그대로 반환합니다.
         return techStackInstance.technologies
     }
+    
 }
