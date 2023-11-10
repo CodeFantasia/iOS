@@ -120,7 +120,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.backgroundColor = .white
-        imageView.image = UIImage(named: "default@2x")
+        imageView.image = UIImage(named: "default")
 
         return imageView
     }()
@@ -206,12 +206,13 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     }()
     
     // 프로젝트 소개 텍스트뷰
-    private let projectIntroTextView: UITextView = {
-        let textView = UITextView()
+    let projectIntroTextView: TextView = {
+        let textView = TextView()
         textView.layer.cornerRadius = 8
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.black.cgColor
         textView.backgroundColor = .white
+        textView.placeholder = "소개글을 입력해주세용" // 플레이스홀더 텍스트 설정
         return textView
     }()
     
@@ -319,6 +320,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         setUp()
         print(data)
+        
+        saveButton.isHidden = true
         
         techLanguageTextField.delegate = self
         
@@ -457,12 +460,12 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         contentView.addSubview(projectEndDateLabel)
         projectEndDateLabel.snp.makeConstraints {
             $0.top.equalTo(projectIntroTextView.snp.bottom).offset(20)
-            $0.left.equalTo(projectStartDatePicker.snp.right).offset(150)
+            $0.right.equalToSuperview().offset(-20)
         }
         contentView.addSubview(projectEndDatePicker)
         projectEndDatePicker.snp.makeConstraints {
             $0.top.equalTo(projectEndDateLabel.snp.bottom).offset(10)
-            $0.left.equalTo(projectStartDatePicker.snp.right).offset(150)
+            $0.right.equalToSuperview().offset(-20)
             $0.height.equalTo(100)
         }
         
@@ -793,4 +796,5 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         // 이미 'technologies'는 모든 기술을 포함하는 배열이므로, 그대로 반환합니다.
         return techStackInstance.technologies
     }
+    
 }

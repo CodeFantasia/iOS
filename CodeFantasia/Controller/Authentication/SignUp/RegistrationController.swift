@@ -7,8 +7,8 @@ import FirebaseDatabase
 class RegistrationController: UIViewController {
 
     // MARK: - Properties
-    
-    private var isDuplicate = false
+
+    private var isDuplicate = true
     private var isTermsOfConditionsViewHidden = true
     
     private let titleLabel: UILabel = {
@@ -67,6 +67,7 @@ class RegistrationController: UIViewController {
     
     private let emailTextField: UITextField = {
         let textfield = Utilities().textField(withPlaceholder: "Email")
+        textfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return textfield
     }()
     
@@ -161,6 +162,10 @@ class RegistrationController: UIViewController {
     
     // MARK: - Selectors
     
+    @objc func textFieldDidChange() {
+        isDuplicate = true 
+    }
+    
     @objc func handleEmailDuplicateCheck() {
         guard let email = emailTextField.text, emailVerify(email: email) else { return }
 
@@ -202,7 +207,7 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleNextButton() {
-        
+
         if isDuplicate == true {
             emailContainerView.shake()
             return
