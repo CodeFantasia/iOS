@@ -69,6 +69,7 @@ extension MyProjectTableViewCell {
         }
         projectTitle.snp.makeConstraints {
             $0.leading.equalTo(projectImage)
+            $0.trailing.equalTo(contentView.snp.trailing).inset(16)
             $0.height.equalTo(20)
             $0.top.equalTo(projectImage.snp.bottom).offset(16)
         }
@@ -76,6 +77,7 @@ extension MyProjectTableViewCell {
             $0.leading.equalTo(projectImage)
             $0.top.equalTo(projectTitle.snp.bottom).offset(16)
             $0.bottom.equalTo(contentView.snp.bottom).inset(16)
+            $0.trailing.equalTo(contentView.snp.trailing).inset(16)
         }
         dateView.snp.makeConstraints {
             $0.top.trailing.equalTo(contentView).inset(16)
