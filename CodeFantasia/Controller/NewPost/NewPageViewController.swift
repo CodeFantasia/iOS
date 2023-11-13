@@ -177,6 +177,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         textField.backgroundColor = .white
+        textField.createToolBar()
         return textField
     }()
     
@@ -198,6 +199,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         textField.backgroundColor = .white
+        textField.createToolBar()
         return textField
     }()
     
@@ -271,6 +273,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         textField.backgroundColor = .white
+        textField.createToolBar()
         return textField
     }()
     
@@ -292,6 +295,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         textField.backgroundColor = .white
+        textField.createToolBar()
         return textField
     }()
     
