@@ -272,10 +272,13 @@ extension ProjectDetailNoticeBoardViewController {
                 DispatchQueue.main.async {
                     self?.activityIndicator.stopAnimating()
                     self?.alertViewActionSheet(
-                        title: "오류 발생",
-                        message: error.localizedDescription,
+                        title: "이미 삭제된 게시물입니다.",
+                        message: "",
                         acceptText: "확인",
-                        cancelText: nil
+                        cancelText: nil,
+                        acceptCompletion: {
+                            self?.navigationController?.popViewController(animated: true)
+                        }
                     )
                 }
             })

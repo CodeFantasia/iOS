@@ -367,7 +367,7 @@ class RegistrationController: UIViewController {
     
     func emailCheck(_ input: String) -> Bool {
         let emailPattern = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}$"
-        return NSPredicate(format: "SELF MATCHES %@", emailPattern).evaluate(with: input)
+        return NSPredicate(format: "SELF MATCHES %@", emailPattern.lowercased()).evaluate(with: input)
     }
     
     func containsOnlyEnglishAndKorean(_ input: String) -> Bool {
