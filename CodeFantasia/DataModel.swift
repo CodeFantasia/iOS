@@ -20,6 +20,8 @@ struct UserProfile: Codable {
     let userProjects: [String]?
     let userID: String?
     var blockIDs: [String]?
+    var followers: [String]?
+    var following: [String]?
 }
 // 신고를 위한 
 struct Report {
