@@ -1,6 +1,9 @@
 # CodeCocoon
 ## 프로그래밍 초심자들을 위한 개발자 커뮤니티
 ------------
+## 고객지원
+구글폼( https://docs.google.com/forms/d/1EKpErGP21bFU5cLN-uAUx0ZK61Fvi9sjgOp19CRk9WU/edit?hl=ko )을 통해 문의사항을 남겨주세요.
+
 ## 소개
 
  이 앱은 프로젝트 팀원을 찾고자 하는 사람들에게 프로젝트 정보를 공유하고 관심 있는 프로젝트를 찾을 수 있는 플랫폼을 제공합니다.
