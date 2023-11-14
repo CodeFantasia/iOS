@@ -9,6 +9,7 @@ import FirebaseStorage
 class UserDataManageController: UIViewController {
     
     let data: UserProfile?
+    var blockIds: [String] = []
     
     init(data: UserProfile?) {
         self.data = data
@@ -30,6 +31,7 @@ class UserDataManageController: UIViewController {
                 selectedInterestField = userProfile.areasOfInterest
                 interestTextView.text = selectedInterestField.joined(separator: ", ")
                 interestTextView.layoutIfNeeded()
+                self.blockIds = userProfile.blockIDs ?? []
             }
         }
     // MARK: - Properties
@@ -207,7 +209,8 @@ class UserDataManageController: UIViewController {
                                                   blogURL: nil,
                                                   profileImageURL: imageUrl,
                                                   userProjects: nil,
-                                                  userID: currentUser)
+                                                  userID: currentUser,
+                                                  blockIDs: self.blockIds)
                     
                     let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
                     let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
