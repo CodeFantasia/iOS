@@ -2,7 +2,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
-
+import WebKit
 
 class RegistrationController: UIViewController {
 
@@ -105,9 +105,14 @@ class RegistrationController: UIViewController {
     }()
     
     private lazy var termsOfConditionsBtn: UIButton = {
-        let btn = Utilities().attributedButton("Code Cocoon 이용 동의서", " 확인하기")
-        btn.setTitle("Code Cocoon 서비스를 위한 개인정보 수집 및 이용 동의서", for: .normal)
+        let btn = Utilities().attributedButton("Code Cocoon 이용 약관", " 확인하기")
         btn.addTarget(self, action: #selector(handleTermsOfConditionsBtn), for: .touchUpInside)
+        return btn
+    }()
+    
+    private lazy var  privacyPolicyUrlBtn: UIButton = {
+        let btn = Utilities().attributedButton("개인 정보 및 처리 방침", " 확인하기")
+        btn.addTarget(self, action: #selector(handlePrivatePolicyBtn), for: .touchUpInside)
         return btn
     }()
     
@@ -190,16 +195,82 @@ class RegistrationController: UIViewController {
         agreeBtn.isSelected = !agreeBtn.isSelected
     }
     
-    @objc func handleTermsOfConditionsBtn() {
+    let navbar = UIView()
+    let webView = WKWebView()
+    
+    @objc func handlePrivatePolicyBtn() {
+        navbar.isHidden = false
+        webView.isHidden = false
+
         
-        view.addSubview(termsOfConditionsView)
-        termsOfConditionsView.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
-            make.width.equalToSuperview().inset(CGFloat.spacing)
-            make.height.equalTo(500)
+        view.addSubview(navbar)
+        navbar.backgroundColor = .white
+        navbar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.right.left.equalToSuperview()
+            make.height.equalTo(50)
         }
         
-        termsOfConditionsView.isHidden = !isTermsOfConditionsViewHidden
+        let closeBtn = UIButton(type: .system)
+        closeBtn.setTitle("Close", for: .normal)
+        closeBtn.setTitleColor(.black, for: .normal)
+        closeBtn.addTarget(self, action: #selector(handleCloseBtn), for: .touchUpInside)
+        navbar.addSubview(closeBtn)
+        closeBtn.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(20)
+        }
+
+        view.addSubview(webView)
+        webView.snp.makeConstraints { make in
+            make.top.equalTo(navbar.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
+        }
+        let url = "https://plip.kr/pcc/e06614ca-9e2f-40ad-9e1e-4c154598dc80/privacy/1.html"
+        if let url = URL(string: url) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
+    }
+    
+    @objc func handleCloseBtn() {
+        navbar.isHidden = true
+        webView.isHidden = true
+    }
+    
+    @objc func handleTermsOfConditionsBtn() {
+        navbar.isHidden = false
+        webView.isHidden = false
+
+        
+        view.addSubview(navbar)
+        navbar.backgroundColor = .white
+        navbar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.right.left.equalToSuperview()
+            make.height.equalTo(50)
+        }
+        
+        let closeBtn = UIButton(type: .system)
+        closeBtn.setTitle("Close", for: .normal)
+        closeBtn.setTitleColor(.black, for: .normal)
+        closeBtn.addTarget(self, action: #selector(handleCloseBtn), for: .touchUpInside)
+        navbar.addSubview(closeBtn)
+        closeBtn.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().inset(20)
+        }
+
+        view.addSubview(webView)
+        webView.snp.makeConstraints { make in
+            make.top.equalTo(navbar.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
+        }
+        let url = "https://field-father-166.notion.site/a7e802a5c4904aeb8fb20ddc6d21e4b5?pvs=4"
+        if let url = URL(string: url) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
     }
     
     @objc func handleShowLogin() {
@@ -331,15 +402,21 @@ class RegistrationController: UIViewController {
             make.centerX.equalToSuperview()
         }
         
+        view.addSubview(privacyPolicyUrlBtn)
+        privacyPolicyUrlBtn.snp.makeConstraints { make in
+            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
+            make.centerX.equalToSuperview()
+        }
+        
         view.addSubview(termsOfConditionsAgree)
         termsOfConditionsAgree.snp.makeConstraints { make in
-            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
+            make.top.equalTo(privacyPolicyUrlBtn.snp.bottom).offset(2)
             make.centerX.equalToSuperview()
         }
         
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
-            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(45)
+            make.top.equalTo(termsOfConditionsAgree.snp.bottom).offset(CGFloat.authSpacing)
             make.left.right.equalTo(stack)
         }
         
