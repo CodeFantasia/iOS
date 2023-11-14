@@ -42,7 +42,7 @@ class ProjectBoardVC: UIViewController {
             let db = Firestore.firestore()
             // Firestore에서 현재 사용자의 문서 가져오기
             let userDocumentReference = db.collection("User").document(currentUser)
-            userDocumentReference.getDocument { snapshot, error in
+            userDocumentReference.addSnapshotListener { snapshot, error in
                 if let error = error {
                     print("Error fetching document: \(error)")
                 } else if let snapshot = snapshot, snapshot.exists {
@@ -53,19 +53,44 @@ class ProjectBoardVC: UIViewController {
                         // blockIDs 필드가 배열인 경우, [String]로 타입 캐스트
                         print("blockIDs: \(blockIDs)")
                         self.blockIds = blockIDs
+                        self.fetchDataFirebase()
                         // blockIDs 값을 projectRepository.readAll 함수로 전달
                     } else {
                         print("blockIDs field not found or has the wrong type")
+                        self.fetchFirebase()
                     }
                 } else {
                     print("Document does not exist")
                 }
             }
         }
-        ///
-        ///
-        /////////////
-        projectRepository.readBlockAll(blockIDs: blockIds ?? []) // 현재 로그인한 유저의 블록아이디 문자열 배열
+    }
+
+        private func fetchDataFirebase() {
+            projectRepository.readBlockAll(blockIDs: blockIds ?? []) // 현재 로그인한 유저의 블록아이디 문자열 배열
+                .observe(on: MainScheduler.instance)
+                .subscribe(onSuccess: { [weak self] projects in
+                    self?.projectsData = projects.map { project in
+                        let imageURL = URL(string: project.imageUrl ?? "")
+                        let statusString = project.recruitingStatus ?? false ? "모집 중" : "모집 완료"
+                        let icons: [IconModel] = project.techStack.flatMap { techStack in
+                            techStack.technologies.map { techName in
+                                IconModel(image: UIImage(named: techName) ?? UIImage())
+                            }
+                        }
+                        return (imageURL, project.projectTitle ?? "", project.projectDescription ?? "", icons, statusString, project.projectID)
+                    }
+                    self?.tableView.reloadData()
+                    self?.refreshControl.endRefreshing()
+                }, onFailure: { [weak self] error in
+                    print("Error fetching data: \(error)")
+                    self?.refreshControl.endRefreshing()
+                })
+                .disposed(by: bag)
+    }
+    
+    private func fetchFirebase() {
+        projectRepository.readAll() // 현재 로그인한 유저의 블록아이디 문자열 배열
             .observe(on: MainScheduler.instance)
             .subscribe(onSuccess: { [weak self] projects in
                 self?.projectsData = projects.map { project in
@@ -85,7 +110,7 @@ class ProjectBoardVC: UIViewController {
                 self?.refreshControl.endRefreshing()
             })
             .disposed(by: bag)
-    }
+}
     
     // MARK: - ViewController Lifecycle
 

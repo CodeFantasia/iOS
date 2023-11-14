@@ -303,9 +303,9 @@ extension ProjectDetailNoticeBoardViewController {
         
         outputs.projectReportButtonDidTap
             .drive(with: self, onNext: { owner, _ in
-                owner.alertViewAlert(title: "신고", message: "프로젝트를 신고하시겠습니까?", cancelText: "아니요", acceptCompletion: {
+                owner.alertViewAlert(title: "신고", message: "게시글을 신고하시겠습니까?\n 해당 게시자의 모든 글이 차단됩니다.", cancelText: "아니요", acceptCompletion: {
                     // 사용자에게 신고 성공 메시지 표시
-                    let alert = UIAlertController(title: "신고 완료", message: "해당 게시글을 신고하였습니다.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "신고 완료", message: "게시글을 신고 및 차단했습니다.\n 해당 게시자는 24시간내로 확인 후 처리하겠습니다.", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
                         let db = Firestore.firestore()
                         let currentUser = Auth.auth().currentUser?.uid
@@ -339,6 +339,7 @@ extension ProjectDetailNoticeBoardViewController {
                         print("문서를 찾을 수 없습니다.")
                         }
                         }
+                        owner.navigationController?.popViewController(animated: true)
                     }))
                     owner.present(alert, animated: true, completion: nil)
                 })

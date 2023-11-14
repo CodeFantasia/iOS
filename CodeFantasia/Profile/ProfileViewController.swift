@@ -128,17 +128,6 @@ class ProfileViewController: UIViewController {
         $0.layer.shadowRadius = 4 / UIScreen.main.scale
         $0.layer.masksToBounds = false
     }
-    private lazy var followButton = UIHoverButton().then {
-        $0.backgroundColor = UIColor.buttonPrimaryColor
-        $0.setTitle("팔로우 하기", for: .normal)
-        $0.titleLabel?.font = UIFont.buttonTitle
-        $0.layer.cornerRadius = .cornerRadius
-        $0.layer.shadowColor = UIColor(hexCode: "#000000").cgColor
-        $0.layer.shadowOffset = CGSize(width: 0.0, height: 4.0)
-        $0.layer.shadowOpacity = 0.25
-        $0.layer.shadowRadius = 4 / UIScreen.main.scale
-        $0.layer.masksToBounds = false
-    }
     
     private lazy var stackView: UIStackView = UIStackView().then {
         $0.layoutMargins = UIEdgeInsets(top: .spacing, left: 20, bottom: 20, right: 20)
@@ -201,7 +190,6 @@ extension ProfileViewController {
           interestTitleLabel,
           interestLabel,
           interestUnderline,
-          followButton,
           editButton,
           logoutButton
         ].forEach {
@@ -297,10 +285,7 @@ extension ProfileViewController {
                     return
                 }
                 if user.userID == currentAuthor {
-                    
-                    self.followButton.isHidden = true
                 } else {
-                    self.followButton.isHidden = true
                     self.editButton.isHidden = true
                     self.logoutButton.isHidden = true
                 }

@@ -20,29 +20,18 @@ class UserDataManageController: UIViewController {
     }
     // 데이터가있는지 판별
     func setUp() {
-        if let userProfile = data {
-            nicknameTextView.text = userProfile.nickname
-            selfIntroductionTextView.text = userProfile.selfIntroduction
-            portfolioTextView.text = userProfile.portfolioURL
-            techStackTextView.text = userProfile.techStack.joined(separator: ", ")
-            interestTextView.text = userProfile.areasOfInterest.joined(separator: ", ")
-//            let profileImageURL = (URL(string: userProfile.profileImageURL ?? "") ?? URL(string: ""))
-//            // Kingfisher를 사용하여 이미지를 다운로드
-//            KingfisherManager.shared.retrieveImage(with: profileImageURL!) { result in
-//                switch result {
-//                case .success(let imageResult):
-//                    // 이미지 다운로드 및 처리가 성공한 경우
-//                    let image = imageResult.image
-//                    self.profileImage = image
-//                    // 이제 'self.profileImage'에 이미지가 할당되었습니다.
-//                case .failure(let error):
-//                    // 이미지 다운로드 중 오류 발생한 경우
-//                    print("이미지 다운로드 오류: \(error)")
-//                }
-
-        } else {
+            if let userProfile = data {
+                nicknameTextView.text = userProfile.nickname
+                selfIntroductionTextView.text = userProfile.selfIntroduction
+                portfolioTextView.text = userProfile.portfolioURL
+                selectedTechStack = userProfile.techStack
+                techStackTextView.text = selectedTechStack.joined(separator: ", ")
+                techStackTextView.layoutIfNeeded()
+                selectedInterestField = userProfile.areasOfInterest
+                interestTextView.text = selectedInterestField.joined(separator: ", ")
+                interestTextView.layoutIfNeeded()
+            }
         }
-    }
     // MARK: - Properties
     
     private let titlelabel: UILabel = {
@@ -456,19 +445,23 @@ extension UserDataManageController: UIImagePickerControllerDelegate, UINavigatio
 extension UserDataManageController: DropDownTableViewDelegate {
     func didSelectItem(_ item: String) {
         if techstackTableview.isHidden == false {
-            if !techStackTextView.text.isEmpty {
-                techStackTextView.text.append(", ")
+            if !selectedTechStack.contains(item) {
+                if !techStackTextView.text.isEmpty {
+                    techStackTextView.text.append(", ")
+                }
+                techStackTextView.text.append(item)
+                selectedTechStack.append(item)
+                techStackTextView.layoutIfNeeded()
             }
-            techStackTextView.text.append(item)
-            selectedTechStack.append(item)
-            techStackTextView.layoutIfNeeded()
         } else if interestTableview.isHidden == false {
-            if !interestTextView.text.isEmpty {
-                interestTextView.text.append(", ")
+            if !selectedInterestField.contains(item) {
+                if !interestTextView.text.isEmpty {
+                    interestTextView.text.append(", ")
+                }
+                interestTextView.text.append(item)
+                selectedInterestField.append(item)
+                interestTextView.layoutIfNeeded()
             }
-            interestTextView.text.append(item)
-            selectedInterestField.append(item)
-            interestTextView.layoutIfNeeded()
         }
     }
     
@@ -478,13 +471,13 @@ extension UserDataManageController: DropDownTableViewDelegate {
                 techStackTextView.text.removeSubrange(range)
             }
             selectedTechStack.removeAll { $0 == item }
+            techStackTextView.text = selectedTechStack.joined(separator: ", ")
         } else if interestTableview.isHidden == false {
             if let range = interestTextView.text.range(of: item) {
                 interestTextView.text.removeSubrange(range)
             }
             selectedInterestField.removeAll { $0 == item }
+        interestTextView.text = selectedInterestField.joined(separator: ", ")
         }
-        
     }
-    
 }
