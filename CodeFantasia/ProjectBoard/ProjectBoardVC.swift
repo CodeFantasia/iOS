@@ -21,9 +21,9 @@ class ProjectBoardVC: UIViewController {
     var writerID: String?
     private let tableView: UITableView = UITableView().then {
         $0.register(ProjectBoardTableviewCell.self, forCellReuseIdentifier: "ProjectBoardCell")
-        $0.separatorStyle = .singleLine // 이 부분을 .none에서 .singleLine으로 변경합니다.
-        $0.separatorColor = UIColor.gray // 구분선의 색상을 설정합니다.
-        $0.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15) // 구분선의 여백을 설정합니다.
+        $0.separatorStyle = .singleLine
+        $0.separatorColor = UIColor.gray
+        $0.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         $0.backgroundColor = .clear
     }
     
@@ -40,6 +40,7 @@ class ProjectBoardVC: UIViewController {
         ////////////////////
         if let currentUser = Auth.auth().currentUser?.uid {
             let db = Firestore.firestore()
+            
             // Firestore에서 현재 사용자의 문서 가져오기
             let userDocumentReference = db.collection("User").document(currentUser)
             userDocumentReference.addSnapshotListener { snapshot, error in
@@ -66,27 +67,30 @@ class ProjectBoardVC: UIViewController {
         }
     }
 
-        private func fetchDataFirebase() {
-            projectRepository.readBlockAll(blockIDs: blockIds ?? []) // 현재 로그인한 유저의 블록아이디 문자열 배열
-                .observe(on: MainScheduler.instance)
-                .subscribe(onSuccess: { [weak self] projects in
-                    self?.projectsData = projects.map { project in
-                        let imageURL = URL(string: project.imageUrl ?? "")
-                        let statusString = project.recruitingStatus ?? false ? "모집 중" : "모집 완료"
-                        let icons: [IconModel] = project.techStack.flatMap { techStack in
-                            techStack.technologies.map { techName in
-                                IconModel(image: UIImage(named: techName) ?? UIImage())
-                            }
+    private func fetchDataFirebase() {
+        projectRepository.readBlockAll(blockIDs: blockIds ?? [])
+            .observe(on: MainScheduler.instance)
+            .subscribe(onSuccess: { [weak self] projects in
+                self?.projectsData = projects.map { project in
+                    var updatedProject = project
+                    updatedProject.updateRecruitmentStatus() // 모집 상태 업데이트
+                    
+                    let imageURL = URL(string: updatedProject.imageUrl ?? "")
+                    let statusString = updatedProject.recruitingStatus ?? false ? "모집 중" : "모집 완료"
+                    let icons: [IconModel] = project.techStack.flatMap { techStack in
+                        techStack.technologies.map { techName in
+                            IconModel(image: UIImage(named: techName) ?? UIImage())
                         }
-                        return (imageURL, project.projectTitle ?? "", project.projectDescription ?? "", icons, statusString, project.projectID)
                     }
-                    self?.tableView.reloadData()
-                    self?.refreshControl.endRefreshing()
-                }, onFailure: { [weak self] error in
-                    print("Error fetching data: \(error)")
-                    self?.refreshControl.endRefreshing()
-                })
-                .disposed(by: bag)
+                    return (imageURL, project.projectTitle ?? "", project.projectDescription ?? "", icons, statusString, project.projectID)
+                }
+                self?.tableView.reloadData()
+                self?.refreshControl.endRefreshing()
+            }, onFailure: { [weak self] error in
+                print("Error fetching data: \(error)")
+                self?.refreshControl.endRefreshing()
+            })
+            .disposed(by: bag)
     }
     
     private func fetchFirebase() {
