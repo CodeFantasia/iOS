@@ -41,6 +41,10 @@
 		AB5C35302AF14FAC0056E646 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352F2AF14FAC0056E646 /* UIView+.swift */; };
 		AB5C35312AF14FAC0056E646 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C352F2AF14FAC0056E646 /* UIView+.swift */; };
 		AB5C72ED2AEF482000A631B0 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */; };
+		AB9013602B033CA5001FCA44 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB90135F2B033CA5001FCA44 /* WebKit.framework */; };
+		AB9013612B033CB1001FCA44 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB90135F2B033CA5001FCA44 /* WebKit.framework */; };
+		AB9013632B033F67001FCA44 /* WKWebView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9013622B033F67001FCA44 /* WKWebView+.swift */; };
+		AB9013642B033F67001FCA44 /* WKWebView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9013622B033F67001FCA44 /* WKWebView+.swift */; };
 		ABA2296F2AEB7CAC00EDE1D5 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
 		ABA229A02AEF368C00EDE1D5 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = ABA2295E2AEB023400EDE1D5 /* FirebaseAnalytics */; };
 		ABA229A12AEF368C00EDE1D5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = ABA229602AEB023400EDE1D5 /* FirebaseAuth */; };
@@ -176,6 +180,8 @@
 		AB41CB972AF6543B00B43C63 /* DropdownTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownTableView.swift; sourceTree = "<group>"; };
 		AB5C352C2AF0BD520056E646 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		AB5C352F2AF14FAC0056E646 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		AB90135F2B033CA5001FCA44 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		AB9013622B033F67001FCA44 /* WKWebView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WKWebView+.swift"; sourceTree = "<group>"; };
 		ABA229A82AEF44AE00EDE1D5 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		ABBDF5362AF0430400D240FD /* UserDataManageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManageController.swift; sourceTree = "<group>"; };
 		ABC3DF1E2AD45E8B008CEF1A /* CodeFantasia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeFantasia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -223,6 +229,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB9013612B033CB1001FCA44 /* WebKit.framework in Frameworks */,
 				ABA229A62AEF368C00EDE1D5 /* FirebaseStorage in Frameworks */,
 				ABA229A52AEF368C00EDE1D5 /* FirebaseMessaging in Frameworks */,
 				ABA229A42AEF368C00EDE1D5 /* FirebaseFirestore in Frameworks */,
@@ -248,6 +255,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB9013602B033CA5001FCA44 /* WebKit.framework in Frameworks */,
 				ABA229A72AEF368C00EDE1D5 /* FirebaseAuth in Frameworks */,
 				F1E18BE62AE105B50041638B /* RxCocoa in Frameworks */,
 				F1E18BE72AE105B50041638B /* Then in Frameworks */,
@@ -320,6 +328,7 @@
 		ABA2296C2AEB028D00EDE1D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB90135F2B033CA5001FCA44 /* WebKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -442,6 +451,7 @@
 				AB5C352C2AF0BD520056E646 /* UILabel+.swift */,
 				AB5C352F2AF14FAC0056E646 /* UIView+.swift */,
 				AB22C6212AFA3AD80039D6EB /* UITextField+.swift */,
+				AB9013622B033F67001FCA44 /* WKWebView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -690,6 +700,7 @@
 				ABC3DF222AD45E8B008CEF1A /* AppDelegate.swift in Sources */,
 				ABC3DF242AD45E8B008CEF1A /* SceneDelegate.swift in Sources */,
 				6BBF70832AE62A9C00F58080 /* PlatformSelectionViewController.swift in Sources */,
+				AB9013632B033F67001FCA44 /* WKWebView+.swift in Sources */,
 				F1F51ACB2AEA0CF0002E8507 /* NetworkManager.swift in Sources */,
 				AB22C6222AFA3AD80039D6EB /* UITextField+.swift in Sources */,
 				F1E653E62AD8E3A900274A34 /* Palette.swift in Sources */,
@@ -752,6 +763,7 @@
 				F1E18BDB2AE105B50041638B /* DataModel.swift in Sources */,
 				F1F51ACC2AEA0CF2002E8507 /* NetworkManager.swift in Sources */,
 				ABD01AE52AEADD2200C3C08A /* Utilities.swift in Sources */,
+				AB9013642B033F67001FCA44 /* WKWebView+.swift in Sources */,
 				F1E18BDC2AE105B50041638B /* PaddingLabel.swift in Sources */,
 				6BBF708B2AEA643900F58080 /* UIColor+.swift in Sources */,
 				F1E18BDD2AE105B50041638B /* MyProjectTableViewCell.swift in Sources */,
@@ -1084,7 +1096,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Daisy.CodeFantasia.Dev;
+				PRODUCT_BUNDLE_IDENTIFIER = DaisyCodeFantasia.Dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1115,7 +1127,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Daisy.CodeFantasia.Dev;
+				PRODUCT_BUNDLE_IDENTIFIER = DaisyCodeFantasia.Dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1146,7 +1158,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Daisy.CodeFantasia.Dev;
+				PRODUCT_BUNDLE_IDENTIFIER = DaisyCodeFantasia.Dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
