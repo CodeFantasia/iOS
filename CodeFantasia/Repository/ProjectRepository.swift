@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol ProjectRepositoryProtocol {
-    func read(projectId: String) -> Single<Project>
+    func read(projectId: String) -> Observable<Project>
     func readAll() -> Single<[Project]>
     func readBlockAll(blockIDs: [String]) -> Single<[Project]>
     func create(project: Project)
@@ -36,7 +36,7 @@ struct ProjectRepository: ProjectRepositoryProtocol {
         self.firebaseManager = firebaseBaseManager
     }
     
-    func read(projectId: String) -> Single<Project> {
+    func read(projectId: String) -> Observable<Project> {
         return firebaseManager.read(collectionId, projectId)
             .map {
                 if let projectData = $0.toObject(Project.self) {
@@ -58,7 +58,6 @@ struct ProjectRepository: ProjectRepositoryProtocol {
             return firebaseManager.read(collectionId)
                 .map { datas in
                     return datas.compactMap { $0.toObject(Project.self) }.filter{!blockIDs.contains($0.writerID ?? "")
-                        
                     }
                 }
         }

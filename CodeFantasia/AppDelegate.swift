@@ -11,6 +11,7 @@ import SnapKit
 import FirebaseCore
 
 @main
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?  // UIWindow 객체를 추가합니다.

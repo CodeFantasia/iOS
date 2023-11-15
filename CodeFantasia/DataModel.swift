@@ -8,7 +8,7 @@
 import UIKit
 
 // 사용자 프로필 정보를 나타내는 구조체
-struct UserProfile: Codable {
+struct UserProfile: Codable, Equatable {
     let nickname: String
     let techStack: [String]
     let areasOfInterest: [String]

@@ -10,6 +10,8 @@ class UserDataManageController: UIViewController {
     
     let data: UserProfile?
     var blockIds: [String] = []
+    var followingIds: [String] = []
+    var followerIds: [String] = []
     
     init(data: UserProfile?) {
         self.data = data
@@ -32,6 +34,8 @@ class UserDataManageController: UIViewController {
                 interestTextView.text = selectedInterestField.joined(separator: ", ")
                 interestTextView.layoutIfNeeded()
                 self.blockIds = userProfile.blockIDs ?? []
+                self.followerIds = userProfile.followers ?? []
+                self.followingIds = userProfile.following ?? []
             }
         }
     // MARK: - Properties
@@ -210,7 +214,10 @@ class UserDataManageController: UIViewController {
                                                   profileImageURL: imageUrl,
                                                   userProjects: nil,
                                                   userID: currentUser,
-                                                  blockIDs: self.blockIds)
+                                                  blockIDs: self.blockIds,
+                                                  followers: self.followerIds,
+                                                  following: self.followingIds
+                    )
                     
                     let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
                     let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
