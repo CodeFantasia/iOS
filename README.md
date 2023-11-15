@@ -1,39 +1,6 @@
 # CodeCocoon
 ## 프로그래밍 초심자들을 위한 개발자 커뮤니티
 ------------
-## 고객지원
-구글폼( https://docs.google.com/forms/d/1EKpErGP21bFU5cLN-uAUx0ZK61Fvi9sjgOp19CRk9WU/edit?hl=ko )을 통해 문의사항을 남겨주세요.
-
-## 개인정보처리방침
-Code Cocoon은(는) \"개인정보 보호법\"에 따라 아래와 같이 수집하는 개인정보의 항목, 수집 및 이용 목적, 보유 및 이용 기간을 안내드리고 동의를 받고자 합니다.
-
-○ 개인정보 수집, 이용 내역
-
-구분(업무명): 회원가입 및 관리
-처리목적:
-    - 본인 식별 인증
-    - 회원자격 유지 관리
-    - 각종 고지, 통지사항 전달
-    - 서비스 부정가입 및 이용 방지
-항목:
-    - 이름, 이메일 주소, 아이디, 비밀번호, 닉네임, 휴대전화번호, 프로필 사진
-보유 및 이용기간:
-    - 회원 탈퇴시까지
-
-구분(업무명): 고객 상담 및 문의
-처리목적:
-    - 고객 문의 접수 및 처리
-    - 고객 불만 사항 처리
-    - 문의 접수 및 처리 이력관리
-항목:
-    - 이름, 휴대전화번호, 이메일주소, 서비스 이용 내역, 문의 내용, 상담 내역, 아이디
-보유 및 이용기간:
-    - 회원 탈퇴시까지
-
-정보주체는 위와 같이 개인정보를 처리하는 것에 대한 동의를 거부할 권리가 있습니다. 그러나 동의를 거부할 경우 [로그인이 필요한 Code Cocoon 서비스 이용]이 제한될 수 있습니다.
-"""
-    
-
 ## 소개
 
  이 앱은 프로젝트 팀원을 찾고자 하는 사람들에게 프로젝트 정보를 공유하고 관심 있는 프로젝트를 찾을 수 있는 플랫폼을 제공합니다.
@@ -87,32 +54,34 @@ Code Cocoon은(는) \"개인정보 보호법\"에 따라 아래와 같이 수집
 ------------
 ## 페이지 별 화면
 * ### 회원가입 및 정보등록
-<img width="1045" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/90bab39d-81c2-4ee3-9bfe-c6de97ae9ed5">
+<img width="1049" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/720ced0c-b8a7-46e2-9684-06abd71b65bf">
 
+* ### 새 글 작성 및 게시글 검색
+<img width="1050" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/ed608d5b-0c12-40ff-8fb1-fcfe561e7735">
 
+* ### 게시글 상세, 신고 및 작성자 프로필 보기
+<img width="1050" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/bdea227c-1ba5-4f27-bc6b-4e3bd3936846">
 
+* ### 내 프로젝트 삭제 및 수정
+<img width="1050" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/45c77a7d-2781-478b-8736-511d873561bb">
 
-* ### 내 프로젝트 및 수정
-<img width="1045" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/78682fc8-889b-4205-8047-0139c567b25b">
-
-
-* ### 검색 기능 및 작성자 프로필 보기
-<img width="1045" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/805b672d-4036-4254-9834-51d281acf98b">
-
-* ### 신청 버튼 및 게시글 신고
-<img width="1049" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/55f2e949-f806-4b93-8e7b-d3646d9d4150">
-
-* ### 새 글 작성
-<img width="1049" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/866e46ae-2786-41f0-9464-e879044e65be">
-
-
-
+* ### 프로필 수정 및 회원 탈퇴(로그아웃)
+<img width="1049" alt="image" src="https://github.com/CodeFantasia/iOS/assets/139093066/d432553b-511f-4f3b-984b-118cd3d1d947">
 
 
 ------------
 
+## 고객지원
+구글폼( https://docs.google.com/forms/d/1EKpErGP21bFU5cLN-uAUx0ZK61Fvi9sjgOp19CRk9WU/edit?hl=ko )을 통해 문의사항을 남겨주세요.
+
 ## 연락처
-문의나 제안 사항이 있다면 [98orchid@naver.com] 로 연락해 주세요.
+기타 문의나 제안 사항이 있다면 [98orchid@naver.com] 로 연락해 주세요.
+
+## 개인정보처리방침
+https://plip.kr/pcc/e06614ca-9e2f-40ad-9e1e-4c154598dc80/privacy/1.html
+
+## 이용약관
+https://field-father-166.notion.site/a7e802a5c4904aeb8fb20ddc6d21e4b5?pvs=4
 
 ------------
 ## 개발자
