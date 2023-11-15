@@ -320,6 +320,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return tableView
     }()
     
+    private let autoCompleteManager = AutoCompleteManager()
     private var filteredTechStacks: [String] = []
     
     // MARK: - 뷰 컨트롤러 생명주기
@@ -801,8 +802,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
    
     // 사용자 입력을 기반으로 제안을 업데이트하는 도우미 함수
     private func updateSuggestions(for text: String) {
-        let allTechStacks = getAllTechStacks()
-        filteredTechStacks = allTechStacks.filter { $0.lowercased().contains(text.lowercased()) }
+        filteredTechStacks = autoCompleteManager.generateSuggestions(for: text)
      
         suggestionsTableView.reloadData()
         suggestionsTableView.isHidden = filteredTechStacks.isEmpty

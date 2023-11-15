@@ -54,6 +54,14 @@ struct Project: Codable {
     var writerID: String?
     var projectStartDate: Date
     var projectEndDate: Date// 게시자 아이디
+    
+    // 모집 상태를 업데이트하는 메서드
+    mutating func updateRecruitmentStatus() {
+        let currentDate = Date()
+        if currentDate > projectEndDate {
+            recruitingStatus = false
+        }
+    }
 }
 
 //// 기술 스택

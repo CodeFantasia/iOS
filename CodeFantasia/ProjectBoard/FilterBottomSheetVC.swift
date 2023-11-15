@@ -65,9 +65,30 @@ class FilterBottomSheetVC: UIViewController {
             make.centerY.equalTo(label)
             make.right.equalTo(view.snp.right).offset(-20)
         }
+        
+//        // "기술 및 언어" 라벨 설정
+//        let skillsAndLanguagesLabel = UILabel()
+//        skillsAndLanguagesLabel.text = "기술 및 언어"
+//        view.addSubview(skillsAndLanguagesLabel)
+//        skillsAndLanguagesLabel.snp.makeConstraints { make in
+//            make.top.equalTo(recruitingSwitch.snp.bottom).offset(20)
+//            make.left.equalTo(view.snp.left).offset(20)
+//        }
+//
+//        // 텍스트 필드 설정
+//        let skillsAndLanguagesTextField = UITextField()
+//        skillsAndLanguagesTextField.borderStyle = .roundedRect
+//        view.addSubview(skillsAndLanguagesTextField)
+//        skillsAndLanguagesTextField.snp.makeConstraints { make in
+//            make.top.equalTo(skillsAndLanguagesLabel.snp.bottom).offset(10)
+//            make.left.right.equalToSuperview().inset(20)
+//            make.height.equalTo(40)
+//        }
+
 
         // 적용 버튼 설정
         applyButton.primaryColorConfigure(title: "적용")
+        applyButton.setTitleColor(.white, for: .normal)
         applyButton.addTarget(self, action: #selector(applyButtonTapped), for: .touchUpInside)
         view.addSubview(applyButton)
         applyButton.snp.makeConstraints { make in

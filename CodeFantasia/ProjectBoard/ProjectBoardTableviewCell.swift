@@ -129,7 +129,7 @@ private extension ProjectBoardTableviewCell {
       make.right.equalTo(titleImageView).offset(0)
       make.bottom.equalTo(contentView).offset(-13)
       make.height.equalTo(26)
-      make.width.equalTo(50)
+      make.width.equalTo(60)
     }
   }
     
