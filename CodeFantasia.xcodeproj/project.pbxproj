@@ -26,6 +26,8 @@
 		6BBF708B2AEA643900F58080 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70882AE7DA3A00F58080 /* UIColor+.swift */; };
 		6BBF70912AF642AA00F58080 /* NewPageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBF70902AF642AA00F58080 /* NewPageManager.swift */; };
 		6BC007BE2ADD0BA5005E544F /* NewPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC007BD2ADD0BA5005E544F /* NewPageViewController.swift */; };
+		AB0779E12B06476200BD15AE /* NewpostUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0779E02B06476200BD15AE /* NewpostUtilities.swift */; };
+		AB0779E22B06476200BD15AE /* NewpostUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0779E02B06476200BD15AE /* NewpostUtilities.swift */; };
 		AB14BEB52AE2503B00ACE79F /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEB42AE2503B00ACE79F /* Button.swift */; };
 		AB14BEBC2AE2505900ACE79F /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBB2AE2505900ACE79F /* LoginController.swift */; };
 		AB14BEC02AE2506300ACE79F /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */; };
@@ -180,6 +182,7 @@
 		6BBF70882AE7DA3A00F58080 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		6BBF70902AF642AA00F58080 /* NewPageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageManager.swift; sourceTree = "<group>"; };
 		6BC007BD2ADD0BA5005E544F /* NewPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageViewController.swift; sourceTree = "<group>"; };
+		AB0779E02B06476200BD15AE /* NewpostUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewpostUtilities.swift; sourceTree = "<group>"; };
 		AB14BEB42AE2503B00ACE79F /* Button.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		AB14BEBB2AE2505900ACE79F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		AB14BEBE2AE2506300ACE79F /* RegistrationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
@@ -306,6 +309,7 @@
 				6BC007BD2ADD0BA5005E544F /* NewPageViewController.swift */,
 				6BBF70822AE62A9C00F58080 /* PlatformSelectionViewController.swift */,
 				317D70642B03818800C5EDC2 /* AutoCompleteManager.swift */,
+				AB0779E02B06476200BD15AE /* NewpostUtilities.swift */,
 			);
 			path = NewPost;
 			sourceTree = "<group>";
@@ -742,6 +746,7 @@
 				6BBF70772ADFB72100F58080 /* ProfileViewController.swift in Sources */,
 				F0B39BC72AE76FF900CE4889 /* ProfileViewModel.swift in Sources */,
 				F1E18B492AE0F9A40041638B /* FirebaseManager.swift in Sources */,
+				AB0779E12B06476200BD15AE /* NewpostUtilities.swift in Sources */,
 				ABC3DF2C2AD45E8B008CEF1A /* CodeFantasia.xcdatamodeld in Sources */,
 				AB41CB942AF37A9400B43C63 /* TextView.swift in Sources */,
 				F13AED032AE611F00098C654 /* Rx+UIViewController.swift in Sources */,
@@ -814,6 +819,7 @@
 				F0BFCB5F2AEA541400D3BEC2 /* MyProjectViewModel.swift in Sources */,
 				F031266B2AE90B4C000E337E /* UIViewController+.swift in Sources */,
 				F03126692AE90B43000E337E /* Rx+UIViewController.swift in Sources */,
+				AB0779E22B06476200BD15AE /* NewpostUtilities.swift in Sources */,
 				AB5C35312AF14FAC0056E646 /* UIView+.swift in Sources */,
 				F1E18BE42AE105B50041638B /* TabbarM.swift in Sources */,
 			);

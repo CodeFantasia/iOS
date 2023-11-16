@@ -124,7 +124,7 @@ class RegistrationController: UIViewController {
         checkBtn.layer.masksToBounds = true
         checkBtn.tintColor = .black
         checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
-        checkBtn.adjustsImageWhenHighlighted = false
+        // checkBtn.adjustsImageWhenHighlighted = false
         return checkBtn
     }()
     

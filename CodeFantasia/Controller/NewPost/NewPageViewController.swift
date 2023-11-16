@@ -76,13 +76,12 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return scrollView
     }()
     
-    // 뒤로가기 버튼 생성
-    let backButton = UIButton().then {
-        $0.setTitle("뒤로가기", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-    }
-    
+    let navbar: UIView = {
+        let (navBtn, view) = NewpostUtilities().createNavbar()
+        navBtn.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return view
+    }()
+
     // 임시저장 버튼
     private let saveButton = UIButton().then {
         $0.setTitle("임시저장", for: .normal)
@@ -363,10 +362,11 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
             $0.height.equalTo(30)
         }
         
-        view.addSubview(backButton)
-        backButton.snp.makeConstraints {
-            $0.centerY.equalTo(saveButton)
-            $0.left.equalTo(view).offset(10)
+        view.addSubview(navbar)
+        navbar.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(2)
+            $0.height.equalTo(40)
         }
         
         let contentView = UIView()
@@ -522,7 +522,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(saveButton.snp.bottom).offset(20)
+            $0.top.equalTo(navbar.snp.bottom)
             $0.left.right.bottom.equalToSuperview()
         }
         contentView.snp.makeConstraints {
