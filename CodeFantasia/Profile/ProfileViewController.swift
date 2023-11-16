@@ -33,11 +33,6 @@ class ProfileViewController: UIViewController {
         $0.backgroundColor = .gray
     }
     
-    private lazy var nicknameLabel = UILabel().then {
-        $0.text = "닉네임"
-        $0.font = UIFont.subTitle
-    }
-
     private lazy var produceStackView: UIStackView = UIStackView().then {
          $0.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
          $0.isLayoutMarginsRelativeArrangement = true
@@ -73,7 +68,7 @@ class ProfileViewController: UIViewController {
          $0.font = UIFont.systemFont(ofSize: .content)
      }
     private lazy var infoLabel = UILabel().then {
-        $0.text = "나의 스펙 정보"
+        $0.text = "나의 정보"
         $0.font = UIFont.subTitle
     }
 
@@ -203,6 +198,11 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     private func navigationbarTitle() {
+        let nameTitle = UILabel().then {
+            $0.text = self.viewModel.userProfile?.nickname
+            $0.font = UIFont.boldSystemFont(ofSize: 16)
+        }
+        navigationItem.titleView = nameTitle
         if self.viewModel.userProfile?.userID == Auth.auth().currentUser?.uid {
             let logoImageView = UIImageView().then {
                 $0.contentMode = .scaleAspectFit
@@ -210,21 +210,16 @@ extension ProfileViewController {
                 $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
                 $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
             }
-
             let logoBarItem = UIBarButtonItem(customView: logoImageView)
             navigationItem.leftBarButtonItem = logoBarItem
         } else {
         }
     }
 
-    
     private func setupLayout() {
         view.addSubview(scrollView)
         scrollView.addSubview(stackView)
-        produceView.addSubview(profileImage)
-        produceView.addSubview(nicknameLabel)
-        
-        [produceView,
+        [profileImage,
          followingUserBtn,
          followersUserBtn
         ].forEach {
@@ -267,18 +262,9 @@ extension ProfileViewController {
             $0.edges.equalToSuperview()
             $0.width.equalToSuperview()
         }
-        produceView.snp.makeConstraints {
-            $0.height.equalTo(100)
-            $0.width.equalTo(130)
-        }
-        nicknameLabel.snp.makeConstraints {
-            $0.top.equalTo(produceView)
-            $0.centerX.equalTo(produceView)
-        }
         profileImage.snp.makeConstraints {
-            $0.centerX.equalTo(nicknameLabel)
-            $0.top.equalTo(nicknameLabel.snp.bottom).offset(6)
-            $0.width.height.equalTo(70)
+            $0.height.equalTo(70)
+            $0.width.equalTo(70)
         }
         infoUnderline.snp.makeConstraints {
             $0.height.equalTo(1)
@@ -338,7 +324,6 @@ extension ProfileViewController {
                     owner.followingUserBtn.setTitle("팔로잉\n\(user.following?.count ?? 0)", for: .normal)
                     owner.techLabel.text = user.techStack.joined(separator: ", ")
                     owner.interestLabel.text = user.areasOfInterest.joined(separator: ", ")
-                    owner.nicknameLabel.text = user.nickname
                     owner.produceContent.text = user.selfIntroduction ?? ""
                     owner.urlLabel.text = user.portfolioURL ?? ""
                 }
@@ -484,23 +469,23 @@ extension ProfileViewController {
             .disposed(by: self.disposeBag)
     }
 }
-          extension ProfileViewController {
-              func deleteEmail() {
-                  guard let email = getCurrentUserEmail() else { return }
-                  AuthManager().deleteAccountWithEmail(email) { error in
-                      if error == nil {
-                          print("이메일 지우기 성공!")
-                      } else {
-                          print("이메일 지우기 실패!")
-                      }
-                  }
-              }
-
-              func getCurrentUserEmail() -> String? {
-                  if let currentUser = Auth.auth().currentUser {
-                      return currentUser.email
-                  } else {
-                      return nil
-                  }
-              }
-          }
+extension ProfileViewController {
+    func deleteEmail() {
+        guard let email = getCurrentUserEmail() else { return }
+        AuthManager().deleteAccountWithEmail(email) { error in
+            if error == nil {
+                print("이메일 지우기 성공!")
+            } else {
+                print("이메일 지우기 실패!")
+            }
+        }
+    }
+    
+    func getCurrentUserEmail() -> String? {
+        if let currentUser = Auth.auth().currentUser {
+            return currentUser.email
+        } else {
+            return nil
+        }
+    }
+}

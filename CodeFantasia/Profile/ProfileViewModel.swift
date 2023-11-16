@@ -216,7 +216,7 @@ final class ProfileViewModel {
                     } else {
                         for document in querySnapshot!.documents {
                             document.reference.updateData(["followers": FieldValue.arrayRemove([current])])
-                            print("유저 팔로잉 삭제 완료")
+                            print("유저 팔로워 삭제 완료")
                         }
                     }
                 }
