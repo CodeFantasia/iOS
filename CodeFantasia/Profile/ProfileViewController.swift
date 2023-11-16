@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController {
          $0.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
          $0.isLayoutMarginsRelativeArrangement = true
          $0.axis = .horizontal
-         $0.spacing = .spacing
+         $0.spacing = 10
      }
 
      private lazy var followingUserBtn = UIButton().then {
@@ -172,7 +172,7 @@ class ProfileViewController: UIViewController {
         $0.layoutMargins = UIEdgeInsets(top: .spacing, left: 20, bottom: 20, right: 20)
         $0.isLayoutMarginsRelativeArrangement = true
         $0.axis = .vertical
-        $0.spacing = .spacing
+        $0.spacing = 10
     }
     private var viewModel: ProfileViewModel
     private let disposeBag = DisposeBag()
