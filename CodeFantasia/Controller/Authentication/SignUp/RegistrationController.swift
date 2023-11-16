@@ -146,8 +146,7 @@ class RegistrationController: UIViewController {
         label.snp.makeConstraints { make in
             make.left.equalTo(agreeBtn.snp.right).offset(2)
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview()
-            make.height.equalToSuperview()
+            make.right.height.equalToSuperview()
         }
     
         return view
@@ -395,27 +394,21 @@ class RegistrationController: UIViewController {
             make.left.equalTo(passwordCheckContainerView).offset(5)
         }
         
-        view.addSubview(termsOfConditionsBtn)
-        termsOfConditionsBtn.snp.makeConstraints { make in
-            make.top.equalTo(stack.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
-        }
+        let termsStack = UIStackView(arrangedSubviews: [termsOfConditionsBtn, privacyPolicyUrlBtn, termsOfConditionsAgree])
+        termsStack.axis = .vertical
+        termsStack.alignment = .center
+        termsStack.spacing = 2
+        termsStack.distribution = .fillEqually
         
-        view.addSubview(privacyPolicyUrlBtn)
-        privacyPolicyUrlBtn.snp.makeConstraints { make in
-            make.top.equalTo(termsOfConditionsBtn.snp.bottom)
-            make.centerX.equalToSuperview()
-        }
-        
-        view.addSubview(termsOfConditionsAgree)
-        termsOfConditionsAgree.snp.makeConstraints { make in
-            make.top.equalTo(privacyPolicyUrlBtn.snp.bottom).offset(5)
-            make.centerX.equalToSuperview()
+        view.addSubview(termsStack)
+        termsStack.snp.makeConstraints { make in
+            make.top.equalTo(stack.snp.bottom).offset(25)
+            make.left.right.equalTo(stack)
         }
         
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
-            make.top.equalTo(termsOfConditionsAgree.snp.bottom).offset(15)
+            make.top.equalTo(termsStack.snp.bottom).offset(15)
             make.left.right.equalTo(stack)
         }
         
