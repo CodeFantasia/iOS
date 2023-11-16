@@ -197,7 +197,7 @@ extension ProfileViewController {
 
 extension ProfileViewController {
     
-    private func navigationbarTitle() {
+     private func navigationbarTitle() {
         let nameTitle = UILabel().then {
             $0.text = self.viewModel.userProfile?.nickname
             $0.font = UIFont.boldSystemFont(ofSize: 16)

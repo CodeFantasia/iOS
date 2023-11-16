@@ -125,8 +125,15 @@ extension FollowTableVC {
         let follow = followDataArry[indexPath.row]
         let profileViewModel = ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: follow.userID ?? "")
         let profileViewController = ProfileViewController(viewModel: profileViewModel)
-        navigationController?.navigationBar.tintColor = UIColor.black
-        navigationController?.pushViewController(profileViewController, animated: true)
+        DispatchQueue.main.async {
+            let nameTitle = UILabel().then {
+                $0.text = follow.nickname
+                $0.font = UIFont.boldSystemFont(ofSize: 16)
+            }
+            profileViewController.navigationItem.titleView = nameTitle
+            profileViewController.navigationController?.navigationBar.tintColor = UIColor.black
+                self.navigationController?.pushViewController(profileViewController, animated: true)
+            }
     }
 }
 
