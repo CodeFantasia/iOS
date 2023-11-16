@@ -27,9 +27,20 @@ class FollowTableVC: UITableViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    private lazy var followOrFollowingLabel = UILabel().then {
+        $0.textColor = .black
+        $0.font = UIFont.boldSystemFont(ofSize: 16)
+    }
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if viewModel.followType == "followers" {
+            NavigationTitle()
+            followOrFollowingLabel.text = "팔로워"
+        } else {
+            NavigationTitle()
+            followOrFollowingLabel.text = "팔로잉"
+        }
         tableView.backgroundColor = UIColor.white
         tableView.separatorInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 15)
         tableView.separatorInsetReference = .fromAutomaticInsets
