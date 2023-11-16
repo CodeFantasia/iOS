@@ -120,7 +120,7 @@ class RegistrationController: UIViewController {
         let checkBtn = UIButton(type: .system)
         checkBtn.setImage(UIImage(systemName: "square"), for: .normal)
         checkBtn.setImage(UIImage(systemName: "checkmark.square"), for: .selected)
-        checkBtn.imageView?.contentMode = .scaleAspectFit
+        checkBtn.imageView?.contentMode = .scaleAspectFill
         checkBtn.layer.masksToBounds = true
         checkBtn.tintColor = .black
         checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
@@ -135,7 +135,7 @@ class RegistrationController: UIViewController {
         agreeBtn.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(25)
+//            make.width.height.equalTo(25)
         }
         
         let label = UILabel()
@@ -403,25 +403,25 @@ class RegistrationController: UIViewController {
         
         view.addSubview(privacyPolicyUrlBtn)
         privacyPolicyUrlBtn.snp.makeConstraints { make in
-            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
+            make.top.equalTo(termsOfConditionsBtn.snp.bottom)
             make.centerX.equalToSuperview()
         }
         
         view.addSubview(termsOfConditionsAgree)
         termsOfConditionsAgree.snp.makeConstraints { make in
-            make.top.equalTo(privacyPolicyUrlBtn.snp.bottom).offset(2)
+            make.top.equalTo(privacyPolicyUrlBtn.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
         }
         
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
-            make.top.equalTo(termsOfConditionsAgree.snp.bottom).offset(CGFloat.authSpacing)
+            make.top.equalTo(termsOfConditionsAgree.snp.bottom).offset(15)
             make.left.right.equalTo(stack)
         }
         
         view.addSubview(alreadyHaveAccountButton)
         alreadyHaveAccountButton.snp.makeConstraints { make in
-            make.top.equalTo(nextButton.snp.bottom).offset(CGFloat.authSpacing)
+            make.top.equalTo(nextButton.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
         }
         
