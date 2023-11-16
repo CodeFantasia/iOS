@@ -87,7 +87,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 8
-        imageView.shadow()
+//        imageView.shadow()
+        imageView.borderLayer()
         imageView.backgroundColor = .white
         imageView.image = UIImage(named: "AddPhoto")
         imageView.snp.makeConstraints { make in
