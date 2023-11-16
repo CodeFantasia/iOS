@@ -120,11 +120,11 @@ class RegistrationController: UIViewController {
         let checkBtn = UIButton(type: .system)
         checkBtn.setImage(UIImage(systemName: "square"), for: .normal)
         checkBtn.setImage(UIImage(systemName: "checkmark.square"), for: .selected)
-        checkBtn.imageView?.contentMode = .scaleAspectFit
+        checkBtn.imageView?.contentMode = .scaleAspectFill
         checkBtn.layer.masksToBounds = true
         checkBtn.tintColor = .black
         checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
-        checkBtn.adjustsImageWhenHighlighted = false
+        // checkBtn.adjustsImageWhenHighlighted = false
         return checkBtn
     }()
     
@@ -135,7 +135,7 @@ class RegistrationController: UIViewController {
         agreeBtn.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(25)
+//            make.width.height.equalTo(25)
         }
         
         let label = UILabel()
@@ -146,8 +146,7 @@ class RegistrationController: UIViewController {
         label.snp.makeConstraints { make in
             make.left.equalTo(agreeBtn.snp.right).offset(2)
             make.centerY.equalToSuperview()
-            make.right.equalToSuperview()
-            make.height.equalToSuperview()
+            make.right.height.equalToSuperview()
         }
     
         return view
@@ -395,33 +394,27 @@ class RegistrationController: UIViewController {
             make.left.equalTo(passwordCheckContainerView).offset(5)
         }
         
-        view.addSubview(termsOfConditionsBtn)
-        termsOfConditionsBtn.snp.makeConstraints { make in
-            make.top.equalTo(stack.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
-        }
+        let termsStack = UIStackView(arrangedSubviews: [termsOfConditionsBtn, privacyPolicyUrlBtn, termsOfConditionsAgree])
+        termsStack.axis = .vertical
+        termsStack.alignment = .center
+        termsStack.spacing = 2
+        termsStack.distribution = .fillEqually
         
-        view.addSubview(privacyPolicyUrlBtn)
-        privacyPolicyUrlBtn.snp.makeConstraints { make in
-            make.top.equalTo(termsOfConditionsBtn.snp.bottom).offset(2)
-            make.centerX.equalToSuperview()
-        }
-        
-        view.addSubview(termsOfConditionsAgree)
-        termsOfConditionsAgree.snp.makeConstraints { make in
-            make.top.equalTo(privacyPolicyUrlBtn.snp.bottom).offset(2)
-            make.centerX.equalToSuperview()
+        view.addSubview(termsStack)
+        termsStack.snp.makeConstraints { make in
+            make.top.equalTo(stack.snp.bottom).offset(25)
+            make.left.right.equalTo(stack)
         }
         
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
-            make.top.equalTo(termsOfConditionsAgree.snp.bottom).offset(CGFloat.authSpacing)
+            make.top.equalTo(termsStack.snp.bottom).offset(15)
             make.left.right.equalTo(stack)
         }
         
         view.addSubview(alreadyHaveAccountButton)
         alreadyHaveAccountButton.snp.makeConstraints { make in
-            make.top.equalTo(nextButton.snp.bottom).offset(CGFloat.authSpacing)
+            make.top.equalTo(nextButton.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
         }
         

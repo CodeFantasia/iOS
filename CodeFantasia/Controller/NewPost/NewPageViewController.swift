@@ -76,47 +76,10 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return scrollView
     }()
     
-    // 뒤로가기 버튼 생성
-    let backButton = UIButton().then {
-        $0.setTitle("뒤로가기", for: .normal)
-        $0.setTitleColor(.black, for: .normal)
-        $0.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-    }
-    
-    // 임시저장 버튼
-    private let saveButton = UIButton().then {
-        $0.setTitle("임시저장", for: .normal)
-        $0.backgroundColor = UIColor(hex: 0x000000)
-        $0.layer.cornerRadius = 15
-        $0.setTitleColor(.white, for: .normal)
-    }
-    
-    // 제목 라벨
-    private let titleLabel = UILabel().then {
-        $0.text = "제목"
-        $0.textColor = UIColor(hex: 0x000000)
-        $0.sizeToFit()
-    }
-    
-    // 제목 텍스트필드
-    private let titleTextField = UITextField().then {
-        $0.placeholder = "제목"
-        $0.borderStyle = .roundedRect
-        $0.layer.cornerRadius = 8
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.black.cgColor
-        $0.backgroundColor = .white
-        $0.createToolBar()
-        
-    }
-    
-    // 썸네일 라벨
-    private let thumbnailLabel: UILabel = {
-        let label = UILabel()
-        label.text = "썸네일"
-        label.textColor = UIColor(hex: 0x000000)
-        label.sizeToFit()
-        return label
+    let navbar: UIView = {
+        let (navBtn, view) = NewpostUtilities().createNavbar()
+        navBtn.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        return view
     }()
     
     // 썸네일 이미지 뷰
@@ -124,11 +87,13 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 8
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.black.cgColor
+//        imageView.shadow()
+        imageView.borderLayer()
         imageView.backgroundColor = .white
-        imageView.image = UIImage(named: "default")
-
+        imageView.image = UIImage(named: "AddPhoto")
+        imageView.snp.makeConstraints { make in
+            make.height.equalTo(200)
+        }
         return imageView
     }()
     
@@ -139,175 +104,100 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         return iconImageView
     }()
     
-    // 출시 플랫폼 라벨
-    private let platformLabel: UILabel = {
-        let label = UILabel()
-        label.text = "출시 플랫폼"
-        label.textColor = UIColor(hex: 0x000000)
-        label.sizeToFit()
-        return label
+    // MARK: - Input View
+    
+    private lazy var titleView: UIView = {
+        let view = NewpostUtilities().createInputView(title: "글 제목", textfield: titleTextField)
+        return view
+    }()
+
+    private let titleTextField: UITextField = {
+        let textfield = NewpostUtilities().createTextField(placeholder: "제목을 입력해주세요.")
+        return textfield
     }()
     
-    // 출시 플랫폼 텍스트 필드
+    private lazy var platformView: UIView = {
+        let view = NewpostUtilities().createInputView(title: "출시 플랫폼", textfield: platformTextField)
+        return view
+    }()
+    
     private let platformTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "출시 플랫폼"
-        textField.borderStyle = .roundedRect
-        textField.layer.cornerRadius = 8
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.backgroundColor = .white
-        //    textField.addTarget(self, action: #selector(showPlatformSelection), for: .touchDown) //
-        return textField
+        let textfield = NewpostUtilities().createTextField(placeholder: "출시 플랫폼 선택해 주세요.")
+        return textfield
     }()
     
-    // 모집 기술 및 언어 라벨
-    private let techLanguageLabel: UILabel = {
-        let label = UILabel()
-        label.text = "모집 기술 및 언어"
-        label.textColor = UIColor(hex: 0x000000)
-        label.sizeToFit()
-        return label
+    private lazy var techLanguageView: UIView = {
+        let view = NewpostUtilities().createInputView(title: "모집 기술 및 언어", textfield: techLanguageTextField)
+        return view
     }()
-    
-    // 모집 기술 및 언어 텍스트 필드
+
     private let techLanguageTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "모집 기술 및 언어"
-        textField.borderStyle = .roundedRect
-        textField.layer.cornerRadius = 8
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.backgroundColor = .white
-        textField.createToolBar()
-        return textField
+        let textfield = NewpostUtilities().createTextField(placeholder: "모집 기술 및 언어를 선택해 주세요.")
+        return textfield
     }()
     
-    // 모집 분야 라벨
-    private let recruitmentFieldLabel: UILabel = {
-        let label = UILabel()
-        label.text = "모집 분야"
-        label.textColor = UIColor(hex: 0x000000)
-        label.sizeToFit()
-        return label
+    private lazy var recruitmentView: UIView = {
+        let view = NewpostUtilities().createInputView(title: "모집 분야", textfield: recruitmentFieldTextField)
+        return view
     }()
-    
-    // 모집 분야 텍스트 필드
+
     private let recruitmentFieldTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "모집 분야"
-        textField.borderStyle = .roundedRect
-        textField.layer.cornerRadius = 8
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.backgroundColor = .white
-        textField.createToolBar()
-        return textField
+        let textfield = NewpostUtilities().createTextField(placeholder: "모집 분야를 입력해주세요.")
+        return textfield
     }()
     
-    // 프로젝트 소개 라벨
-    private let projectIntroLabel: UILabel = {
-        let label = UILabel()
-        label.text = "프로젝트 소개"
-        label.textColor = UIColor(hex: 0x000000)
-        label.sizeToFit()
-        return label
+    private lazy var projectIntroView: UIView = {
+        let view = NewpostUtilities().createTextviewInput(title: "프로젝트 소개", textview: projectIntroTextView, textviewHeight: 200)
+        return view
     }()
     
-    // 프로젝트 소개 텍스트뷰
-    let projectIntroTextView: TextView = {
-        let textView = TextView()
-        textView.layer.cornerRadius = 8
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.black.cgColor
-        textView.backgroundColor = .white
-        textView.placeholder = "소개글을 입력해주세용" // 플레이스홀더 텍스트 설정
-        return textView
+    private let projectIntroTextView: UITextView = {
+        let textview = NewpostUtilities().createTextView(placeholder: "프로젝트 소개를 해주세요!")
+        return textview
     }()
     
-    // 프로젝트 시작 기간 라벨
-    let projectStartDateLabel: UILabel = {
-        let label = UILabel()
-        label.text = "프로젝트 시작일"
-        label.textColor = UIColor(hex: 0x000000)
-        label.sizeToFit()
-        return label
+    private lazy var datepickerView: UIView = {
+        let view = NewpostUtilities().createDatePicker(startdate: projectStartDatePicker, enddate: projectEndDatePicker)
+        return view
     }()
-    
-    // 프로젝트 종료 기간 라벨
-    let projectEndDateLabel: UILabel = {
-        let label = UILabel()
-        label.text = "프로젝트 종료일"
-        label.textColor = UIColor(hex: 0x000000)
-        label.sizeToFit()
-        return label
-    }()
-    
-    // 프로젝트 기간 데이트 피커1
+
     let projectStartDatePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         return datePicker
     }()
-    
-    // 프로젝트 기간 데이트 피커2
+
     let projectEndDatePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
         return datePicker
     }()
     
-    // 모임 유형 라벨
-    let meetingTypeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "모임 유형"
-        label.textColor = UIColor(hex: 0x000000)
-        label.sizeToFit()
-        return label
+    private lazy var meetingTypeView: UIView = {
+        let view = NewpostUtilities().createInputView(title: "모임 유형", textfield: meetingTypeTextField)
+        return view
     }()
-    
-    // 모임 유형 텍스트 필드
-    let meetingTypeTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "모임 유형"
-        textField.borderStyle = .roundedRect
-        textField.layer.cornerRadius = 8
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.backgroundColor = .white
-        textField.createToolBar()
+
+    private let meetingTypeTextField: UITextField = {
+        let textField = NewpostUtilities().createTextField(placeholder: "모임 유형을 입력해주세요.")
         return textField
     }()
     
-    // 신청 시 연락 방법 라벨
-    let contactMethodLabel: UILabel = {
-        let label = UILabel()
-        label.text = "연락 수단을 적어주세요."
-        label.textColor = UIColor(hex: 0x000000)
-        label.sizeToFit()
-        return label
+    private lazy var contactMethodView: UIView = {
+        let view = NewpostUtilities().createInputView(title: "연락처", textfield: contactMethodTextField)
+        return view
     }()
     
-    // 신청 시 연락 방법 텍스트 필드
-    let contactMethodTextField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "신청 시 연락 방법"
-        textField.borderStyle = .roundedRect
-        textField.layer.cornerRadius = 8
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.backgroundColor = .white
-        textField.createToolBar()
+    private let contactMethodTextField: UITextField = {
+        let textField = NewpostUtilities().createTextField(placeholder: "연락 수단을 적어주세요.")
         return textField
     }()
     
-    // 작성 완료 버튼
     private let completeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("작성 완료", for: .normal)
-        //    button.frame = CGRect(x: 10, y: 1000, width: UIScreen.main.bounds.width - 20, height: 40)
         button.backgroundColor = UIColor(hex: 0x000000)
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = .cornerRadius
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         return button
@@ -333,8 +223,6 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         setUp()
         print(data)
         
-        saveButton.isHidden = true
-        
         techLanguageTextField.delegate = self
         
         setupUI()
@@ -354,177 +242,68 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     private func setupUI() {
         view.backgroundColor = .white
-        
-        view.addSubview(saveButton)
-        saveButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(60)
-            $0.right.equalToSuperview().offset(-10)
-            $0.width.equalTo(100)
-            $0.height.equalTo(30)
-        }
-        
-        view.addSubview(backButton)
-        backButton.snp.makeConstraints {
-            $0.centerY.equalTo(saveButton)
-            $0.left.equalTo(view).offset(10)
+
+        view.addSubview(navbar)
+        navbar.snp.makeConstraints {
+            $0.left.right.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(2)
+            $0.height.equalTo(40)
         }
         
         let contentView = UIView()
         
-        // 제목 라벨
-        contentView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(contentView).offset(20)
-            $0.left.equalTo(contentView).offset(20)
-        }
-        // 제목 텍스트 필드
-        contentView.addSubview(titleTextField)
-        titleTextField.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-            $0.right.equalTo(contentView).offset(-20)
-            $0.height.equalTo(30)
-        }
-        
-        contentView.addSubview(thumbnailLabel)
-        thumbnailLabel.snp.makeConstraints {
-            $0.top.equalTo(titleTextField.snp.bottom).offset(20)
-            $0.left.equalTo(contentView).offset(20)
-        }
         contentView.addSubview(thumbnailImageView)
-        thumbnailImageView.snp.makeConstraints {
-            $0.top.equalTo(thumbnailLabel.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-            $0.right.equalTo(contentView).offset(-20)
-            $0.height.equalTo(200)
+        thumbnailImageView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(CGFloat.spacing)
+            make.top.equalToSuperview().offset(10)
+            make.height.equalTo(200)
         }
         
-        // 출시 플랫폼 라벨와 텍스트 필드
-        contentView.addSubview(platformLabel)
-        platformLabel.snp.makeConstraints {
-            $0.top.equalTo(thumbnailImageView.snp.bottom).offset(20)
-            $0.left.equalTo(contentView).offset(20)
-        }
-        contentView.addSubview(platformTextField)
-        platformTextField.snp.makeConstraints {
-            $0.top.equalTo(platformLabel.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-            $0.right.equalTo(contentView).offset(-20)
-            $0.height.equalTo(30)
+        contentView.addSubview(titleView)
+        titleView.snp.makeConstraints { make in
+            make.top.equalTo(thumbnailImageView.snp.bottom).offset(20)
+            make.left.right.equalTo(thumbnailImageView)
         }
         
-        // 모집 기술 및 언어 라벨와 텍스트 필드
-        contentView.addSubview(techLanguageLabel)
-        techLanguageLabel.snp.makeConstraints {
-            $0.top.equalTo(platformTextField.snp.bottom).offset(20)
-            $0.left.equalTo(contentView).offset(20)
-        }
-        contentView.addSubview(techLanguageTextField)
-        techLanguageTextField.snp.makeConstraints {
-            $0.top.equalTo(techLanguageLabel.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-            $0.right.equalTo(contentView).offset(-20)
-            $0.height.equalTo(30)
+        contentView.addSubview(techLanguageView)
+        techLanguageView.snp.makeConstraints { make in
+            make.top.equalTo(titleView.snp.bottom).offset(20)
+            make.left.right.equalTo(titleView)
         }
         
-        // 모집 분야 라벨와 텍스트 필드
-        contentView.addSubview(recruitmentFieldLabel)
-        recruitmentFieldLabel.snp.makeConstraints {
-            $0.top.equalTo(techLanguageTextField.snp.bottom).offset(20)
-            $0.left.equalTo(contentView).offset(20)
+        contentView.addSubview(platformView)
+        platformView.snp.makeConstraints { make in
+            make.top.equalTo(techLanguageView.snp.bottom).offset(20)
+            make.left.right.equalTo(titleView)
         }
-        contentView.addSubview(recruitmentFieldTextField)
-        recruitmentFieldTextField.snp.makeConstraints {
-            $0.top.equalTo(recruitmentFieldLabel.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-            $0.right.equalTo(contentView).offset(-20)
-            $0.height.equalTo(30)
-        }
+
+        let subviews = [recruitmentView, projectIntroView, datepickerView, meetingTypeView, contactMethodView]
         
-        // 프로젝트 소개 라벨와 텍스트뷰
-        contentView.addSubview(projectIntroLabel)
-        projectIntroLabel.snp.makeConstraints {
-            $0.top.equalTo(recruitmentFieldTextField.snp.bottom).offset(20)
-            $0.left.equalTo(contentView).offset(20)
-        }
-        contentView.addSubview(projectIntroTextView)
-        projectIntroTextView.snp.makeConstraints {
-            $0.top.equalTo(projectIntroLabel.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-            $0.right.equalTo(contentView).offset(-20)
-            $0.height.equalTo(100)
-        }
+        let stack = UIStackView(arrangedSubviews: subviews)
+        stack.axis = .vertical
+        stack.spacing = 20
+        stack.distribution = .fillProportionally
         
-        // 프로젝트 시작 기간 라벨과 데이트 피커
-        contentView.addSubview(projectStartDateLabel)
-        projectStartDateLabel.snp.makeConstraints {
-            $0.top.equalTo(projectIntroTextView.snp.bottom).offset(20)
-            $0.left.equalTo(contentView).offset(20)
+        contentView.addSubview(stack)
+        stack.snp.makeConstraints { make in
+            make.top.equalTo(platformView.snp.bottom).offset(20)
+            make.left.right.equalToSuperview().inset(CGFloat.spacing)
         }
-        contentView.addSubview(projectStartDatePicker)
-        projectStartDatePicker.snp.makeConstraints {
-            $0.top.equalTo(projectStartDateLabel.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-            $0.height.equalTo(100)
-        }
-        
-        // 프로젝트 종료 기간 라벨 2와 데이트 피커 2
-        contentView.addSubview(projectEndDateLabel)
-        projectEndDateLabel.snp.makeConstraints {
-            $0.top.equalTo(projectIntroTextView.snp.bottom).offset(20)
-            $0.right.equalToSuperview().offset(-20)
-        }
-        contentView.addSubview(projectEndDatePicker)
-        projectEndDatePicker.snp.makeConstraints {
-            $0.top.equalTo(projectEndDateLabel.snp.bottom).offset(10)
-            $0.right.equalToSuperview().offset(-20)
-            $0.height.equalTo(100)
-        }
-        
-        // 모집유형 라벨과 텍스트필드
-        contentView.addSubview(meetingTypeLabel)
-        meetingTypeLabel.snp.makeConstraints {
-            $0.top.equalTo(projectEndDatePicker.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-        }
-        
-        contentView.addSubview(meetingTypeTextField)
-        meetingTypeTextField.snp.makeConstraints {
-            $0.top.equalTo(meetingTypeLabel.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-            $0.right.equalTo(contentView).offset(-20)
-            $0.height.equalTo(30)
-        }
-        // 연락방법 라벨과 텍스트필드
-        contentView.addSubview(contactMethodLabel)
-        contactMethodLabel.snp.makeConstraints {
-            $0.top.equalTo(meetingTypeTextField.snp.bottom).offset(20)
-            $0.left.equalTo(contentView).offset(20)
-        }
-        
-        contentView.addSubview(contactMethodTextField)
-        contactMethodTextField.snp.makeConstraints {
-            $0.top.equalTo(contactMethodLabel.snp.bottom).offset(10)
-            $0.left.equalTo(contentView).offset(20)
-            $0.right.equalTo(contentView).offset(-20)
-            $0.height.equalTo(30)
-        }
-        
-        // 작성 완료 버튼
+
         contentView.addSubview(completeButton)
         completeButton.snp.makeConstraints {
-            $0.top.equalTo(contactMethodTextField.snp.bottom).offset(20)
-            $0.left.equalTo(contentView).offset(10)
-            $0.width.equalTo(UIScreen.main.bounds.width - 20)
-            $0.height.equalTo(30)
+            $0.top.equalTo(stack.snp.bottom).offset(20)
+            $0.left.right.equalToSuperview().inset(CGFloat.spacing)
+            $0.height.equalTo(50)
         }
-        scrollView.addSubview(contentView)
         
+        scrollView.addSubview(contentView)
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(saveButton.snp.bottom).offset(20)
+            $0.top.equalTo(navbar.snp.bottom)
             $0.left.right.bottom.equalToSuperview()
         }
+
         contentView.snp.makeConstraints {
             $0.edges.width.equalTo(scrollView)
             $0.bottom.equalTo(completeButton.snp.bottom).offset(20)
