@@ -106,6 +106,8 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.black.cgColor
         $0.backgroundColor = .white
+        $0.createToolBar()
+        
     }
     
     // 썸네일 라벨
