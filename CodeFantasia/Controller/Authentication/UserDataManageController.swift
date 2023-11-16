@@ -10,6 +10,8 @@ class UserDataManageController: UIViewController {
     
     let data: UserProfile?
     var blockIds: [String] = []
+    var followingIds: [String] = []
+    var followerIds: [String] = []
     
     init(data: UserProfile?) {
         self.data = data
@@ -32,6 +34,8 @@ class UserDataManageController: UIViewController {
                 interestTextView.text = selectedInterestField.joined(separator: ", ")
                 interestTextView.layoutIfNeeded()
                 self.blockIds = userProfile.blockIDs ?? []
+                self.followerIds = userProfile.followers ?? []
+                self.followingIds = userProfile.following ?? []
             }
         }
     // MARK: - Properties
@@ -137,21 +141,7 @@ class UserDataManageController: UIViewController {
         button.addTarget(self, action: #selector(handleDoneButton), for: .touchUpInside)
         return button
     }()
-    
-    private let withdrawButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("회원 탈퇴", for: .normal)
-        button.backgroundColor = UIColor.lightGray
-        button.snp.makeConstraints { make in
-            make.height.equalTo(50)
-        }
-        button.layer.cornerRadius = CGFloat.cornerRadius
-        button.titleLabel?.font = UIFont.buttonTitle
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(handleWithdrawButton), for: .touchUpInside)
-        return button
-    }()
-    
+
     private let techstackTableview: DropDownTableView = {
         let tableview = DropDownTableView()
         let techstack = TechStack().technologies
@@ -210,7 +200,10 @@ class UserDataManageController: UIViewController {
                                                   profileImageURL: imageUrl,
                                                   userProjects: nil,
                                                   userID: currentUser,
-                                                  blockIDs: self.blockIds)
+                                                  blockIDs: self.blockIds,
+                                                  followers: self.followerIds,
+                                                  following: self.followingIds
+                    )
                     
                     let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
                     let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
@@ -235,57 +228,7 @@ class UserDataManageController: UIViewController {
         }
         
     }
-    
-    
-    
-    @objc func handleWithdrawButton() {
-        if let user = Auth.auth().currentUser {
-            self.alertViewAlert(title: "회원 탈퇴", message: """
-                                                               정말 탈퇴 하시겠습니까?
-                                                               기존의 정보들이 모두 삭제됩니다.
-                                                               """, cancelText: "아니요", acceptCompletion:  {
-                self.deleteEmail()
-                user.delete { [self] error in
-                    if let error = error {
-                        print("Firebase Error : ", error)
-                    } else {
-                        let currentAuthor = self.data?.userID
-                        let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
-                        let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
-                        userRepository.delete(userId: currentAuthor ?? "")
-                        let db = Firestore.firestore()
-                        db.collection("Project").whereField("writerID", isEqualTo: currentAuthor ?? "").getDocuments { (querySnapshot, error) in
-                            if let error = error {
-                                print("Error getting documents: \(error)")
-                            } else {
-                                for document in querySnapshot!.documents {
-                                    document.reference.delete()
-                                    print("Document successfully deleted.")
-                                }
-                                self.alertViewAlert(title: "탈퇴 완료", message: """
-                                                                               탈퇴가 완료 되었습니다.
-                                                                               서비스를 이용하려면 다시 가입해주세요.
-                                                                               로그인 화면으로 돌아갑니다.
-                                                                               """, cancelText: nil, acceptCompletion:  {
-                                    DispatchQueue.main.async {
-                                        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
-                                            fatalError("could not get scene delegate ")
-                                        }
-                                        sceneDelegate.window?.rootViewController = TabBarController()
-                                    }
-                                })
-                            }
-                        }
-                    }
-                }
-            })
-        } else {
-            self.alertViewAlert(title: "로그인 정보가 일치하지 않습니다", message: """
-                                                           다시 로그인 후 탈퇴해주세요.
-                                                           """, cancelText: nil, acceptCompletion:  {})
-                }
-    }
-    
+
     @objc func backBarButton() {
         navigationController?.popViewController(animated: true)
         navigationController?.navigationBar.isHidden = true
@@ -325,10 +268,6 @@ class UserDataManageController: UIViewController {
         } else {
             return nil
         }
-    }
-    
-    func hideWithdrawButton() {
-        withdrawButton.isHidden = true 
     }
     
     func validateUserProfile(nickname: String) -> Bool {
@@ -387,7 +326,7 @@ class UserDataManageController: UIViewController {
             make.height.width.equalTo(130)
         }
         
-        let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton, withdrawButton])
+        let stackview = UIStackView(arrangedSubviews: [nicknameView, techStackView, interestFieldView, portfolioUrlView, selfIntroductionView, doneButton])
         stackview.axis = .vertical
         stackview.spacing = 20
         stackview.distribution = .fillProportionally
@@ -398,9 +337,7 @@ class UserDataManageController: UIViewController {
             make.left.right.width.equalToSuperview().inset(CGFloat.spacing)
             make.bottom.equalToSuperview().inset(CGFloat.spacing)
         }
-        
         scrollview.contentSize = CGSize(width: view.frame.width, height: stackview.frame.maxY + 20)
-        
     }
     
     func configureDropdownUI() {

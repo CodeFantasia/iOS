@@ -24,10 +24,6 @@ final class ProjectDetailNoticeBoardViewModel {
         var projectLeaderProfileDidTap: Driver<String?>
         var projectReportButtonDidTap: Driver<Void>
         var userAuthConfirmed: Driver<Bool>
-//        var projectApplySuccess: Observable<Void>
-//        var projectApplyFail: Observable<Void>
-//        var projectReportSuccess: Observable<Void>
-//        var projectReportFail: Observable<Void>
     }
     let projectDeleteComplete = PublishSubject<Void>()
     let projectApplyComplete = PublishSubject<Void>()
@@ -49,22 +45,21 @@ final class ProjectDetailNoticeBoardViewModel {
     
     func transform(input: Input) -> Output {
         
-        let projectData = Observable<Project>.create { [weak self] observer in
-            guard let self else { return Disposables.create() }
-            input.viewDidLoad
-                .subscribe { projectId in
-                    self.projectRepository.read(projectId: self.projectId)
-                        .subscribe(onSuccess: { project in
-                            self.project = project
-                            observer.onNext(project)
-                        }, onFailure: { error in
-                            observer.onError(error)
-                        })
-                        .disposed(by: self.disposeBag)
-                }
-                .disposed(by: self.disposeBag)
-            return Disposables.create()
-        }
+        
+        let projectData = input.viewDidLoad
+            .flatMapLatest { [weak self] _ -> Observable<Project> in
+                guard let self = self else { return Observable.empty() }
+                return self.projectRepository.read(projectId: self.projectId)
+            }
+            .share()
+        projectData
+            .subscribe(onNext: { [weak self] project in
+                self?.project = project
+                print("User data updated: \(project)")
+            }, onError: { error in
+                // 에러 처리 로직을 수행합니다.
+            })
+            .disposed(by: disposeBag)
         
         //TODO: - apply, report 기능 추가
         projectApplyComplete.subscribe { _ in
@@ -104,3 +99,19 @@ final class ProjectDetailNoticeBoardViewModel {
     }
 }
 
+//        let projectData = Observable<Project>.create { [weak self] observer in
+//            guard let self else { return Disposables.create() }
+//            input.viewDidLoad
+//                .subscribe { projectId in
+//                    self.projectRepository.read(projectId: self.projectId)
+//                        .subscribe(onSuccess: { project in
+//                            self.project = project
+//                            observer.onNext(project)
+//                        }, onFailure: { error in
+//                            observer.onError(error)
+//                        })
+//                        .disposed(by: self.disposeBag)
+//                }
+//                .disposed(by: self.disposeBag)
+//            return Disposables.create()
+//        }

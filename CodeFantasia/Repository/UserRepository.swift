@@ -10,12 +10,14 @@ import RxSwift
 import FirebaseAuth
 
 protocol UserRepositoryProtocol {
-    func read(userId: String) -> Single<UserProfile>
+    func read(userId: String) -> Observable<UserProfile>
     func readAll() -> Single<[UserProfile]>
     func create(user: UserProfile)
     func delete(user: UserProfile)
     func `delete`(userId: String)
     func update(user: UserProfile)
+    func readFollowerUsers(userId: String) -> Observable<[UserProfile]>
+    func readFollowingUsers(userId: String) -> Observable<[UserProfile]>
 }
 
 struct UserRepository: UserRepositoryProtocol {
@@ -35,7 +37,7 @@ struct UserRepository: UserRepositoryProtocol {
         self.firebaseManager = firebaseBaseManager
     }
     
-    func read(userId: String) -> Single<UserProfile> {
+    func read(userId: String) -> Observable<UserProfile> {
         return firebaseManager.read(collectionId, userId)
             .map {
                 if let userData = $0.toObject(UserProfile.self) {
@@ -75,5 +77,39 @@ struct UserRepository: UserRepositoryProtocol {
         } else {
             firebaseManager.update(collectionId, user.userID ?? "", user)
         }
+    }
+
+    func readFollowerUsers(userId: String) -> Observable<[UserProfile]> {
+        return firebaseManager.getFollowersList(collectionId, userId)
+            .flatMapLatest { followerList -> Observable<[UserProfile]> in
+                let observables = followerList.map { userId in
+                    return firebaseManager.read(collectionId, userId)
+                        .map { data in
+                            if let userProfile = data.toObject(UserProfile.self) {
+                                return userProfile
+                            } else {
+                                throw UserRepositoryError.dataConvertError
+                            }
+                        }
+                }
+                return Observable.combineLatest(observables)
+            }
+    }
+    
+    func readFollowingUsers(userId: String) -> Observable<[UserProfile]> {
+        return firebaseManager.getFollowingList(collectionId, userId)
+            .flatMapLatest { followingList -> Observable<[UserProfile]> in
+                let observables = followingList.map { userId in
+                    return firebaseManager.read(collectionId, userId)
+                        .map { data in
+                            if let userProfile = data.toObject(UserProfile.self) {
+                                return userProfile
+                            } else {
+                                throw UserRepositoryError.dataConvertError
+                            }
+                        }
+                }
+                return Observable.combineLatest(observables)
+            }
     }
 }

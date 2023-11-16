@@ -305,7 +305,6 @@ class RegistrationController: UIViewController {
         let userId = Auth.auth().currentUser?.uid
         let data = ProfileViewModel(userRepository:UserRepository(firebaseBaseManager: FireBaseManager()), userId: userId ?? "").userProfile
         let vc = UserDataManageController(data: data)
-        vc.hideWithdrawButton()
         navigationController?.pushViewController(vc, animated: true)
     }
     
