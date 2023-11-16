@@ -21,6 +21,12 @@ extension UITextField {
         self.leftViewMode = ViewMode.always
     }
     
+    func addLeftPadding() {
+      let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: self.frame.height))
+      self.leftView = paddingView
+      self.leftViewMode = ViewMode.always
+    }
+    
     func createToolBar() {
         let toolbar: UIToolbar = {
             let toolbar = UIToolbar()

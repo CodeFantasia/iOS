@@ -41,14 +41,13 @@ class TextView: UITextView {
     // MARK: - Helpers
     
     func createToolBar() {
-        print("Toolbar 소환됨")
         self.inputAccessoryView = toolbar
     }
     
     func placeholder(withPlaceholder placeholder: String?) {
         if let placeholder = placeholder {
             self.text = placeholder
-            self.textColor = .darkGray
+            self.textColor = .lightGray
             self.font = UIFont.body
             self.placeholder = placeholder
         }
