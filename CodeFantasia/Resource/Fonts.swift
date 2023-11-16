@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIFont {
+    static let boldSmallTitle = boldSystemFont(ofSize: 17)
     static let title = systemFont(ofSize: 30, weight: .bold)
     static let subTitle = systemFont(ofSize: 20, weight: .semibold)
     static let smallTitle = systemFont(ofSize: 14, weight: .light)
