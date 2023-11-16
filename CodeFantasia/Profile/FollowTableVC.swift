@@ -48,7 +48,6 @@ class FollowTableVC: UITableViewController {
         tableView.register(FollowViewCell.self, forCellReuseIdentifier: FollowViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
-        navigationbarTitle()
     }
 }
 
@@ -64,7 +63,9 @@ extension FollowTableVC {
             .withUnretained(self)
             .subscribe(onNext: { owner, user in
                 owner.followDataArry = user
-                owner.tableView.reloadData()
+                DispatchQueue.main.async {
+                    owner.tableView.reloadData()
+                }
                 if owner.followDataArry.isEmpty {
                 } else {
                 }
@@ -72,18 +73,6 @@ extension FollowTableVC {
             )
             .disposed(by: disposeBag)
         
-    }
-}
-
-extension FollowTableVC {
-    
-    func navigationbarTitle() {
-        let logoImageView = UIImageView().then {
-            $0.contentMode = .scaleAspectFit
-            $0.image = UIImage(named: "AppIcon_long")
-            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        }
     }
 }
 
@@ -123,6 +112,14 @@ extension FollowTableVC {
         let follow = followDataArry[indexPath.row]
         let profileViewModel = ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: follow.userID ?? "")
         let profileViewController = ProfileViewController(viewModel: profileViewModel)
-        present(profileViewController, animated: true)
+        navigationController?.pushViewController(profileViewController, animated: true)
+        navigationController?.navigationBar.tintColor = UIColor.black
     }
+}
+
+extension FollowTableVC {
+        func NavigationTitle() {
+//            self.followOrFollowingLabel.text = "팔로잉"
+            self.navigationItem.titleView = self.followOrFollowingLabel
+        }
 }

@@ -62,15 +62,6 @@ class ProfileViewController: UIViewController {
          $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
          $0.setTitleColor(.black, for: .normal)
      }
-
-
-     private lazy var followersLabel = UILabel().then {
-         $0.font = UIFont.smallTitle
-     }
-     private lazy var followingLabel = UILabel().then {
-         $0.font = UIFont.smallTitle
-     }
-
      private lazy var produceLabel = UILabel().then {
 
          $0.text = "소개"
@@ -114,7 +105,6 @@ class ProfileViewController: UIViewController {
         $0.font = UIFont.systemFont(ofSize: .content)
     }
 
-   
     private lazy var urlTitleLabel = UILabel().then {
         $0.text = "포트폴리오"
         $0.font = UIFont.body
@@ -213,16 +203,20 @@ extension ProfileViewController {
 extension ProfileViewController {
     
     private func navigationbarTitle() {
-        let logoImageView = UIImageView().then {
-            $0.contentMode = .scaleAspectFit
-            $0.image = UIImage(named: "AppIcon_long")
-            $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        if self.viewModel.userProfile?.userID == Auth.auth().currentUser?.uid {
+            let logoImageView = UIImageView().then {
+                $0.contentMode = .scaleAspectFit
+                $0.image = UIImage(named: "AppIcon_long")
+                $0.widthAnchor.constraint(equalToConstant: 100).isActive = true
+                $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            }
+
+            let logoBarItem = UIBarButtonItem(customView: logoImageView)
+            navigationItem.leftBarButtonItem = logoBarItem
+        } else {
         }
-        
-        let logoBarItem = UIBarButtonItem(customView: logoImageView)
-        navigationItem.leftBarButtonItem = logoBarItem
     }
+
     
     private func setupLayout() {
         view.addSubview(scrollView)
@@ -274,15 +268,17 @@ extension ProfileViewController {
             $0.width.equalToSuperview()
         }
         produceView.snp.makeConstraints {
-            $0.height.equalTo(130)
+            $0.height.equalTo(100)
             $0.width.equalTo(130)
         }
-        profileImage.snp.makeConstraints {
-            $0.centerX.equalTo(produceView)
-            $0.width.height.equalTo(100)
-        }
         nicknameLabel.snp.makeConstraints {
+            $0.top.equalTo(produceView)
             $0.centerX.equalTo(produceView)
+        }
+        profileImage.snp.makeConstraints {
+            $0.centerX.equalTo(nicknameLabel)
+            $0.top.equalTo(nicknameLabel.snp.bottom).offset(6)
+            $0.width.height.equalTo(70)
         }
         infoUnderline.snp.makeConstraints {
             $0.height.equalTo(1)
@@ -331,10 +327,9 @@ extension ProfileViewController {
                     owner.profileImage.kf.setImage(with: URL(string: user.profileImageURL ?? "")) { result in
                         switch result {
                         case .success(_):
-                            owner.profileImage.roundCornersForAspectFit(radius: 50)
-                            owner.profileImage.contentMode = .scaleAspectFill
+                            owner.profileImage.contentMode = .scaleToFill
                             owner.profileImage.clipsToBounds = true
-                            owner.profileImage.layer.cornerRadius = 50
+                            owner.profileImage.layer.cornerRadius = 35
                         case .failure(_):
                             owner.alertViewAlert(title: "오류", message: "이미지 다운로드에 오류가 발생했습니다.", cancelText: nil)
                         }
@@ -382,8 +377,9 @@ extension ProfileViewController {
                 let followViewModel = FollowViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: owner.viewModel.userProfile?.userID ?? "")
                 let followersVC = FollowTableVC(viewModel: followViewModel)
                 followViewModel.followType = "followers"
-                owner.navigationController?.pushViewController(followersVC, animated: true)
                 owner.navigationController?.navigationBar.tintColor = UIColor.black
+                owner.navigationController?.pushViewController(followersVC, animated: true)
+
             })
             .disposed(by: disposeBag)
         
@@ -392,16 +388,16 @@ extension ProfileViewController {
                 let followViewModel = FollowViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: owner.viewModel.userProfile?.userID ?? "")
                 let followingsVC = FollowTableVC(viewModel: followViewModel)
                 followViewModel.followType = "followings"
-                owner.navigationController?.pushViewController(followingsVC, animated: true)
                 owner.navigationController?.navigationBar.tintColor = UIColor.black
+                owner.navigationController?.pushViewController(followingsVC, animated: true)
             })
             .disposed(by: disposeBag)
         
         outputs.profileEditDidTap
             .drive(with: self, onNext: { owner, user in
                 let profileEditVC = UserDataManageController(data: owner.viewModel.userProfile)
-                owner.navigationController?.pushViewController(profileEditVC, animated: true)
-                owner.navigationController?.navigationBar.tintColor = UIColor.black
+                owner.present(profileEditVC, animated: true)
+//                owner.navigationController?.navigationBar.tintColor = UIColor.black
             })
             .disposed(by: disposeBag)
         

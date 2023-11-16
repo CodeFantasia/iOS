@@ -40,6 +40,7 @@ final class ProfileViewModel {
     let dataUpdateTrigger = PublishSubject<UserProfile>()
     let isFollowing = BehaviorRelay<Bool>(value: false)
     private let USER_REF = Firestore.firestore().collection("User")
+    private let PROJ_REF = Firestore.firestore().collection("Project")
     private let currentUser = Auth.auth().currentUser?.uid
     private let disposeBag = DisposeBag()
     private let userRepository: UserRepositoryProtocol
@@ -208,11 +209,31 @@ final class ProfileViewModel {
             if let current = userProfile?.userID {
                 self.userRepository.delete(userId: current)
                 print("유저 프로필 삭제 완료")
-                let firebaseManager:  FireBaseManagerProtocol = FireBaseManager()
-                let userRepository = UserRepository(collectionId: "User", firebaseBaseManager: firebaseManager)
-                userRepository.delete(userId: current)
-                let db = Firestore.firestore()
-                db.collection("Project").whereField("writerID", isEqualTo: current ).getDocuments { (querySnapshot, error) in
+                let followersQuery = USER_REF.whereField("followers", arrayContains: current)
+                followersQuery.getDocuments { (querySnapshot, error) in
+                    if let error = error {
+                        print("Error getting documents: \(error)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            document.reference.updateData(["followers": FieldValue.arrayRemove([current])])
+                            print("유저 팔로잉 삭제 완료")
+                        }
+                    }
+                }
+                
+                let followingQuery = USER_REF.whereField("followers", arrayContains: current)
+                followingQuery.getDocuments { (querySnapshot, error) in
+                    if let error = error {
+                        print("Error getting documents: \(error)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            document.reference.updateData(["followers": FieldValue.arrayRemove([current])])
+                            print("유저 팔로잉 삭제 완료")
+                        }
+                    }
+                }
+             
+                PROJ_REF.whereField("writerID", isEqualTo: current ).getDocuments { (querySnapshot, error) in
                     if let error = error {
                         print("Error getting documents: \(error)")
                     } else {

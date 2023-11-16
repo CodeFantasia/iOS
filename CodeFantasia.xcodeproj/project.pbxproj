@@ -437,8 +437,8 @@
 			isa = PBXGroup;
 			children = (
 				F0B39BC62AE76FF900CE4889 /* ProfileViewModel.swift */,
-				F0C9C33C2B05057B00B3476C /* FollowTableVC.swift */,
 				6BBF70762ADFB72100F58080 /* ProfileViewController.swift */,
+				F0C9C33C2B05057B00B3476C /* FollowTableVC.swift */,
 				F0C9C33E2B0508DA00B3476C /* FollowViewCell.swift */,
 				F0C9C3402B050A7600B3476C /* FollowViewModel.swift */,
 			);

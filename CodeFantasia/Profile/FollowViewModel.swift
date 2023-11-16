@@ -44,9 +44,9 @@ final class FollowViewModel {
                 print("\(String(describing: followType))")
 
                 if self.followType == "followers" {
-                    return self.userRepository.readFollowerUsers(userId: self.userId )
+                    return self.userRepository.readFollowerUsers(userId: self.userId)
                 } else {
-                    return self.userRepository.readFollowingUsers(userId: self.userId )
+                    return self.userRepository.readFollowingUsers(userId: self.userId)
                 }
             }
                     .share()
