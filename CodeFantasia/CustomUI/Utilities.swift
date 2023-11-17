@@ -188,9 +188,8 @@ class Utilities {
         label.snp.makeConstraints { make in
             make.left.top.equalToSuperview()
         }
-        
+
         view.addSubview(textview)
-        textview.backgroundColor = UIColor.white
         textview.snp.makeConstraints { make in
             make.top.equalTo(label.snp.bottom).offset(2)
             make.left.right.equalToSuperview()

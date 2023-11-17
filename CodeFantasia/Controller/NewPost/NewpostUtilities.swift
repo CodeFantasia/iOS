@@ -89,9 +89,8 @@ class NewpostUtilities {
 
         let textfield = UITextField()
         textfield.placeholder = placeholder
-        textfield.layer.cornerRadius = 3
-        textfield.layer.borderColor = UIColor.lightGray.cgColor
-        textfield.layer.borderWidth = 0.75
+        textfield.backgroundColor = UIColor.textfieldColor
+        textfield.layer.cornerRadius = 8.0
         textfield.createToolBar()
         textfield.addLeftPadding()
         
@@ -136,9 +135,8 @@ class NewpostUtilities {
         
         let textview = TextView()
         textview.placeholder(withPlaceholder: placeholder)
-        textview.layer.cornerRadius = 3
-        textview.layer.borderColor = UIColor.lightGray.cgColor
-        textview.layer.borderWidth = 0.75
+        textview.backgroundColor = UIColor.textfieldColor
+        textview.layer.cornerRadius = 8.0
         
         return textview
     }

@@ -64,24 +64,24 @@ class UserDataManageController: UIViewController {
     private let addPhotoButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "plus_photo"), for: .normal)
-        button.tintColor = .black
+        button.tintColor = .gray
         button.addTarget(self, action: #selector(handleAddProfilePhoto), for: .touchUpInside)
         return button
     }()
     
     private lazy var nicknameView: UIView = {
-        let view = Utilities().inputFormView(withLabel: "*닉네임 (영어, 한글 3~12자 입력)", firstSectionLength: 4, textview: nicknameTextView, textviewHeight: nil)
+        let view = Utilities().inputFormView(withLabel: "닉네임 (영어, 한글 3~12자 입력)", firstSectionLength: 4, textview: nicknameTextView, textviewHeight: nil)
         return view
     }()
     
     private lazy var techStackView: UIView = {
-        let (view, dropdownButton) = Utilities().dropdownInputFormView(withLabel: "*기술스택 (1개 이상 선택)", firstSectionLength: 5, textview: techStackTextView, textviewHeight: nil)
+        let (view, dropdownButton) = Utilities().dropdownInputFormView(withLabel: "기술스택 (1개 이상 선택)", firstSectionLength: 5, textview: techStackTextView, textviewHeight: nil)
         dropdownButton.addTarget(self, action: #selector(handleTechStackButton), for: .touchUpInside)
         return view
     }()
     
     private lazy var interestFieldView: UIView = {
-        let (view, dropdownButton) = Utilities().dropdownInputFormView(withLabel: "*관심분야 (1개 이상 선택)", firstSectionLength: 5, textview: interestTextView, textviewHeight: nil)
+        let (view, dropdownButton) = Utilities().dropdownInputFormView(withLabel: "관심분야 (1개 이상 선택)", firstSectionLength: 5, textview: interestTextView, textviewHeight: nil)
         dropdownButton.addTarget(self, action: #selector(handleInterestFieldButton), for: .touchUpInside)
         return view
     }()
@@ -98,7 +98,7 @@ class UserDataManageController: UIViewController {
     
     private lazy var nicknameTextView: UITextView = {
         let textview = TextView()
-        textview.placeholder(withPlaceholder: "닉네임을 입력해주세요.")
+        textview.placeholder(withPlaceholder: "닉네임을 입력해주세요.") 
         return textview
     }()
     
@@ -316,7 +316,7 @@ class UserDataManageController: UIViewController {
         view.addSubview(scrollview)
         scrollview.snp.makeConstraints { make in
             make.top.equalTo(titlelabel.snp.bottom).offset(20)
-            make.left.right.bottom.equalToSuperview().inset(CGFloat.spacing)
+            make.left.right.bottom.equalToSuperview()
         }
         
         scrollview.addSubview(addPhotoButton)
