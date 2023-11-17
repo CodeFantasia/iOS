@@ -15,5 +15,5 @@ extension CGFloat {
     static let smallTitle: CGFloat = 13
     static let subTitle: CGFloat = 18
     static let title: CGFloat = 30
-    static let minimumFormHeight: CGFloat = 35
+    static let minimumFormHeight: CGFloat = 37
 }

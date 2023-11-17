@@ -87,8 +87,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 8
-//        imageView.shadow()
-        imageView.borderLayer()
+        imageView.shadow()
         imageView.backgroundColor = .white
         imageView.image = UIImage(named: "AddPhoto")
         imageView.snp.makeConstraints { make in
@@ -255,7 +254,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         contentView.addSubview(thumbnailImageView)
         thumbnailImageView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(CGFloat.spacing)
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(15)
             make.height.equalTo(200)
         }
         

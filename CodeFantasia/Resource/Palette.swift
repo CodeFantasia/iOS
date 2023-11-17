@@ -26,5 +26,6 @@ extension UIColor {
     static let primaryColor = UIColor(hexCode: "#67C99D")
     static let buttonPrimaryColor = UIColor.black
     static let buttonSecondaryColor = UIColor(hexCode: "#B4B4B4")
+    static let textfieldColor = UIColor(hexCode: "#f2f2f2")
 
 }

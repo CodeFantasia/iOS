@@ -111,34 +111,6 @@ class Utilities {
         
         return (view, duplicateBtn)
     }
-    
-    // MARK: - New Post
-    
-    func createInputContainerView(title: String, textField: UITextField) -> UIView {
-        let container = UIView()
-        
-        // 타이틀 라벨
-        let titleLabel = UILabel()
-        titleLabel.text = title
-        titleLabel.textColor = .black
-        
-        container.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(container)
-            make.left.equalTo(container)
-        }
-        
-        // 뷰에 입력
-        container.addSubview(textField)
-        textField.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.left.equalTo(container)
-            make.right.equalTo(container)
-            make.height.equalTo(CGFloat.minimumFormHeight)
-        }
-        
-        return container
-    }
 
     // MARK: - Profile
     
@@ -216,9 +188,8 @@ class Utilities {
         label.snp.makeConstraints { make in
             make.left.top.equalToSuperview()
         }
-        
+
         view.addSubview(textview)
-        textview.backgroundColor = UIColor.white
         textview.snp.makeConstraints { make in
             make.top.equalTo(label.snp.bottom).offset(2)
             make.left.right.equalToSuperview()
@@ -248,4 +219,53 @@ class Utilities {
         
         return view
     }
+    
+    func termsOfConditionsView(title: String) -> (UIView, UIButton, UIButton) {
+        let containerView = UIView()
+
+        let checkboxBtn: UIButton = {
+            let btn = UIButton(type: .system)
+            btn.setImage(UIImage(systemName: "checkmark"), for: .selected)
+            btn.imageView?.contentMode = .scaleAspectFit
+            btn.layer.masksToBounds = true
+            btn.tintColor = .black
+            btn.layer.cornerRadius = 5
+            btn.layer.borderColor = UIColor.black.cgColor
+            btn.layer.borderWidth = 0.75
+            return btn
+        }()
+
+        containerView.addSubview(checkboxBtn)
+        checkboxBtn.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.width.height.equalTo(23)
+            make.centerY.equalToSuperview()
+        }
+
+        let label: UILabel = {
+            let label = UILabel()
+            label.text = title
+            label.font = .body
+            return label
+        }()
+
+        containerView.addSubview(label)
+        label.snp.makeConstraints { make in
+            make.leading.equalTo(checkboxBtn.snp.trailing).offset(5)
+            make.centerY.equalToSuperview()
+        }
+
+        let confirmBtn = UIButton(type: .system)
+        confirmBtn.setTitle("확인하기", for: .normal)
+
+        containerView.addSubview(confirmBtn)
+        confirmBtn.snp.makeConstraints { make in
+            make.trailing.equalToSuperview()
+            make.width.equalTo(80)
+            make.centerY.equalToSuperview()
+        }
+
+        return (containerView, confirmBtn, checkboxBtn)
+    }
+
 }

@@ -99,66 +99,17 @@ class RegistrationController: UIViewController {
         return button
     }()
     
-    private lazy var termsOfConditionsView: UIView = {
-        let view = TermsOfConditionsView()
-        return view
-    }()
+    private let (termsOfConditionsView, termsOfConditionBtn, conditionAgreeBtn) = Utilities().termsOfConditionsView(title: "서비스 이용 약관 동의")
     
-    private lazy var termsOfConditionsBtn: UIButton = {
-        let btn = Utilities().attributedButton("Code Cocoon 이용 약관", " 확인하기")
-        btn.addTarget(self, action: #selector(handleTermsOfConditionsBtn), for: .touchUpInside)
-        return btn
-    }()
-    
-    private lazy var  privacyPolicyUrlBtn: UIButton = {
-        let btn = Utilities().attributedButton("개인 정보 및 처리 방침", " 확인하기")
-        btn.addTarget(self, action: #selector(handlePrivatePolicyBtn), for: .touchUpInside)
-        return btn
-    }()
-    
-    private let agreeBtn: UIButton = {
-        let checkBtn = UIButton(type: .system)
-        checkBtn.setImage(UIImage(systemName: "square"), for: .normal)
-        checkBtn.setImage(UIImage(systemName: "checkmark.square"), for: .selected)
-        checkBtn.imageView?.contentMode = .scaleAspectFill
-        checkBtn.layer.masksToBounds = true
-        checkBtn.tintColor = .black
-        checkBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
-        // checkBtn.adjustsImageWhenHighlighted = false
-        return checkBtn
-    }()
-    
-    private lazy var termsOfConditionsAgree: UIView = {
-        let view = UIView()
-        
-        view.addSubview(agreeBtn)
-        agreeBtn.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.centerY.equalToSuperview()
-//            make.width.height.equalTo(25)
-        }
-        
-        let label = UILabel()
-        label.text = "위를 확인했으며 이에 동의합니다."
-        label.textColor = .black
-        label.font = UIFont.body
-        view.addSubview(label)
-        label.snp.makeConstraints { make in
-            make.left.equalTo(agreeBtn.snp.right).offset(2)
-            make.centerY.equalToSuperview()
-            make.right.height.equalToSuperview()
-        }
-    
-        return view
-    }()
+    private let (privacyPolicyView, privacyPolicyUrlBtn, privacyAgreeBtn) = Utilities().termsOfConditionsView(title: "개인정보 수집 및 이용 동의")
     
     // MARK: - Life Cycle
       override func viewDidLoad() {
         super.viewDidLoad()
 
         configureUI()
-        hideTextView()
         setKeyboardObserver()
+        setTermsOfConditionsBtn()
       }
       deinit {
         removeKeyboardObserver()
@@ -191,7 +142,11 @@ class RegistrationController: UIViewController {
     }
     
     @objc func handleTermsOfConditionsAgree() {
-        agreeBtn.isSelected = !agreeBtn.isSelected
+        conditionAgreeBtn.isSelected = !conditionAgreeBtn.isSelected
+    }
+    
+    @objc func handlePrivacyAgree() {
+        privacyAgreeBtn.isSelected = !privacyAgreeBtn.isSelected
     }
     
     let navbar = UIView()
@@ -200,7 +155,6 @@ class RegistrationController: UIViewController {
     @objc func handlePrivatePolicyBtn() {
         navbar.isHidden = false
         webView.isHidden = false
-
         
         view.addSubview(navbar)
         navbar.backgroundColor = .white
@@ -241,7 +195,6 @@ class RegistrationController: UIViewController {
         navbar.isHidden = false
         webView.isHidden = false
 
-        
         view.addSubview(navbar)
         navbar.backgroundColor = .white
         navbar.snp.makeConstraints { make in
@@ -283,8 +236,13 @@ class RegistrationController: UIViewController {
             return
         }
         
-        if agreeBtn.isSelected == false {
-            termsOfConditionsBtn.shake()
+        if conditionAgreeBtn.isSelected == false {
+            termsOfConditionsView.shake()
+            return
+        }
+        
+        if privacyAgreeBtn.isSelected == false {
+            privacyPolicyView.shake()
             return
         }
 
@@ -307,17 +265,14 @@ class RegistrationController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func dismissTextView() {
-        termsOfConditionsView.isHidden = true
-    }
-
-    
     // MARK: - Helpers
     
-    func hideTextView() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissTextView))
-        self.view.addGestureRecognizer(tap)
-        tap.delegate = self
+    func setTermsOfConditionsBtn() {
+        termsOfConditionBtn.addTarget(self, action: #selector(handleTermsOfConditionsBtn), for: .touchUpInside)
+        privacyPolicyUrlBtn.addTarget(self, action: #selector(handlePrivatePolicyBtn), for: .touchUpInside)
+        
+        conditionAgreeBtn.addTarget(self, action: #selector(handleTermsOfConditionsAgree), for: .touchUpInside)
+        privacyAgreeBtn.addTarget(self, action: #selector(handlePrivacyAgree), for: .touchUpInside)
     }
     
     func emailVerify(email: String) -> Bool {
@@ -394,21 +349,23 @@ class RegistrationController: UIViewController {
             make.left.equalTo(passwordCheckContainerView).offset(5)
         }
         
-        let termsStack = UIStackView(arrangedSubviews: [termsOfConditionsBtn, privacyPolicyUrlBtn, termsOfConditionsAgree])
-        termsStack.axis = .vertical
-        termsStack.alignment = .center
-        termsStack.spacing = 2
-        termsStack.distribution = .fillEqually
+        view.addSubview(termsOfConditionsView)
+        termsOfConditionsView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(CGFloat.authSpacing)
+            make.top.equalTo(passwordDoNotMatch.snp.bottom).offset(20)
+            make.height.equalTo(25)
+        }
         
-        view.addSubview(termsStack)
-        termsStack.snp.makeConstraints { make in
-            make.top.equalTo(stack.snp.bottom).offset(25)
-            make.left.right.equalTo(stack)
+        view.addSubview(privacyPolicyView)
+        privacyPolicyView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(CGFloat.authSpacing)
+            make.top.equalTo(termsOfConditionsView.snp.bottom).offset(10)
+            make.height.equalTo(25)
         }
         
         view.addSubview(nextButton)
         nextButton.snp.makeConstraints { make in
-            make.top.equalTo(termsStack.snp.bottom).offset(15)
+            make.top.equalTo(privacyPolicyView.snp.bottom).offset(20)
             make.left.right.equalTo(stack)
         }
         
