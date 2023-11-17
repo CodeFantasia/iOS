@@ -254,7 +254,7 @@ class NewPageViewController: UIViewController, UIImagePickerControllerDelegate, 
         contentView.addSubview(thumbnailImageView)
         thumbnailImageView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(CGFloat.spacing)
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(15)
             make.height.equalTo(200)
         }
         

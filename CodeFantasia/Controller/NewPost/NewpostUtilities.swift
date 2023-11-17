@@ -136,7 +136,8 @@ class NewpostUtilities {
         let textview = TextView()
         textview.placeholder(withPlaceholder: placeholder)
         textview.backgroundColor = UIColor.textfieldColor
-        textview.layer.cornerRadius = 8.0
+        textview
+            .layer.cornerRadius = 8.0
         
         return textview
     }
