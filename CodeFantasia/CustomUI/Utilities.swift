@@ -227,7 +227,7 @@ class Utilities {
         let checkboxBtn: UIButton = {
             let btn = UIButton(type: .system)
             btn.setImage(UIImage(systemName: "checkmark"), for: .selected)
-            btn.imageView?.contentMode = .scaleAspectFill
+            btn.imageView?.contentMode = .scaleAspectFit
             btn.layer.masksToBounds = true
             btn.tintColor = .black
             btn.layer.cornerRadius = 5
@@ -239,7 +239,7 @@ class Utilities {
         containerView.addSubview(checkboxBtn)
         checkboxBtn.snp.makeConstraints { make in
             make.leading.equalToSuperview()
-            make.width.height.equalTo(20)
+            make.width.height.equalTo(23)
             make.centerY.equalToSuperview()
         }
 
