@@ -26,7 +26,7 @@ final class FollowViewModel {
     private let userId: String
     var userProfile: [UserProfile]?
     var followType: String?
-    
+
     init(
         userRepository: UserRepositoryProtocol,
         userId: String
@@ -36,6 +36,20 @@ final class FollowViewModel {
     }
     
     func transform(input: Input) -> Output {
+//        let userData = input.viewDidLoad
+//            .startWith(())
+//            .flatMapLatest { [weak self] _ -> Observable<[UserProfile]> in
+//                guard let self = self else { return Observable.empty() }
+//                print("유저 데이터 가져오는 중...")
+//                print("\(String(describing: followType))")
+//
+//                if self.followType == "followers" {
+//                    return self.userRepository.readFollowerUsers(userId: self.userId)
+//                } else {
+//                    return self.userRepository.readFollowingUsers(userId: self.userId)
+//                }
+//            }
+//                    .share()
         let userData = input.viewDidLoad
             .startWith(())
             .flatMapLatest { [weak self] _ -> Observable<[UserProfile]> in
@@ -49,7 +63,8 @@ final class FollowViewModel {
                     return self.userRepository.readFollowingUsers(userId: self.userId)
                 }
             }
-                    .share()
+            .observe(on: MainScheduler.instance) // MainScheduler에서 작업을 수행하도록 설정
+            .share()
                 userData
                     .subscribe(onNext: { [weak self] user in
                         self?.userProfile = user

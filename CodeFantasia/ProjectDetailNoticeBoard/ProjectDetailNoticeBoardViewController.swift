@@ -296,7 +296,8 @@ extension ProjectDetailNoticeBoardViewController {
             .drive(with: self, onNext: { owner, leaderUserId in
                 if let leaderUserId {
                     let profileViewController = ProfileViewController(viewModel: ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: String(leaderUserId)))
-                    owner.present(profileViewController, animated: true)
+                    owner.navigationController?.navigationBar.tintColor = UIColor.black
+                    owner.navigationController?.pushViewController(profileViewController, animated: true)
                 }
             })
             .disposed(by: disposeBag)

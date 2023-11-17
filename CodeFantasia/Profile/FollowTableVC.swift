@@ -31,16 +31,30 @@ class FollowTableVC: UITableViewController {
         $0.textColor = .black
         $0.font = UIFont.boldSystemFont(ofSize: 16)
     }
+    
+    private lazy var followEmptyLabel = UILabel().then {
+        $0.textColor = .gray
+        $0.font = UIFont.boldSystemFont(ofSize: 20)
+    }
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        if viewModel.followType == "followers" {
-            NavigationTitle()
-            followOrFollowingLabel.text = "팔로워"
-        } else {
-            NavigationTitle()
-            followOrFollowingLabel.text = "팔로잉"
+        NavigationTitle()
+        setup()
+    }
+}
+
+extension FollowTableVC {
+        func NavigationTitle() {
+            if viewModel.followType == "followers" {
+                self.navigationItem.titleView = self.followOrFollowingLabel
+                followOrFollowingLabel.text = "팔로워"
+            } else {
+                self.navigationItem.titleView = self.followOrFollowingLabel
+                followOrFollowingLabel.text = "팔로잉"
+            }
         }
+    func setup() {
         tableView.backgroundColor = UIColor.white
         tableView.separatorInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 15)
         tableView.separatorInsetReference = .fromAutomaticInsets
@@ -76,8 +90,8 @@ extension FollowTableVC {
     }
 }
 
+
 extension FollowTableVC {
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return followDataArry.count
     }
@@ -91,7 +105,6 @@ extension FollowTableVC {
         let follow = followDataArry[indexPath.row]
         cell.backgroundColor = UIColor.backgroundColor
         DispatchQueue.main.async {
-//            cell.userId = follow.userID
             cell.followName.text = follow.nickname
             cell.followTech.text = follow.techStack.joined(separator: ", ")
             cell.followImage.kf.setImage(with: URL(string: follow.profileImageURL ?? "")) { result in
@@ -112,14 +125,15 @@ extension FollowTableVC {
         let follow = followDataArry[indexPath.row]
         let profileViewModel = ProfileViewModel(userRepository: UserRepository(firebaseBaseManager: FireBaseManager()), userId: follow.userID ?? "")
         let profileViewController = ProfileViewController(viewModel: profileViewModel)
-        navigationController?.pushViewController(profileViewController, animated: true)
-        navigationController?.navigationBar.tintColor = UIColor.black
+        DispatchQueue.main.async {
+            let nameTitle = UILabel().then {
+                $0.text = follow.nickname
+                $0.font = UIFont.boldSystemFont(ofSize: 16)
+            }
+            profileViewController.navigationItem.titleView = nameTitle
+            profileViewController.navigationController?.navigationBar.tintColor = UIColor.black
+                self.navigationController?.pushViewController(profileViewController, animated: true)
+            }
     }
 }
 
-extension FollowTableVC {
-        func NavigationTitle() {
-//            self.followOrFollowingLabel.text = "팔로잉"
-            self.navigationItem.titleView = self.followOrFollowingLabel
-        }
-}
